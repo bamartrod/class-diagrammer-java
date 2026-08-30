@@ -84,7 +84,7 @@ public final class JavaVersionBehavior {
                 CliArgs.parse(new String[]{"src", "--java", "9"});
                 return false;
             } catch (IllegalArgumentException expected) {
-                return expected.getMessage().contains("no soportada");
+                return expected.getMessage().contains("unsupported");
             }
         });
 
