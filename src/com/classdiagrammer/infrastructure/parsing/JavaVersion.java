@@ -28,6 +28,6 @@ public enum JavaVersion {
             }
         }
         throw new IllegalArgumentException(
-                "java version no soportada: " + raw + " (use 8, 11, 17, 21, 26)");
+                "unsupported java version: " + raw + " (use 8, 11, 17, 21, 26)");
     }
 }

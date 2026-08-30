@@ -16,7 +16,7 @@ public final class CodeGraphIntegrity {
 
     public static void verify(TestHarness h) {
         h.scope("unit/grafo");
-        h.expect("dos tipos con la misma identidad conviven desambiguados por su ruta", () -> {
+        h.expect("two types with same identity coexist disambiguated by path", () -> {
             TypeNode first = TypeNode.named("p.A", "A")
                     .ofKind(TypeKind.CLASS).locatedAt("src/a", "A.java").build();
             TypeNode second = TypeNode.named("p.A", "A")
@@ -35,7 +35,7 @@ public final class CodeGraphIntegrity {
             return graph.find("com.demo.Base").isPresent()
                     && !graph.find("com.demo.Missing").isPresent();
         });
-        h.expect("los homonimos se agrupan por nombre simple sin perder el orden de llegada", () -> {
+        h.expect("homonyms are grouped by simple name preserving arrival order", () -> {
             List<TypeNode> ordered = Arrays.asList(
                     type("a.Dup"), type("com.demo.Base"), type("b.Dup"));
             CodeGraph graph = CodeGraph.of(ordered);
