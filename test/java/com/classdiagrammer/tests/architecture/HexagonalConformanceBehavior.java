@@ -31,13 +31,13 @@ public final class HexagonalConformanceBehavior {
 
         h.scope("architecture/conformidad-hexagonal");
 
-        h.expect("el nucleo de dominio solo conversa consigo mismo y con el jdk", () ->
+        h.expect("domain core only depends on itself and the JDK", () ->
                 allImportsWithin(units, "domain", allowedLayers("domain")));
-        h.expect("la aplicacion se apoya unicamente en el dominio y en si misma", () ->
+        h.expect("application only depends on domain and itself", () ->
                 allImportsWithin(units, "application", allowedLayers("application")));
-        h.expect("los adaptadores de infraestructura no se acoplan entre si", () ->
+        h.expect("infrastructure adapters do not couple to each other", () ->
                 noCrossAdapterCoupling(units));
-        h.expect("el proyecto entero vive sin dependencias externas", () -> {
+        h.expect("the whole project lives with zero external dependencies", () -> {
             for (SourceUnit unit : units) {
                 for (String imported : unit.imports) {
                     boolean jdk = imported.startsWith("java.");
@@ -49,7 +49,7 @@ public final class HexagonalConformanceBehavior {
             }
             return true;
         });
-        h.expect("la produccion nunca cita artefactos de verificacion", () -> {
+        h.expect("production never imports verification artifacts", () -> {
             for (SourceUnit unit : units) {
                 for (String imported : unit.imports) {
                     if (imported.startsWith(ROOT_PACKAGE + "tests")) {
@@ -59,7 +59,7 @@ public final class HexagonalConformanceBehavior {
             }
             return true;
         });
-        h.expect("el nucleo permanece libre de anotaciones decorativas", () -> {
+        h.expect("core remains free of decorative annotations", () -> {
             for (SourceUnit unit : units) {
                 if (!unit.layer.equals("domain") && !unit.layer.equals("application")) {
                     continue;
@@ -72,7 +72,7 @@ public final class HexagonalConformanceBehavior {
             }
             return true;
         });
-        h.expect("cada clase respeta el umbral de revision de cohesion", () -> {
+        h.expect("each class respects the cohesion review threshold", () -> {
             for (SourceUnit unit : units) {
                 if (unit.effectiveLines() > COHESION_REVIEW_THRESHOLD_LINES) {
                     return false;
@@ -158,7 +158,7 @@ public final class HexagonalConformanceBehavior {
             walked.filter(path -> path.toString().endsWith(".java")).forEach(path ->
                     units.add(readUnit(sourceRoot, path)));
         } catch (IOException e) {
-            throw new IllegalStateException("no se pudo leer el arbol de produccion", e);
+            throw new IllegalStateException("could not read production tree", e);
         }
         return units;
     }

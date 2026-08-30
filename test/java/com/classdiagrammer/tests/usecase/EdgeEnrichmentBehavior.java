@@ -27,7 +27,7 @@ public final class EdgeEnrichmentBehavior {
                                 "velocity-engine-core", "2.4.1")
                         : null;
 
-        h.expect("una dependencia externa reconocida viaja con su artefacto y version", () -> {
+        h.expect("a recognized external dependency travels with its artifact and version", () -> {
             SourceRecords reader = new SourceRecords(
                     Sources.java("src/Render.java", "package app;",
                             "import org.apache.velocity.Template;",
@@ -48,7 +48,7 @@ public final class EdgeEnrichmentBehavior {
                     && haciaVelocity.artifact().version().equals("2.4.1");
         });
 
-        h.expect("las aristas internas declaran origen de proyecto sin artifact", () -> {
+        h.expect("internal edges declare project origin without artifact", () -> {
             SourceRecords reader = new SourceRecords(
                     Sources.java("src/Base.java", "package app;", "public class Base { }"),
                     Sources.java("src/Hija.java", "package app;",
@@ -69,7 +69,7 @@ public final class EdgeEnrichmentBehavior {
                     && interna.isResolved();
         });
 
-        h.expect("un nombre simple se califica con los imports del propio archivo", () -> {
+        h.expect("a simple name is qualified with imports from its own file", () -> {
             SourceRecords reader = new SourceRecords(
                     Sources.java("src/Panel.java", "package ui;",
                             "import org.apache.velocity.BaseTemplate;",
@@ -90,7 +90,7 @@ public final class EdgeEnrichmentBehavior {
             return calificada;
         });
 
-        h.expect("lo que nadie reconoce permanece sin resolver y sin artifact", () -> {
+        h.expect("what no one recognizes remains unresolved without artifact", () -> {
             SourceRecords reader = new SourceRecords(
                     Sources.java("src/X.java", "package x;",
                             "import raro.inventado.Cosa;",

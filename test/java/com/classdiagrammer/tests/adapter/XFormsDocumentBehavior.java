@@ -18,7 +18,7 @@ public final class XFormsDocumentBehavior {
         final ArtifactParser parser = new XFormsArtifactParser();
         h.scope("adapter/documentos-xforms");
 
-        h.expect("un xhtml con namespace xforms es aceptado y uno sin el no", () -> {
+        h.expect("xhtml with xforms namespace is accepted and one without is not", () -> {
             String conXforms = OPEN + "<xf:model id=\"m1\"/>\n</html>\n";
             String sinXforms = "<html xmlns:h=\"http://www.w3.org/1999/xhtml\">"
                     + "<h:p>texto</h:p></html>\n";
@@ -51,7 +51,7 @@ public final class XFormsDocumentBehavior {
                     && node.fields().get(1).name().equals("/persona/edad");
         });
 
-        h.expect("un mayor-que dentro del valor de un atributo no rompe el escaneo", () -> {
+        h.expect("greater-than inside attribute value does not break scanning", () -> {
             String content = OPEN
                     + "<xf:model id=\"raro\">\n"
                     + "  <xf:bind nodeset=\"/x[y > 2]\" />\n"
@@ -72,7 +72,7 @@ public final class XFormsDocumentBehavior {
                     && node.fields().get(0).name().equals("/visible");
         });
 
-        h.expect("solo las instancias hacia documentos generan referencias", () -> {
+        h.expect("only instances pointing to documents generate references", () -> {
             String content = OPEN
                     + "<xf:model>\n"
                     + "  <xf:instance src=\"datos-persona.xml\"/>\n"

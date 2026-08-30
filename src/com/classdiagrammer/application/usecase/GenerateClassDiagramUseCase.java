@@ -83,10 +83,10 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
             try {
                 return new ArrayList<>(artifactParser.parse(file));
             } catch (StackOverflowError e) {
-                System.err.println("Advertencia: archivo omitido por desbordamiento: " + file.file());
+                System.err.println("Warning: file skipped due to stack overflow: " + file.file());
                 return new ArrayList<>();
             } catch (Exception e) {
-                System.err.println("Advertencia: archivo omitido por error: " + file.file() + " - " + e.getMessage());
+                System.err.println("Warning: file skipped due to error: " + file.file() + " - " + e.getMessage());
                 return new ArrayList<>();
             }
         }
@@ -97,10 +97,10 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                     try {
                         return artifactParser.parse(file);
                     } catch (StackOverflowError e) {
-                        System.err.println("Advertencia: archivo omitido por desbordamiento: " + file.file());
+                        System.err.println("Warning: file skipped due to stack overflow: " + file.file());
                         return List.<TypeNode>of();
                     } catch (Exception e) {
-                        System.err.println("Advertencia: archivo omitido por error: " + file.file() + " - " + e.getMessage());
+                        System.err.println("Warning: file skipped due to error: " + file.file() + " - " + e.getMessage());
                         return List.<TypeNode>of();
                     }
                 }));
@@ -111,9 +111,9 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                     collected.addAll(future.get());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    throw new IllegalStateException("parsing interrumpido", e);
+                    throw new IllegalStateException("parsing interrupted", e);
                 } catch (ExecutionException e) {
-                    System.err.println("Advertencia: tarea fallida: " + e.getCause().getMessage());
+                    System.err.println("Warning: task failed: " + e.getCause().getMessage());
                 }
             }
             return collected;

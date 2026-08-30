@@ -26,7 +26,7 @@ public final class JarIndexBehavior {
         final DeclaredDependency lib = new DeclaredDependency(
                 "org.example", "lib", "1.0");
 
-        h.expect("un jar del repositorio local responde por su paquete exacto", () ->
+        h.expect("a jar from local repository responds for its exact package", () ->
                 withLocalRepo(velocity, new String[]{
                         "org/apache/velocity/Template.class",
                         "org/apache/velocity/context/InternalContext.class"}, index -> {
@@ -37,7 +37,7 @@ public final class JarIndexBehavior {
                             && found.version().equals("2.4.1");
                 }));
 
-        h.expect("un subpaquete ausente se remonte hasta el ancestro publicado", () ->
+        h.expect("a missing subpackage falls back to published ancestor", () ->
                 withLocalRepo(lib, new String[]{"org/example/lib/Core.class"},
                         index -> index.locate("org.example.lib.interno.Maquina") != null));
 
