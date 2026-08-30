@@ -64,14 +64,14 @@ public final class CliArgs {
         Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "26"));
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
-                    "java version no soportada: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
+                    "unsupported java version: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
         }
     }
 
     public static String usage() {
-        return "Uso: classdiagrammer <carpeta-fuente> [-o salida.json] [--java <8|11|17|21|26>]\n"
-                + "Explora los .java de la carpeta indicada y genera un grafo JSON tipo diagrama de clases.\n"
-                + "  --java <v>  version del parser Java (por defecto 8)\n";
+        return "Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21|26>]\n"
+                + "Scans .java files in the given folder and generates a JSON class diagram graph.\n"
+                + "  --java <v>  Java parser version (default 8)\n";
     }
 
     public String sourceRoot() { return sourceRoot; }

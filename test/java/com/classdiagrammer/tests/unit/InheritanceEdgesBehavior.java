@@ -21,7 +21,7 @@ public final class InheritanceEdgesBehavior {
         final EdgeResolver resolver = new EdgeResolver();
 
         h.scope("unit/aristas");
-        h.expect("la herencia conecta al hijo con su padre", () -> {
+        h.expect("inheritance connects child to its parent", () -> {
             CodeGraph graph = graphOf(
                     type("com.demo.Base"),
                     child("com.demo.Child", Arrays.asList("Base"), noImports()));
@@ -29,7 +29,7 @@ public final class InheritanceEdgesBehavior {
             return contains(edges, "com.demo.Child", "com.demo.Base",
                     TypeRelationKind.EXTENDS, true);
         });
-        h.expect("la realizacion conecta la clase con su contrato", () -> {
+        h.expect("realization connects class to its contract", () -> {
             CodeGraph graph = graphOf(
                     type("com.demo.Named"),
                     childWithImplements("com.demo.Impl", Arrays.asList("Named")));
@@ -37,14 +37,14 @@ public final class InheritanceEdgesBehavior {
             return contains(edges, "com.demo.Impl", "com.demo.Named",
                     TypeRelationKind.IMPLEMENTS, true);
         });
-        h.expect("un padre fuera del grafo queda como destino externo sin resolver", () -> {
+        h.expect("a parent outside the graph remains as unresolved external target", () -> {
             CodeGraph graph = graphOf(child("lonely.Orphan",
                     Arrays.asList("UnknownParent"), noImports()));
             List<Edge> edges = resolver.resolve(graph);
             return contains(edges, "lonely.Orphan", "UnknownParent",
                     TypeRelationKind.EXTENDS, false);
         });
-        h.expect("un padre del mismo paquete se reconoce por nombre simple", () -> {
+        h.expect("a parent in same package is recognized by simple name", () -> {
             TypeNode helper = TypeNode.named("q.Helper", "Helper").inPackage("q")
                     .ofKind(TypeKind.CLASS).build();
             TypeNode user = TypeNode.named("q.Client", "Client").inPackage("q")
@@ -53,7 +53,7 @@ public final class InheritanceEdgesBehavior {
             List<Edge> edges = resolver.resolve(CodeGraph.of(Arrays.asList(helper, user)));
             return contains(edges, "q.Client", "q.Helper", TypeRelationKind.EXTENDS, true);
         });
-        h.expect("los imports solo enlazan tipos que participan en el grafo", () -> {
+        h.expect("imports only link types that participate in the graph", () -> {
             CodeGraph graph = graphOf(
                     type("com.demo.Base"),
                     child("com.demo.User", noParents(),
@@ -64,7 +64,7 @@ public final class InheritanceEdgesBehavior {
             boolean ignoresUnknown = !containsFrom(edges, "com.demo.User", "java.util.List");
             return linksToKnown && ignoresUnknown;
         });
-        h.expect("un import repetido produce una sola arista", () -> {
+        h.expect("a repeated import produces a single edge", () -> {
             CodeGraph graph = graphOf(
                     type("com.demo.Base"),
                     child("com.demo.User", noParents(),

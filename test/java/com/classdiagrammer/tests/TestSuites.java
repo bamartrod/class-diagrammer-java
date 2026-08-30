@@ -42,8 +42,8 @@ public final class TestSuites {
 
         harness.report(System.out);
         System.out.println();
-        System.out.println("Verificaciones: " + harness.total()
-                + " | Fallos: " + harness.failedCount());
+        System.out.println("Checks: " + harness.total()
+                + " | Failures: " + harness.failedCount());
         if (harness.failedCount() > 0) {
             System.exit(1);
         }

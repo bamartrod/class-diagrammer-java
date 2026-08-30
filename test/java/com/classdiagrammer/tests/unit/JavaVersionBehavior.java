@@ -20,9 +20,9 @@ public final class JavaVersionBehavior {
     }
 
     public static void verify(TestHarness h) {
-        h.scope("unit/versiones-java");
+        h.scope("unit/java-versions");
 
-        h.expect("el parser base acepta fuentes java", () -> {
+        h.expect("base parser accepts java sources", () -> {
             SourceFile file = new SourceFile("", "A.java", "class A {}");
             return new JavaArtifactParser().accepts(file)
                     && new Java11ArtifactParser().accepts(file)
@@ -31,7 +31,7 @@ public final class JavaVersionBehavior {
                     && new Java26ArtifactParser().accepts(file);
         });
 
-        h.expect("la factoria elige el parser segun la version solicitada", () -> {
+        h.expect("factory chooses parser according to requested version", () -> {
             return JavaParserFactory.forVersion(JavaVersion.from("8")) instanceof JavaArtifactParser
                     && JavaParserFactory.forVersion(JavaVersion.from("11")) instanceof Java11ArtifactParser
                     && JavaParserFactory.forVersion(JavaVersion.from("17")) instanceof Java17ArtifactParser
@@ -39,14 +39,14 @@ public final class JavaVersionBehavior {
                     && JavaParserFactory.forVersion(JavaVersion.from("26")) instanceof Java26ArtifactParser;
         });
 
-        h.expect("java 11 entiende var en cuerpo de metodo", () -> {
+        h.expect("java 11 understands var in method body", () -> {
             SourceFile file = new SourceFile("app", "app/Serv.java",
                     "package app; class Serv { void m() { var x = 1; } }");
             List<TypeNode> nodes = new Java11ArtifactParser().parse(file);
             return nodes.size() == 1 && nodes.get(0).simpleName().equals("Serv");
         });
 
-        h.expect("java 17 tolera text blocks sin romper llaves", () -> {
+        h.expect("java 17 tolerates text blocks without breaking braces", () -> {
             SourceFile file = new SourceFile("app", "app/T.java",
                     "package app; class T { String s = \"\"\"\n"
                             + "  linea 1\n"
@@ -56,7 +56,7 @@ public final class JavaVersionBehavior {
             return nodes.size() == 1;
         });
 
-        h.expect("java 17 expone permits como relacion propia y conserva sealed", () -> {
+        h.expect("java 17 exposes permits as own relation and preserves sealed", () -> {
             SourceFile file = new SourceFile("app", "app/Shape.java",
                     "package app; public sealed class Shape permits Circle, Square {} "
                             + "final class Circle extends Shape {} "
@@ -72,14 +72,14 @@ public final class JavaVersionBehavior {
                     && shape.modifiers().contains("sealed");
         });
 
-        h.expect("java 21 y 26 heredan el soporte de 17 sin regresiones", () -> {
+        h.expect("java 21 and 26 inherit support from 17 without regressions", () -> {
             SourceFile file = new SourceFile("app", "app/R.java",
                     "package app; record R(int x, int y) {}");
             return new Java21ArtifactParser().parse(file).size() == 1
                     && new Java26ArtifactParser().parse(file).size() == 1;
         });
 
-        h.expect("el flag --java rechaza versiones no soportadas", () -> {
+        h.expect("--java flag rejects unsupported versions", () -> {
             try {
                 CliArgs.parse(new String[]{"src", "--java", "9"});
                 return false;
@@ -88,7 +88,7 @@ public final class JavaVersionBehavior {
             }
         });
 
-        h.expect("el flag --java por defecto es 8 y acepta 8/11/17/21/26", () -> {
+        h.expect("--java flag defaults to 8 and accepts 8/11/17/21/26", () -> {
             return CliArgs.parse(new String[]{"src"}).javaVersion().equals("8")
                     && CliArgs.parse(new String[]{"src", "--java", "17"}).javaVersion().equals("17")
                     && CliArgs.parse(new String[]{"src", "--java", "26"}).javaVersion().equals("26");

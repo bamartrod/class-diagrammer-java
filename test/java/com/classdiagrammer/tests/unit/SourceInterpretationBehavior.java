@@ -29,7 +29,7 @@ public final class SourceInterpretationBehavior {
                     && type.imports().contains("com.demo.Base")
                     && type.imports().size() == 2;
         });
-        h.expect("la carpeta y el archivo acompanan al tipo", () -> {
+        h.expect("folder and file accompany the type", () -> {
             TypeNode type = only(parser.parse(userServiceSource()));
             return "src/com/demo".equals(type.folder())
                     && type.file().endsWith("UserService.java");
@@ -40,7 +40,7 @@ public final class SourceInterpretationBehavior {
                     && type.visibility() == Visibility.PUBLIC
                     && type.modifiers().contains("abstract");
         });
-        h.expect("herencia y contratos realizados se leen del encabezado", () -> {
+        h.expect("inheritance and implemented contracts are read from header", () -> {
             TypeNode type = only(parser.parse(userServiceSource()));
             return type.extendsTypes().contains("Base")
                     && type.implementsTypes().contains("Named")
@@ -69,7 +69,7 @@ public final class SourceInterpretationBehavior {
                     && "items".equals(grouped.parameters().get(0).name())
                     && "List<Integer>".equals(grouped.parameters().get(0).type());
         });
-        h.expect("cuerpos ajenos no contaminan la lectura de miembros", () -> {
+        h.expect("foreign bodies do not contaminate member reading", () -> {
             TypeNode type = only(parser.parse(userServiceSource()));
             return findMethod(type, "audit") != null
                     && findField(type, "r") == null
@@ -111,7 +111,7 @@ public final class SourceInterpretationBehavior {
                     && color.constructors().size() == 2
                     && color.methods().size() == 1;
         });
-        h.expect("los tipos anidados califican su nombre completo", () -> {
+        h.expect("nested types qualify their full name", () -> {
             List<TypeNode> nodes = parser.parse(Sources.java("Outer.java",
                     "class Outer {",
                     "    class Inner { void ping() { } }",
@@ -131,7 +131,7 @@ public final class SourceInterpretationBehavior {
             }
             return outer && inner && nestedStatic && nodes.size() == 3;
         });
-        h.expect("un tipo en paquete por defecto omite el segmento de paquete", () -> {
+        h.expect("a type in default package omits package segment", () -> {
             TypeNode bare = only(parser.parse(Sources.java("Bare.java",
                     "public class Bare { public void hi() { } }")));
             return "Bare".equals(bare.qualifiedName()) && "".equals(bare.packageName());
@@ -151,7 +151,7 @@ public final class SourceInterpretationBehavior {
                     && odd.fields().size() == 2
                     && !containsType(nodes, "Bogus");
         });
-        h.expect("varargs y arreglos sobreviven la lectura", () -> {
+        h.expect("varargs and arrays survive reading", () -> {
             TypeNode shaped = only(parser.parse(Sources.java("demo/Shapes.java",
                     "package demo;",
                     "class Shapes {",
