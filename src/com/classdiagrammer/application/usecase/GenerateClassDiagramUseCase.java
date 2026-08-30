@@ -79,7 +79,7 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
             return new ArrayList<>();
         }
         if (files.size() == 1) {
-            var file = files.getFirst();
+            SourceFile file = files.get(0);
             try {
                 return new ArrayList<>(artifactParser.parse(file));
             } catch (StackOverflowError e) {
@@ -90,23 +90,24 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                 return new ArrayList<>();
             }
         }
-        var futures = new ArrayList<Future<List<TypeNode>>>(files.size());
-        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            for (var file : files) {
+        List<Future<List<TypeNode>>> futures = new ArrayList<>(files.size());
+        java.util.concurrent.ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        try {
+            for (SourceFile file : files) {
                 futures.add(executor.submit(() -> {
                     try {
                         return artifactParser.parse(file);
                     } catch (StackOverflowError e) {
                         System.err.println("Advertencia: archivo omitido por desbordamiento: " + file.file());
-                        return List.<TypeNode>of();
+                        return java.util.Collections.emptyList();
                     } catch (Exception e) {
                         System.err.println("Advertencia: archivo omitido por error: " + file.file() + " - " + e.getMessage());
-                        return List.<TypeNode>of();
+                        return java.util.Collections.emptyList();
                     }
                 }));
             }
-            var collected = new ArrayList<TypeNode>();
-            for (var future : futures) {
+            List<TypeNode> collected = new ArrayList<TypeNode>();
+            for (Future<List<TypeNode>> future : futures) {
                 try {
                     collected.addAll(future.get());
                 } catch (InterruptedException e) {
@@ -117,6 +118,8 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                 }
             }
             return collected;
+        } finally {
+            executor.shutdown();
         }
     }
 
