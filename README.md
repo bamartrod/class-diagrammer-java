@@ -1,4 +1,4 @@
-# ClassDiagrammer — v2.0.0 (Java 17 LTS)
+# ClassDiagrammer — v2.0.0 (Java 11 LTS)
 
 Herramienta **Java 26** que recorre un proyecto, interpreta sus fuentes y genera un
 grafo JSON con forma de diagrama de clases: carpetas, paquetes, imports,
@@ -10,7 +10,7 @@ modificadores (`sealed`/`non-sealed`/`final`).
 namespace `http://www.w3.org/2002/xforms`). Cada tecnología tiene su parser
 especializado detrás del puerto `ArtifactParser`; el enrutado es por extensión
 y, para XForms, por contenido. La versión Java analizada se elige con `--java`
-y es independiente del JDK que ejecuta la herramienta (runtime 17 puede analizar
+y es independiente del JDK que ejecuta la herramienta (runtime 11 puede analizar
 fuentes 8).
 
 **Concurrencia:** parsing concurrente con **Fixed Thread Pool** (`Executors.newFixedThreadPool(...)`) en `GenerateClassDiagramUseCase` — 7k tipos de `xwiki-platform` en 14s sin acoplar dominio.
@@ -30,7 +30,7 @@ terceros: parser propio, escritor JSON propio y arnés de verificación propio.
 
 ## 1. Requisitos
 
-* JDK 17 (`java-17-openjdk`), compilado con `javac --release 17`
+* JDK 11 (`java-11-openjdk`), compilado con `javac --release 11`
 * Sin repositorios remotos necesarios
 
 Verificación completa del proyecto:
@@ -115,7 +115,7 @@ Contenido modelado por tecnología:
 | Velocity `.vm/.vtl` | `template` (id = ruta del archivo) | cada `#macro(name $args)` | cada `#set($var)` global (fuera de macros) | imports hacia `#parse`/`#include` |
 | XForms `.xhtml/.xforms/.xml` | `form` (id = ruta del archivo) | cada `<xf:model>` y `<xf:submission>` | cada `<xf:bind nodeset/ref>` | imports hacia instancias/submissions que apuntan a documentos del árbol |
 
-## 4. Arquitectura (hexagonal, Java 17)
+## 4. Arquitectura (hexagonal, Java 11)
 
 ```
 src/com/classdiagrammer/
@@ -126,7 +126,7 @@ src/com/classdiagrammer/
 │   ├── port/in/             GenerateClassDiagram (+ Command / Result)
 │   ├── port/out/            SourceCodeReader, ArtifactParser, DependencyResolver,
 │   │                        DiagramOutput, DiagramReport
-│   └── usecase/             GenerateClassDiagramUseCase (Fixed Thread Pool, 17)
+│   └── usecase/             GenerateClassDiagramUseCase (Fixed Thread Pool, 11)
 ├── infrastructure/
 │   ├── filesystem/          FileSystemSourceReader
 │   ├── parsing/             LanguageCapabilities + JavaVersion (versión = configuración, no copia)

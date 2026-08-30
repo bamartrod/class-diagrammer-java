@@ -1,6 +1,10 @@
 package com.classdiagrammer.interfaces.cli;
 
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class CliArgs {
 
@@ -57,7 +61,7 @@ public final class CliArgs {
     }
 
     private static void validateJavaVersion(String raw) {
-        var supported = java.util.Set.of("8", "11", "17", "21", "26");
+        Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "26"));
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
                     "java version no soportada: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
@@ -65,26 +69,13 @@ public final class CliArgs {
     }
 
     public static String usage() {
-        return """
-                Uso: classdiagrammer <carpeta-fuente> [-o salida.json] [--java <8|11|17|21|26>]
-                Explora los .java de la carpeta indicada y genera un grafo JSON tipo diagrama de clases.
-                  --java <v>  version del parser Java (por defecto 8)
-                """;
+        return "Uso: classdiagrammer <carpeta-fuente> [-o salida.json] [--java <8|11|17|21|26>]\n"
+                + "Explora los .java de la carpeta indicada y genera un grafo JSON tipo diagrama de clases.\n"
+                + "  --java <v>  version del parser Java (por defecto 8)\n";
     }
 
-    public String sourceRoot() {
-        return sourceRoot;
-    }
-
-    public String outputPath() {
-        return outputPath;
-    }
-
-    public String javaVersion() {
-        return javaVersion;
-    }
-
-    public boolean helpRequested() {
-        return helpRequested;
-    }
+    public String sourceRoot() { return sourceRoot; }
+    public String outputPath() { return outputPath; }
+    public String javaVersion() { return javaVersion; }
+    public boolean helpRequested() { return helpRequested; }
 }

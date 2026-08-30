@@ -61,7 +61,7 @@ public final class Edge {
         if (provider == null) {
             throw new IllegalArgumentException("artifact provider is required");
         }
-        var target = qualifiedTarget == null || qualifiedTarget.trim().isEmpty()
+        String target = qualifiedTarget == null || qualifiedTarget.trim().isEmpty()
                 ? to : qualifiedTarget.trim();
         return new Edge(from, target, kind, true, EdgeOrigin.EXTERNAL, provider);
     }
@@ -95,9 +95,10 @@ public final class Edge {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Edge that)) {
+        if (!(other instanceof Edge)) {
             return false;
         }
+        Edge that = (Edge) other;
         return from.equals(that.from) && to.equals(that.to) && kind == that.kind;
     }
 
@@ -108,7 +109,7 @@ public final class Edge {
 
     @Override
     public String toString() {
-        var suffix = artifact == null ? "" : " [" + artifact + "]";
+        String suffix = artifact == null ? "" : " [" + artifact + "]";
         return from + " -" + kind.jsonName() + "-> " + to + suffix;
     }
 }

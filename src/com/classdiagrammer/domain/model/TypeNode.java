@@ -67,7 +67,8 @@ public final class TypeNode {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        if (!(other instanceof TypeNode that)) return false;
+        if (!(other instanceof TypeNode)) return false;
+        TypeNode that = (TypeNode) other;
         return qualifiedName.equals(that.qualifiedName);
     }
 

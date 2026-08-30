@@ -1,17 +1,34 @@
 package com.classdiagrammer.domain.model;
 
-public record Parameter(String type, String name) {
+import java.util.Objects;
 
-    public Parameter {
+public final class Parameter {
+
+    private final String type;
+    private final String name;
+
+    public Parameter(String type, String name) {
         if (type == null || type.trim().isEmpty()) {
             throw new IllegalArgumentException("parameter type is required");
         }
-        type = type.trim();
-        name = name == null ? "" : name.trim();
+        this.type = type.trim();
+        this.name = name == null ? "" : name.trim();
+    }
+
+    public String type() { return type; }
+    public String name() { return name; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Parameter)) return false;
+        Parameter that = (Parameter) o;
+        return type.equals(that.type) && name.equals(that.name);
     }
 
     @Override
-    public String toString() {
-        return name.isEmpty() ? type : type + " " + name;
-    }
+    public int hashCode() { return Objects.hash(type, name); }
+
+    @Override
+    public String toString() { return name.isEmpty() ? type : type + " " + name; }
 }

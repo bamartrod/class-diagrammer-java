@@ -83,12 +83,15 @@ public final class JavaArtifactParser implements ArtifactParser {
     }
 
     static TypeKind mapKind(String kindToken) {
-        return switch (kindToken) {
-            case "class", "record" -> TypeKind.CLASS;
-            case "interface" -> TypeKind.INTERFACE;
-            case "enum" -> TypeKind.ENUM;
-            default -> TypeKind.ANNOTATION;
-        };
+        if ("class".equals(kindToken) || "record".equals(kindToken)) {
+            return TypeKind.CLASS;
+        } else if ("interface".equals(kindToken)) {
+            return TypeKind.INTERFACE;
+        } else if ("enum".equals(kindToken)) {
+            return TypeKind.ENUM;
+        } else {
+            return TypeKind.ANNOTATION;
+        }
     }
 
     static String parentFolder(String filePath) {
