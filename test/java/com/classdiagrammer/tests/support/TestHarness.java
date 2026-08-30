@@ -34,7 +34,7 @@ public final class TestHarness {
     }
 
     private final List<Outcome> outcomes = new ArrayList<>();
-    private String currentScope = "sin-ambito";
+    private String currentScope = "no-scope";
 
     public void scope(String name) {
         this.currentScope = name;
@@ -61,7 +61,7 @@ public final class TestHarness {
                 destination.println();
                 destination.println("[" + printedScope + "]");
             }
-            String verdict = outcome.holds ? "OK" : "FALLO";
+            String verdict = outcome.holds ? "OK" : "FAIL";
             destination.println("  - " + outcome.behavior + " => " + verdict);
             if (!outcome.holds && outcome.obstruction != null) {
                 destination.println("      (" + outcome.obstruction + ")");
