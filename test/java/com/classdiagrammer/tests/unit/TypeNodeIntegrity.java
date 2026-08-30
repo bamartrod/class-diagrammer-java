@@ -16,7 +16,7 @@ public final class TypeNodeIntegrity {
     }
 
     public static void verify(TestHarness h) {
-        h.scope("unit/identidad-de-tipos");
+        h.scope("unit/type-identity");
         h.expect("un tipo sin nombre calificado es rechazado", () -> {
             try {
                 TypeNode.named("   ", "A");
@@ -27,7 +27,7 @@ public final class TypeNodeIntegrity {
         });
         h.expect("un tipo sin naturaleza declarada es rechazado",
                 () -> refuses(TypeNode.named("p.A", "A")));
-        h.expect("la identidad de un tipo es su nombre calificado", () -> {
+        h.expect("type identity is its qualified name", () -> {
             TypeNode first = TypeNode.named("p.A", "A").ofKind(TypeKind.CLASS).build();
             TypeNode twin = TypeNode.named("p.A", "A").ofKind(TypeKind.CLASS)
                     .withVisibility(Visibility.PUBLIC).build();

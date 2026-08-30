@@ -23,7 +23,7 @@ public final class GenerationFlowBehavior {
     public static void verify(TestHarness h) {
         h.scope("usecase/generacion");
 
-        h.expect("un proyecto con clases vinculadas llega completo hasta el destino", () -> {
+        h.expect("a project with linked classes arrives complete at destination", () -> {
             SourceRecords reader = new SourceRecords(
                     Sources.java("src/Base.java", "package app;", "public class Base { }"),
                     Sources.java("src/Service.java",
@@ -46,7 +46,7 @@ public final class GenerationFlowBehavior {
                     .generate(GenerateClassDiagramCommand.of("vacio", "vacio.json"));
             return result.typeCount() == 0 && result.edgeCount() == 0 && sink.writings == 1;
         });
-        h.expect("una raiz en blanco se rechaza antes de tocar el sistema de archivos", () -> {
+        h.expect("a blank root is rejected before touching filesystem", () -> {
             SourceRecords reader = new SourceRecords();
             RecordingDiagramSink sink = new RecordingDiagramSink();
             try {
@@ -56,7 +56,7 @@ public final class GenerationFlowBehavior {
                 return reader.consultations == 0 && sink.writings == 0;
             }
         });
-        h.expect("una ruta de salida ausente se rechaza con el mismo cuidado", () -> {
+        h.expect("a missing output path is rejected with same care", () -> {
             try {
                 GenerateClassDiagramCommand.of("raiz", " ");
                 return false;

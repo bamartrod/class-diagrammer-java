@@ -15,7 +15,7 @@ public final class VelocityTemplateBehavior {
         final ArtifactParser parser = new VelocityArtifactParser();
         h.scope("adapter/plantillas-velocity");
 
-        h.expect("solo las plantillas velocity son aceptadas", () ->
+        h.expect("only velocity templates are accepted", () ->
                 parser.accepts(file("layout/base.vm", "#macro(a $b)\n#end"))
                         && parser.accepts(file("layout/otro.vtl", "$x"))
                         && !parser.accepts(file("layout/base.txt", "texto"))
@@ -65,7 +65,7 @@ public final class VelocityTemplateBehavior {
                     && node.fields().isEmpty();
         });
 
-        h.expect("condicionales y texto libre con mayor-que no rompen el escaneo", () -> {
+        h.expect("conditionals and free text with greater-than do not break scanning", () -> {
             TypeNode node = only(parser.parse(file(
                     "views/d.vm",
                     "#if($a > $b)\n"
@@ -83,7 +83,7 @@ public final class VelocityTemplateBehavior {
                     && node.methods().get(0).name().equals("fin");
         });
 
-        h.expect("dos macros homonimos no duplican el metodo", () -> {
+        h.expect("duplicate macro names do not duplicate methods", () -> {
             TypeNode node = only(parser.parse(file(
                     "views/e.vm",
                     "#macro(x $a)\n#end\n#if(true)#macro(x $a)#end#end\n")));
