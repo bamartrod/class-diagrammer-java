@@ -19,9 +19,9 @@ final class HeaderParser {
         private final List<String> permitsTypes;
 
         ParsedHeader(List<String> extendsTypes, List<String> implementsTypes, List<String> permitsTypes) {
-            this.extendsTypes = List.copyOf(extendsTypes);
-            this.implementsTypes = List.copyOf(implementsTypes);
-            this.permitsTypes = List.copyOf(permitsTypes);
+            this.extendsTypes = Collections.unmodifiableList(new ArrayList<>(extendsTypes));
+            this.implementsTypes = Collections.unmodifiableList(new ArrayList<>(implementsTypes));
+            this.permitsTypes = Collections.unmodifiableList(new ArrayList<>(permitsTypes));
         }
 
         List<String> extendsTypes() {

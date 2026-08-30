@@ -62,7 +62,8 @@ public final class JavaVersionBehavior {
                             + "final class Circle extends Shape {} "
                             + "final class Square extends Shape {}");
             List<TypeNode> nodes = new Java17ArtifactParser().parse(file);
-            var shape = nodes.stream().filter(n -> n.simpleName().equals("Shape")).findFirst().orElse(null);
+            TypeNode shape = null;
+            for (TypeNode n : nodes) { if (n.simpleName().equals("Shape")) { shape = n; break; } }
             return nodes.size() == 3
                     && shape != null
                     && shape.permitsTypes().contains("Circle")

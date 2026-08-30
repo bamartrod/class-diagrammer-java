@@ -35,13 +35,13 @@ public final class TypeNode {
         this.modifiers = Collections.unmodifiableSet(new HashSet<>(builder.modifiers));
         this.folder = builder.folder;
         this.file = builder.file;
-        this.imports = List.copyOf(builder.imports);
-        this.extendsTypes = List.copyOf(builder.extendsTypes);
-        this.implementsTypes = List.copyOf(builder.implementsTypes);
-        this.permitsTypes = List.copyOf(builder.permitsTypes);
-        this.methods = List.copyOf(builder.methods);
-        this.constructors = List.copyOf(builder.constructors);
-        this.fields = List.copyOf(builder.fields);
+        this.imports = Collections.unmodifiableList(new ArrayList<>(builder.imports));
+        this.extendsTypes = Collections.unmodifiableList(new ArrayList<>(builder.extendsTypes));
+        this.implementsTypes = Collections.unmodifiableList(new ArrayList<>(builder.implementsTypes));
+        this.permitsTypes = Collections.unmodifiableList(new ArrayList<>(builder.permitsTypes));
+        this.methods = Collections.unmodifiableList(new ArrayList<>(builder.methods));
+        this.constructors = Collections.unmodifiableList(new ArrayList<>(builder.constructors));
+        this.fields = Collections.unmodifiableList(new ArrayList<>(builder.fields));
     }
 
     public static Builder named(String qualifiedName, String simpleName) {
