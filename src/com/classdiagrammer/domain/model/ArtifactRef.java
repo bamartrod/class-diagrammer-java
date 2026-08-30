@@ -2,6 +2,11 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Objects;
 
+/**
+ * Value object referencing an external artifact (groupId, artifactId, version).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class ArtifactRef {
 
     private final String groupId;

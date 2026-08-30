@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Parser for XForms documents.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class FormModelCollector {
 
     static final String XFORMS_NAMESPACE = "http://www.w3.org/2002/xforms";

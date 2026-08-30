@@ -17,6 +17,11 @@ import com.classdiagrammer.tests.unit.TypeNodeIntegrity;
 import com.classdiagrammer.tests.usecase.EdgeEnrichmentBehavior;
 import com.classdiagrammer.tests.usecase.GenerationFlowBehavior;
 
+/**
+ * Behavior verification suite for TestSuites.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class TestSuites {
 
     private TestSuites() {

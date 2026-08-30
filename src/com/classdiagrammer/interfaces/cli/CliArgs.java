@@ -6,6 +6,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Parses and validates command-line arguments.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class CliArgs {
 
     private final String sourceRoot;

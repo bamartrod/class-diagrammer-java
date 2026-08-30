@@ -6,6 +6,11 @@ import com.classdiagrammer.domain.model.SourceFile;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Test support utility SourceRecords.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class SourceRecords implements SourceCodeReader {
 
     private final List<SourceFile> records = new ArrayList<>();

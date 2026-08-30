@@ -1,5 +1,10 @@
 package com.classdiagrammer.infrastructure.parsing.java;
 
+/**
+ * Helper SourceText supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class SourceText {
 
     private static final int CODE = 0;

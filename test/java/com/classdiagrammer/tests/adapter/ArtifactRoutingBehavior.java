@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Behavior verification suite for ArtifactRoutingBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class ArtifactRoutingBehavior {
 
     private ArtifactRoutingBehavior() {

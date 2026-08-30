@@ -14,6 +14,11 @@ import com.classdiagrammer.tests.support.TestHarness;
 
 import java.util.List;
 
+/**
+ * Behavior verification suite for JavaVersionBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JavaVersionBehavior {
 
     private JavaVersionBehavior() {

@@ -2,6 +2,11 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Set;
 
+/**
+ * Encapsulates Java visibility (public, protected, private, package-private).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public enum Visibility {
     PUBLIC("public"),
     PROTECTED("protected"),

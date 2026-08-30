@@ -2,6 +2,11 @@ package com.classdiagrammer.infrastructure.dependencies;
 
 import java.util.Objects;
 
+/**
+ * Dependency resolution component DeclaredDependency.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class DeclaredDependency {
 
     private final String groupId;

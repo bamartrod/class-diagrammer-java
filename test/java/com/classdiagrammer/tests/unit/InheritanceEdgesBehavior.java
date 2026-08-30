@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Behavior verification suite for InheritanceEdgesBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class InheritanceEdgesBehavior {
 
     private InheritanceEdgesBehavior() {

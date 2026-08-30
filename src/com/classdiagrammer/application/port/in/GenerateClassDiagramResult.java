@@ -3,6 +3,11 @@ package com.classdiagrammer.application.port.in;
 import java.nio.file.Path;
 import java.util.Objects;
 
+/**
+ * Input port GenerateClassDiagramResult defining the use-case contract.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class GenerateClassDiagramResult {
 
     private final Path writtenTo;
