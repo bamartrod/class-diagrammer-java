@@ -4,6 +4,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Component XmlTagScanner.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class XmlTagScanner {
 
     public static final class Tag {

@@ -16,6 +16,11 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Arrays;
 
+/**
+ * Behavior verification suite for JsonEmissionBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JsonEmissionBehavior {
 
     private JsonEmissionBehavior() {

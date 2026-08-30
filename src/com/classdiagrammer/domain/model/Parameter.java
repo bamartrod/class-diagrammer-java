@@ -1,5 +1,10 @@
 package com.classdiagrammer.domain.model;
 
+/**
+ * Represents a method parameter with type and name.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public record Parameter(String type, String name) {
 
     public Parameter {

@@ -3,6 +3,11 @@ package com.classdiagrammer.infrastructure.dependencies;
 import com.classdiagrammer.application.port.out.DependencyResolver;
 import com.classdiagrammer.domain.model.ArtifactRef;
 
+/**
+ * Dependency resolution component ClasspathArtifactResolver.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class ClasspathArtifactResolver implements DependencyResolver {
 
     private final LocalRepositoryIndex index;

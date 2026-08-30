@@ -15,6 +15,11 @@ import com.classdiagrammer.tests.support.TestHarness;
 
 import java.nio.file.Paths;
 
+/**
+ * Behavior verification suite for GenerationFlowBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class GenerationFlowBehavior {
 
     private GenerationFlowBehavior() {

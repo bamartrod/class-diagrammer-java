@@ -4,6 +4,11 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Helper TypeDeclaration supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class TypeDeclaration {
 
     private final Set<String> modifiers;

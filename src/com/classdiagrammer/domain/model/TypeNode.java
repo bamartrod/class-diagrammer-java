@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Domain node representing a Java type (class, interface, enum, etc.).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class TypeNode {
 
     private final String qualifiedName;

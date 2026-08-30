@@ -7,6 +7,11 @@ import com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser;
 
+/**
+ * Factory creating the correct Java parser per version.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JavaParserFactory {
 
     private JavaParserFactory() {

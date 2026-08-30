@@ -2,6 +2,11 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Objects;
 
+/**
+ * Value object for a source file (path and content).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class SourceFile {
 
     private final String folder;

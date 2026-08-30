@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Dependency resolution component GradleDependencies.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class GradleDependencies {
 
     private static final Pattern NOTATION = Pattern.compile(

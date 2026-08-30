@@ -2,6 +2,11 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Objects;
 
+/**
+ * Directed relation between two types (extends, implements, permits, imports).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Edge {
 
     private final String from;

@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Resolves type references into graph edges.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class EdgeResolver {
 
     public List<Edge> resolve(CodeGraph graph) {

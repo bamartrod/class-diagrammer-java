@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Composite router dispatching files to the appropriate ArtifactParser.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class CompositeArtifactParser implements ArtifactParser {
 
     private final List<ArtifactParser> delegates;

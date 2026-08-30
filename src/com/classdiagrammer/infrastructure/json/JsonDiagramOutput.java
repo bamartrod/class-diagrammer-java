@@ -14,6 +14,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * Infrastructure adapter writing the diagram as JSON.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JsonDiagramOutput implements DiagramOutput {
 
     public Path write(DiagramReport report, String targetPath) {

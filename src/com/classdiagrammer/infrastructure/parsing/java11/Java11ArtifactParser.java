@@ -9,6 +9,11 @@ import com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser;
 
 import java.util.List;
 
+/**
+ * Artifact parser for Java11ArtifactParser delegating to the core Java parser with version-specific capabilities.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Java11ArtifactParser implements ArtifactParser {
 
     private final JavaArtifactParser delegate =
