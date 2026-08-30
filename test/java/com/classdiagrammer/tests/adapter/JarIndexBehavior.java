@@ -13,6 +13,11 @@ import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * Behavior verification suite for JarIndexBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JarIndexBehavior {
 
     private JarIndexBehavior() {

@@ -2,6 +2,11 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Objects;
 
+/**
+ * Represents a method parameter with type and name.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Parameter {
 
     private final String type;

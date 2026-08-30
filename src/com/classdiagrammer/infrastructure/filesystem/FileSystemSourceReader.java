@@ -16,6 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Filesystem adapter reading source files from disk.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class FileSystemSourceReader implements SourceCodeReader {
 
     private static final Set<String> SOURCE_EXTENSIONS = new HashSet<>(Arrays.asList(

@@ -12,6 +12,11 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+/**
+ * Dependency resolution component LocalRepositoryIndex.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class LocalRepositoryIndex {
 
     private final List<IndexedArtifact> indexed = new ArrayList<>();

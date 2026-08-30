@@ -1,5 +1,10 @@
 package com.classdiagrammer.infrastructure.parsing;
 
+/**
+ * Enumeration of supported Java versions (8, 11, 17, 21, 26).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public enum JavaVersion {
     V8("8"),
     V11("11"),

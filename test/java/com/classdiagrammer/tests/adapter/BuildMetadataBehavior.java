@@ -10,6 +10,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Behavior verification suite for BuildMetadataBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class BuildMetadataBehavior {
 
     private final static String POM_CON_PROPIEDADES = ""

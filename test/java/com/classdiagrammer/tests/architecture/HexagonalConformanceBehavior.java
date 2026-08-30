@@ -13,6 +13,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+/**
+ * Behavior verification suite for HexagonalConformanceBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class HexagonalConformanceBehavior {
 
     private static final Pattern IMPORT_LINE =

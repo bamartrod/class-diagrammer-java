@@ -4,6 +4,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Test support utility TestHarness.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class TestHarness {
 
     public interface Behavior {

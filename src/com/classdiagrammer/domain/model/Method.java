@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Represents a method or constructor with parameters and visibility.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Method {
 
     private final String name;

@@ -8,6 +8,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Helper TokenOps supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class TokenOps {
 
     private static final Pattern ANNOTATION =

@@ -11,6 +11,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Helper SignatureInterpreter supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class SignatureInterpreter {
 
     private final String simpleName;

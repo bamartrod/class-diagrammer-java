@@ -3,6 +3,11 @@ package com.classdiagrammer.infrastructure.json;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * Low-level JSON writer without external dependencies.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JsonWriter {
 
     private static final String INDENT = "  ";

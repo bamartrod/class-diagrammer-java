@@ -25,6 +25,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * Application use case orchestrating parsing, resolution and output generation.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
 
     private final SourceCodeReader sourceReader;

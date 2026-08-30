@@ -6,6 +6,11 @@ import com.classdiagrammer.domain.model.TypeNode;
 import com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser;
 import com.classdiagrammer.tests.support.TestHarness;
 
+/**
+ * Behavior verification suite for XFormsDocumentBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class XFormsDocumentBehavior {
 
     private static final String OPEN =

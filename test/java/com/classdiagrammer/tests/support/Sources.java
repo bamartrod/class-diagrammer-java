@@ -2,6 +2,11 @@ package com.classdiagrammer.tests.support;
 
 import com.classdiagrammer.domain.model.SourceFile;
 
+/**
+ * Test support utility Sources.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Sources {
 
     private Sources() {
