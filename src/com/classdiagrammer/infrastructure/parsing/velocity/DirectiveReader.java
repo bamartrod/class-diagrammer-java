@@ -1,5 +1,10 @@
 package com.classdiagrammer.infrastructure.parsing.velocity;
 
+/**
+ * Infrastructure parsing component DirectiveReader.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class DirectiveReader {
 
     private DirectiveReader() {

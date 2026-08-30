@@ -6,6 +6,11 @@ import com.classdiagrammer.application.port.out.DiagramReport;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Test support utility RecordingDiagramSink.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class RecordingDiagramSink implements DiagramOutput {
 
     public DiagramReport lastReport;

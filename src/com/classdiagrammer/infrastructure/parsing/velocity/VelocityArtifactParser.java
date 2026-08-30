@@ -15,6 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Parser for Apache Velocity templates (.vm/.vtl).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class VelocityArtifactParser implements ArtifactParser {
 
     private static final String KIND_MARKER = "velocity";

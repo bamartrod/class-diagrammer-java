@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Dependency resolution component PomDependencies.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class PomDependencies {
 
     private static final Pattern PROPERTIES_BLOCK =

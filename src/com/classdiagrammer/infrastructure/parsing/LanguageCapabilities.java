@@ -1,5 +1,10 @@
 package com.classdiagrammer.infrastructure.parsing;
 
+/**
+ * Describes language capabilities enabled per Java version.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public record LanguageCapabilities(
         boolean textBlocks,
         boolean records,

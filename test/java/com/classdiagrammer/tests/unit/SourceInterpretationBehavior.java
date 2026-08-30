@@ -12,6 +12,11 @@ import com.classdiagrammer.tests.support.TestHarness;
 
 import java.util.List;
 
+/**
+ * Behavior verification suite for SourceInterpretationBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class SourceInterpretationBehavior {
 
     private SourceInterpretationBehavior() {

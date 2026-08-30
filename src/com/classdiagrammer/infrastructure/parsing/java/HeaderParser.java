@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Helper HeaderParser supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class HeaderParser {
 
     private static final Pattern EXTENDS_CLAUSE = Pattern.compile("\\bextends\\b");

@@ -6,6 +6,11 @@ import com.classdiagrammer.domain.model.TypeNode;
 import com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser;
 import com.classdiagrammer.tests.support.TestHarness;
 
+/**
+ * Behavior verification suite for VelocityTemplateBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class VelocityTemplateBehavior {
 
     private VelocityTemplateBehavior() {

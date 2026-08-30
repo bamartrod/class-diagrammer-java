@@ -18,6 +18,11 @@ import com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser;
 
 import java.util.Arrays;
 
+/**
+ * Composition root and CLI entry point wiring all adapters.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Main {
 
     private Main() {

@@ -17,6 +17,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Parser for XForms documents.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class XFormsArtifactParser implements ArtifactParser {
 
     private static final String KIND_MARKER = "xforms";

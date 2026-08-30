@@ -9,6 +9,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Aggregates TypeNodes into a navigable code graph with deduplication.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class CodeGraph {
 
     private final List<TypeNode> nodes;

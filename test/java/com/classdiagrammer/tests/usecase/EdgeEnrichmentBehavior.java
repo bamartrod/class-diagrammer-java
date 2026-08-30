@@ -13,6 +13,11 @@ import com.classdiagrammer.tests.support.SourceRecords;
 import com.classdiagrammer.tests.support.Sources;
 import com.classdiagrammer.tests.support.TestHarness;
 
+/**
+ * Behavior verification suite for EdgeEnrichmentBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class EdgeEnrichmentBehavior {
 
     private EdgeEnrichmentBehavior() {
