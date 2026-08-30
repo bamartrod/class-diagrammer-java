@@ -1,5 +1,10 @@
 package com.classdiagrammer.application.port.in;
 
+/**
+ * Input port GenerateClassDiagramCommand defining the use-case contract.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class GenerateClassDiagramCommand {
 
     private final String sourceRoot;

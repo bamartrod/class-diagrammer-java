@@ -1,5 +1,10 @@
 package com.classdiagrammer.domain.model;
 
+/**
+ * Value object referencing an external artifact (groupId, artifactId, version).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public record ArtifactRef(String groupId, String artifactId, String version) {
 
     public ArtifactRef {

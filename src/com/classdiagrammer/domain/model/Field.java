@@ -5,6 +5,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Represents a class field with name, type and visibility.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class Field {
 
     private final String name;

@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Behavior verification suite for TypeNodeIntegrity.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class TypeNodeIntegrity {
 
     private TypeNodeIntegrity() {

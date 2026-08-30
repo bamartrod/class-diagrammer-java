@@ -3,6 +3,11 @@ package com.classdiagrammer.infrastructure.parsing.velocity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Parser for Apache Velocity templates (.vm/.vtl).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class TemplateDirectives {
 
     static final class MacroSig {

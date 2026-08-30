@@ -2,6 +2,11 @@ package com.classdiagrammer.interfaces.cli;
 
 import java.nio.file.Paths;
 
+/**
+ * Parses and validates command-line arguments.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class CliArgs {
 
     private final String sourceRoot;

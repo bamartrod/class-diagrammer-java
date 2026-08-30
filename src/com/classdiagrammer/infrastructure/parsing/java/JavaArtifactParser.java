@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Artifact parser for JavaArtifactParser delegating to the core Java parser with version-specific capabilities.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class JavaArtifactParser implements ArtifactParser {
 
     private static final Pattern PACKAGE_DECLARATION =

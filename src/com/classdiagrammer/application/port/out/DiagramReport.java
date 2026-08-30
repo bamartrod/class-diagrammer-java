@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Output port DiagramReport abstracting an infrastructure concern.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class DiagramReport {
 
     private final String sourceRoot;

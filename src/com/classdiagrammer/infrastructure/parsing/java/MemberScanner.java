@@ -1,5 +1,10 @@
 package com.classdiagrammer.infrastructure.parsing.java;
 
+/**
+ * Helper MemberScanner supporting the Java parser pipeline.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 final class MemberScanner {
 
     SignatureInterpreter.ParsedMembers scan(TypeDeclaration declaration,

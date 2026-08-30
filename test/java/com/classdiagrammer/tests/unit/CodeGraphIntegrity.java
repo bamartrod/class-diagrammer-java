@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Behavior verification suite for CodeGraphIntegrity.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class CodeGraphIntegrity {
 
     private CodeGraphIntegrity() {

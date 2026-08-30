@@ -7,6 +7,11 @@ import com.classdiagrammer.domain.model.TypeNode;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Parser for Hibernate mapping files (.hbm.xml).
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class HbmArtifactParser implements ArtifactParser {
 
     public boolean accepts(SourceFile source) {

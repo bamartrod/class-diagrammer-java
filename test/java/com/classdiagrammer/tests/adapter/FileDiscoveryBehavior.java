@@ -8,6 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Behavior verification suite for FileDiscoveryBehavior.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class FileDiscoveryBehavior {
 
     private FileDiscoveryBehavior() {

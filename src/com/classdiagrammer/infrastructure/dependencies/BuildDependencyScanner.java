@@ -3,6 +3,11 @@ package com.classdiagrammer.infrastructure.dependencies;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dependency resolution component BuildDependencyScanner.
+ *
+ * @author Brandon Martinez - https://github.com/bamartrod
+ */
 public final class BuildDependencyScanner {
 
     public List<DeclaredDependency> scan(String sourceRoot) {
