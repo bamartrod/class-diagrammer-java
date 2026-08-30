@@ -45,7 +45,7 @@ public final class Main {
                             new JsonDiagramOutput())
                             .generate(GenerateClassDiagramCommand.of(
                                     cli.sourceRoot(), cli.outputPath()));
-            System.out.printf("Grafo generado: %d tipos, %d relaciones -> %s%n",
+            System.out.printf("Graph generated: %d types, %d relations -> %s%n",
                     result.typeCount(), result.edgeCount(), result.writtenTo());
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.err.println("Error: " + e.getMessage());

@@ -24,7 +24,7 @@ public final class JsonEmissionBehavior {
     public static void verify(TestHarness h) {
         h.scope("adapter/emision-json");
 
-        h.expect("el informe se convierte en json legible en la ruta pedida", () -> {
+        h.expect("report is converted to readable json at requested path", () -> {
             Path root = scratch();
             try {
                 Path target = root.resolve("diagrama.json");
@@ -47,7 +47,7 @@ public final class JsonEmissionBehavior {
                 cleanup(root);
             }
         });
-        h.expect("los separadores del json son siempre validos", () -> {
+        h.expect("json separators are always valid", () -> {
             Path root = scratch();
             try {
                 Path target = root.resolve("estructura.json");
@@ -64,7 +64,7 @@ public final class JsonEmissionBehavior {
                 cleanup(root);
             }
         });
-        h.expect("las carpetas del destino aparecen solas si faltan", () -> {
+        h.expect("destination folders are created if missing", () -> {
             Path root = scratch();
             try {
                 Path deep = root.resolve("a/b/c/diagrama.json");
@@ -76,7 +76,7 @@ public final class JsonEmissionBehavior {
                 cleanup(root);
             }
         });
-        h.expect("los caracteres especiales viajan escapados y recuperables", () -> {
+        h.expect("special characters are escaped and recoverable", () -> {
             Path root = scratch();
             try {
                 Path target = root.resolve("escapado.json");
@@ -90,7 +90,7 @@ public final class JsonEmissionBehavior {
                 cleanup(root);
             }
         });
-        h.expect("el origen viaja en cada arista y el artifact solo cuando existe", () -> {
+        h.expect("origin travels in each edge and artifact only when present", () -> {
             Path root = scratch();
             try {
                 Path target = root.resolve("origenes.json");

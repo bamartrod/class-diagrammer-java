@@ -24,7 +24,7 @@ public final class ArtifactRoutingBehavior {
     public static void verify(TestHarness h) {
         h.scope("adapter/enrutado-de-parsers");
 
-        h.expect("cada artefacto viaja hacia su parser por extension y contenido", () -> {
+        h.expect("each artifact is routed to its parser by extension and content", () -> {
             ArtifactParser composite = composite();
             return composite.accepts(file("src/A.java", "class A {}"))
                     && composite.accepts(file("views/b.vm", "$x"))
@@ -33,7 +33,7 @@ public final class ArtifactRoutingBehavior {
                     && !composite.accepts(file("docs/readme.md", "# titulo"));
         });
 
-        h.expect("un compuesto sin parsers se rechaza", () -> {
+        h.expect("a composite without parsers is rejected", () -> {
             try {
                 new CompositeArtifactParser(new ArrayList<ArtifactParser>());
                 return false;

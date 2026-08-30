@@ -60,15 +60,15 @@ public final class CliArgs {
         var supported = java.util.Set.of("8", "11", "17", "21", "26");
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
-                    "java version no soportada: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
+                    "unsupported java version: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
         }
     }
 
     public static String usage() {
         return """
-                Uso: classdiagrammer <carpeta-fuente> [-o salida.json] [--java <8|11|17|21|26>]
-                Explora los .java de la carpeta indicada y genera un grafo JSON tipo diagrama de clases.
-                  --java <v>  version del parser Java (por defecto 8)
+                Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21|26>]
+                Scans .java files in the given folder and generates a JSON class diagram graph.
+                  --java <v>  Java parser version (default 8)
                 """;
     }
 

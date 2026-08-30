@@ -52,7 +52,7 @@ public final class FileDiscoveryBehavior {
                 deleteTree(root);
             }
         });
-        h.expect("las carpetas ocultas quedan fuera del barrido", () -> {
+        h.expect("hidden folders are excluded from scan", () -> {
             Path root = temporaryFolder();
             try {
                 write(root, ".git/C.java", "package c;");
@@ -81,7 +81,7 @@ public final class FileDiscoveryBehavior {
                 deleteTree(root);
             }
         });
-        h.expect("el contenido llega intacto incluyendo acentos y llaves", () -> {
+        h.expect("content arrives intact including accents and braces", () -> {
             Path root = temporaryFolder();
             try {
                 String expected = "package g; // ñandú { }";
