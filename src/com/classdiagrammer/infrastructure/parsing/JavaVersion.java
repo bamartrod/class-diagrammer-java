@@ -1,7 +1,7 @@
 package com.classdiagrammer.infrastructure.parsing;
 
 /**
- * Enumeration of supported Java versions (8, 11, 17, 21, 26).
+ * Enumeration of supported Java versions (8, 11, 17, 21, 25).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
@@ -10,7 +10,7 @@ public enum JavaVersion {
     V11("11"),
     V17("17"),
     V21("21"),
-    V26("26");
+    V25("25");
 
     private final String label;
 
@@ -33,6 +33,6 @@ public enum JavaVersion {
             }
         }
         throw new IllegalArgumentException(
-                "unsupported java version: " + raw + " (use 8, 11, 17, 21, 26)");
+                "unsupported java version: " + raw + " (use 8, 11, 17, 21, 25)");
     }
 }

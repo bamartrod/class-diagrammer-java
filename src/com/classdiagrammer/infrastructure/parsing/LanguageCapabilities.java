@@ -18,7 +18,7 @@ public record LanguageCapabilities(
             case V11 -> new LanguageCapabilities(false, false, false, false, false);
             case V17 -> new LanguageCapabilities(true, true, true, true, true);
             case V21 -> new LanguageCapabilities(true, true, true, true, true);
-            case V26 -> new LanguageCapabilities(true, true, true, true, true);
+            case V25 -> new LanguageCapabilities(true, true, true, true, true);
         };
     }
 }
