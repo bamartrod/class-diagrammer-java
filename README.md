@@ -129,7 +129,7 @@ src/com/classdiagrammer/
 │   ├── filesystem/          FileSystemSourceReader
 │   ├── parsing/             LanguageCapabilities + JavaVersion (version = configuration, not copy)
 │   │   ├── java/            JavaArtifactParser (core, text-blocks in SourceText, permits in HeaderParser)
-│   │   ├── java11/17/21/25/ Thin wrappers per LTS (composition, CSAS-004-U18)
+│   │   ├── java11/17/21/25/ Thin wrappers per LTS (composition)
 │   │   ├── velocity/        VelocityArtifactParser, TemplateDirectives, DirectiveReader
 │   │   ├── xforms/          XFormsArtifactParser, FormModelCollector
 │   │   ├── hibernate/       HbmArtifactParser (.hbm.xml)
@@ -142,26 +142,10 @@ src/com/classdiagrammer/
 **Only registered exception:** `interfaces.cli.Main` acts as composition root
 and imports `infrastructure.*` to wire adapters.
 
-## 5. CSAS Traceability
+## 5. Architecture Principles
 
-Compliant with the Collaborative Software Architecture Standard:
+This project follows hexagonal architecture, SOLID, and clean verification practices.
 
-| Rule | Unit | Application |
-| --- | --- | --- |
-| Dependency inversion | `CSAS-004-U13` | All dependencies point towards the core; verified by architecture test |
-| Core isolation | `CSAS-004-U15` | Domain imports nothing from application, infrastructure or interfaces |
-| No coupling between adapters | `CSAS-004-U18` | Adapters do not know each other; shared kernels declared: `infrastructure.xml` and `parsing/java*` family |
-| Ports segregated by capability | `CSAS-007-U4/U5` | `ArtifactParser` and `DependencyResolver` as ports; Java version = `LanguageCapabilities` (OCP) |
-| Infrastructure type isolation | `CSAS-004-U20` | No framework annotations or types in core (`QAL-002a`) |
-| Verification scopes | `CSAS-005-U7…U12` | Suites separated by scope: unit, usecase, adapter, architecture (84 checks) |
-| Reverse contamination forbidden | `CSAS-005-U14` | Production never imports `tests` |
-| Behavioral naming | `CSAS-005-U26`, `CSAS-008-U9…U11` | Every check bears a behavioral name |
-| SOLID | `CSAS-007-U2…U6` | One use case, segregated ports, parsers by composition |
-| Cohesion threshold 200 LOC | `CSAS-007-U8`, `CSAS-008-U5` | Blocks classes >200 (TypeNode 110 after compaction) |
-| Concurrency | `CSAS-009` | Virtual Threads only in `application`, pure domain |
-| Canonical physical layout | `CSAS-008-U2/U3/U8` | Production / test / configuration separated |
-
-**Mutation:** *mutation-first* suites (`CSAS-TS-000 §4`). `pitest` deferred due to zero-dependency.
 
 ## 6. Known limits
 
