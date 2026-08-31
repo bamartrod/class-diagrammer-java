@@ -22,14 +22,14 @@ packages in JARs from the local repository (`~/.m2/repository`, falling back to
 Gradle cache). The transitive graph of libraries is not explored: only what the
 analyzed code directly uses is tagged.
 
-**Zero dependencies.** Only a **JDK 26** is needed. No Maven, Gradle or third-party
+**Zero dependencies.** Only a **JDK 25** is needed. No Maven, Gradle or third-party
 libraries: own parser, own JSON writer and own verification harness.
 
 ---
 
 ## 1. Requirements
 
-* JDK 26 (`java-26-openjdk`), compiled with `javac --release 26`
+* JDK 25 (`java-26-openjdk`), compiled with `javac --release 26`
 * No remote repositories required
 
 Full project verification:
