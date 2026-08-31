@@ -1,4 +1,4 @@
-package com.classdiagrammer.infrastructure.parsing.java26;
+package com.classdiagrammer.infrastructure.parsing.java25;
 
 import com.classdiagrammer.application.port.out.ArtifactParser;
 import com.classdiagrammer.domain.model.SourceFile;
@@ -10,14 +10,14 @@ import com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser;
 import java.util.List;
 
 /**
- * Artifact parser for Java26ArtifactParser delegating to the core Java parser with version-specific capabilities.
+ * Artifact parser for Java25ArtifactParser delegating to the core Java parser with version-specific capabilities.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
-public final class Java26ArtifactParser implements ArtifactParser {
+public final class Java25ArtifactParser implements ArtifactParser {
 
     private final JavaArtifactParser delegate =
-            new JavaArtifactParser(LanguageCapabilities.forVersion(JavaVersion.V26));
+            new JavaArtifactParser(LanguageCapabilities.forVersion(JavaVersion.V25));
 
     public boolean accepts(SourceFile source) {
         return source != null && source.file().endsWith(".java");
