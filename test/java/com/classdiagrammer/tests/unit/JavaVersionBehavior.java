@@ -8,7 +8,7 @@ import com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser;
-import com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser;
+import com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser;
 import com.classdiagrammer.interfaces.cli.CliArgs;
 import com.classdiagrammer.tests.support.TestHarness;
 
@@ -33,7 +33,7 @@ public final class JavaVersionBehavior {
                     && new Java11ArtifactParser().accepts(file)
                     && new Java17ArtifactParser().accepts(file)
                     && new Java21ArtifactParser().accepts(file)
-                    && new Java26ArtifactParser().accepts(file);
+                    && new Java25ArtifactParser().accepts(file);
         });
 
         h.expect("factory chooses parser according to requested version", () -> {
@@ -41,7 +41,7 @@ public final class JavaVersionBehavior {
                     && JavaParserFactory.forVersion(JavaVersion.from("11")) instanceof Java11ArtifactParser
                     && JavaParserFactory.forVersion(JavaVersion.from("17")) instanceof Java17ArtifactParser
                     && JavaParserFactory.forVersion(JavaVersion.from("21")) instanceof Java21ArtifactParser
-                    && JavaParserFactory.forVersion(JavaVersion.from("26")) instanceof Java26ArtifactParser;
+                    && JavaParserFactory.forVersion(JavaVersion.from("25")) instanceof Java25ArtifactParser;
         });
 
         h.expect("java 11 understands var in method body", () -> {
@@ -76,11 +76,11 @@ public final class JavaVersionBehavior {
                     && shape.modifiers().contains("sealed");
         });
 
-        h.expect("java 21 and 26 inherit support from 17 without regressions", () -> {
+        h.expect("java 21 and 25 inherit support from 17 without regressions", () -> {
             SourceFile file = new SourceFile("app", "app/R.java",
                     "package app; record R(int x, int y) {}");
             return new Java21ArtifactParser().parse(file).size() == 1
-                    && new Java26ArtifactParser().parse(file).size() == 1;
+                    && new Java25ArtifactParser().parse(file).size() == 1;
         });
 
         h.expect("--java flag rejects unsupported versions", () -> {
@@ -92,10 +92,10 @@ public final class JavaVersionBehavior {
             }
         });
 
-        h.expect("--java flag defaults to 8 and accepts 8/11/17/21/26", () -> {
+        h.expect("--java flag defaults to 8 and accepts 8/11/17/21/25", () -> {
             return CliArgs.parse(new String[]{"src"}).javaVersion().equals("8")
                     && CliArgs.parse(new String[]{"src", "--java", "17"}).javaVersion().equals("17")
-                    && CliArgs.parse(new String[]{"src", "--java", "26"}).javaVersion().equals("26");
+                    && CliArgs.parse(new String[]{"src", "--java", "26"}).javaVersion().equals("25");
         });
     }
 }
