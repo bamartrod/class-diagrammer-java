@@ -2,7 +2,7 @@
   "tool": "ClassDiagrammer",
   "version": "1.0.0",
   "sourceRoot": "./src",
-  "generatedAtUtc": "2026-08-30T13:14:57.041837883Z",
+  "generatedAtUtc": "2026-08-31T01:05:05.811449314Z",
   "summary": {
     "types": 67,
     "relations": 135
@@ -3396,7 +3396,7 @@
         "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
         "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
         "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
-        "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser"
+        "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser"
       ],
       "extends": [],
       "implements": [],
@@ -5001,13 +5001,13 @@
       ]
     },
     {
-      "id": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
-      "name": "Java26ArtifactParser",
+      "id": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
+      "name": "Java25ArtifactParser",
       "kind": "class",
       "visibility": "public",
-      "package": "com.classdiagrammer.infrastructure.parsing.java26",
-      "folder": "com/classdiagrammer/infrastructure/parsing/java26",
-      "file": "com/classdiagrammer/infrastructure/parsing/java26/Java26ArtifactParser.java",
+      "package": "com.classdiagrammer.infrastructure.parsing.java25",
+      "folder": "com/classdiagrammer/infrastructure/parsing/java25",
+      "file": "com/classdiagrammer/infrastructure/parsing/java25/Java25ArtifactParser.java",
       "modifiers": [
         "public",
         "final"
@@ -6702,7 +6702,7 @@
     },
     {
       "from": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
-      "to": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "to": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
@@ -7009,49 +7009,49 @@
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.application.port.out.ArtifactParser",
       "kind": "implements",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.application.port.out.ArtifactParser",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.domain.model.SourceFile",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.domain.model.TypeNode",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.infrastructure.parsing.JavaVersion",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.infrastructure.parsing.LanguageCapabilities",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
     },
     {
-      "from": "com.classdiagrammer.infrastructure.parsing.java26.Java26ArtifactParser",
+      "from": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "to": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "kind": "imports",
       "resolved": true,
