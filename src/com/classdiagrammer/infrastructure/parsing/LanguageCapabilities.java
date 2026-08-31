@@ -36,7 +36,7 @@ public final class LanguageCapabilities {
             case V11: return new LanguageCapabilities(false, false, false, false, false);
             case V17: return new LanguageCapabilities(true, true, true, true, true);
             case V21: return new LanguageCapabilities(true, true, true, true, true);
-            case V26: return new LanguageCapabilities(true, true, true, true, true);
+            case V25: return new LanguageCapabilities(true, true, true, true, true);
             default: throw new IllegalArgumentException("unknown version: " + version);
         }
     }

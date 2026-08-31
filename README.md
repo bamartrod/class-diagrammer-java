@@ -5,7 +5,7 @@ JSON graph shaped as a class diagram: folders, packages, imports,
 `extends`/`implements`/`permits`, constructors, methods, fields, visibility and
 modifiers (`sealed`/`non-sealed`/`final`).
 
-**Supported languages:** Java code (`.java` 8/11/17/21/26), Apache Velocity
+**Supported languages:** Java code (`.java` 8/11/17/21/25), Apache Velocity
 templates (`.vm`, `.vtl`) and XForms forms (`.xhtml`/`.xforms`/`.xml` with
 namespace `http://www.w3.org/2002/xforms`). Each technology has its specialized
 parser behind the `ArtifactParser` port; routing is by extension and, for
@@ -41,7 +41,7 @@ Full project verification:
 ## 2. Usage
 
 ```bash
-./classdiagrammer.sh <source-folder> [-o output.json] [--java <8|11|17|21|26>]
+./classdiagrammer.sh <source-folder> [-o output.json] [--java <8|11|17|21|25>]
 
 # examples
 ./classdiagrammer.sh ~/Projects/MyProject/src -o ~/Downloads/code.json --java 17
@@ -109,7 +109,7 @@ Modeled content by technology:
 
 | Technology | Node | Methods | Fields | Edges |
 | --- | --- | --- | --- | --- |
-| Java 8-26 | class / interface / enum / annotation / record (sealed/non-sealed/final preserved) | constructors + methods | fields | extends / implements / **permits** / imports |
+| Java 8-25 | class / interface / enum / annotation / record (sealed/non-sealed/final preserved) | constructors + methods | fields | extends / implements / **permits** / imports |
 | Velocity `.vm/.vtl` | `template` (id = file path) | each `#macro(name $args)` | each `#set($var)` global (outside macros) | imports towards `#parse`/`#include` |
 | XForms `.xhtml/.xforms/.xml` | `form` (id = file path) | each `<xf:model>` and `<xf:submission>` | each `<xf:bind nodeset/ref>` | imports towards instances/submissions pointing to in-tree documents |
 
@@ -129,7 +129,7 @@ src/com/classdiagrammer/
 │   ├── filesystem/          FileSystemSourceReader
 │   ├── parsing/             LanguageCapabilities + JavaVersion (version = configuration, not copy)
 │   │   ├── java/            JavaArtifactParser (core, text-blocks in SourceText, permits in HeaderParser)
-│   │   ├── java11/17/21/26/ Thin wrappers per LTS (composition, CSAS-004-U18)
+│   │   ├── java11/17/21/25/ Thin wrappers per LTS (composition, CSAS-004-U18)
 │   │   ├── velocity/        VelocityArtifactParser, TemplateDirectives, DirectiveReader
 │   │   ├── xforms/          XFormsArtifactParser, FormModelCollector
 │   │   ├── hibernate/       HbmArtifactParser (.hbm.xml)

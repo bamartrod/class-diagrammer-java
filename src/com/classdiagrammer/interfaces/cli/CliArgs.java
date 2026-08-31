@@ -66,15 +66,15 @@ public final class CliArgs {
     }
 
     private static void validateJavaVersion(String raw) {
-        Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "26"));
+        Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "25"));
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
-                    "unsupported java version: " + raw + " (use 8, 11, 17, 21, 26)\n" + usage());
+                    "unsupported java version: " + raw + " (use 8, 11, 17, 21, 25)\n" + usage());
         }
     }
 
     public static String usage() {
-        return "Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21|26>]\n"
+        return "Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21|25>]\n"
                 + "Scans .java files in the given folder and generates a JSON class diagram graph.\n"
                 + "  --java <v>  Java parser version (default 8)\n";
     }
