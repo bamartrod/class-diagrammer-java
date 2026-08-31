@@ -10,7 +10,7 @@ templates (`.vm`, `.vtl`) and XForms forms (`.xhtml`/`.xforms`/`.xml` with
 namespace `http://www.w3.org/2002/xforms`). Each technology has its specialized
 parser behind the `ArtifactParser` port; routing is by extension and, for
 XForms, by content. The Java version to parse is chosen with `--java`
-and is independent of the JDK running the tool (runtime 26 can parse
+and is independent of the JDK running the tool (runtime 25 can parse
 sources 8).
 
 **Concurrency:** concurrent parsing with **Virtual Threads** (`Executors.newVirtualThreadPerTaskExecutor()`) in `GenerateClassDiagramUseCase` — 7k types from `xwiki-platform` in 14s without coupling the domain.
@@ -29,7 +29,7 @@ libraries: own parser, own JSON writer and own verification harness.
 
 ## 1. Requirements
 
-* JDK 25 (`java-26-openjdk`), compiled with `javac --release 26`
+* JDK 25 (`java-25-openjdk`), compiled with `javac --release 25`
 * No remote repositories required
 
 Full project verification:
