@@ -95,7 +95,7 @@ public final class JavaVersionBehavior {
         h.expect("--java flag defaults to 8 and accepts 8/11/17/21/25", () -> {
             return CliArgs.parse(new String[]{"src"}).javaVersion().equals("8")
                     && CliArgs.parse(new String[]{"src", "--java", "17"}).javaVersion().equals("17")
-                    && CliArgs.parse(new String[]{"src", "--java", "26"}).javaVersion().equals("25");
+                    && CliArgs.parse(new String[]{"src", "--java", "25"}).javaVersion().equals("25");
         });
     }
 }
