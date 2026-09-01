@@ -2,6 +2,7 @@ package com.classdiagrammer.domain.model;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,8 +17,9 @@ public final class Field {
     private final String type;
     private final Visibility visibility;
     private final Set<String> modifiers;
+    private final List<String> requiredImports;
 
-    private Field(String name, String type, Visibility visibility, Set<String> modifiers) {
+    private Field(String name, String type, Visibility visibility, Set<String> modifiers, List<String> requiredImports) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("field name is required");
         }
@@ -30,11 +32,16 @@ public final class Field {
         this.name = name.trim();
         this.type = type.trim();
         this.visibility = visibility;
-        this.modifiers = Collections.unmodifiableSet(new HashSet<>(modifiers));
+        this.modifiers = Collections.unmodifiableSet(new HashSet<String>(modifiers));
+        this.requiredImports = requiredImports == null ? Collections.emptyList() : Collections.unmodifiableList(new java.util.ArrayList<String>(requiredImports));
     }
 
     public static Field named(String name, String type, Visibility visibility, Set<String> modifiers) {
-        return new Field(name, type, visibility, modifiers);
+        return new Field(name, type, visibility, modifiers, Collections.emptyList());
+    }
+
+    public static Field named(String name, String type, Visibility visibility, Set<String> modifiers, List<String> requiredImports) {
+        return new Field(name, type, visibility, modifiers, requiredImports);
     }
 
     public String name() {
@@ -51,6 +58,10 @@ public final class Field {
 
     public Set<String> modifiers() {
         return modifiers;
+    }
+
+    public List<String> requiredImports() {
+        return requiredImports;
     }
 
     @Override

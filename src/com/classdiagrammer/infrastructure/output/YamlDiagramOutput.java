@@ -135,6 +135,7 @@ public final class YamlDiagramOutput implements DiagramOutput {
             out.append("      - name: ").append(escapeYaml(f.name())).append("\n");
             yaml(out, 3, "type", f.type());
             yaml(out, 3, "visibility", f.visibility().jsonName());
+            yamlList(out, 3, "requiredImports", f.requiredImports());
         }
     }
 
@@ -145,6 +146,7 @@ public final class YamlDiagramOutput implements DiagramOutput {
             out.append("      - name: ").append(escapeYaml(m.name())).append("\n");
             if (includeReturn) yaml(out, 3, "returnType", m.returnType());
             yaml(out, 3, "visibility", m.visibility().jsonName());
+            yamlList(out, 3, "requiredImports", m.requiredImports());
             out.append("        parameters:\n");
             if (m.parameters().isEmpty()) { out.append("          []\n"); }
             else for (Parameter p : m.parameters()) {
