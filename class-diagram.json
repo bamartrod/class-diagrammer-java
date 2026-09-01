@@ -2,11 +2,11 @@
   "tool": "ClassDiagrammer",
   "version": "1.0.0",
   "sourceRoot": "./src",
-  "generatedAtUtc": "2026-09-01T22:31:49.878116879Z",
+  "generatedAtUtc": "2026-09-01T22:47:13.361616469Z",
   "summary": {
-    "types": 77,
-    "relations": 173,
-    "evidences": 426,
+    "types": 82,
+    "relations": 203,
+    "evidences": 491,
     "evaluation": "conformant"
   },
   "nodes": [
@@ -4005,6 +4005,603 @@
       "methods": []
     },
     {
+      "id": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "name": "DiagramOutputFactory",
+      "kind": "class",
+      "visibility": "public",
+      "package": "com.classdiagrammer.infrastructure.output",
+      "folder": "com/classdiagrammer/infrastructure/output",
+      "file": "com/classdiagrammer/infrastructure/output/DiagramOutputFactory.java",
+      "modifiers": [
+        "public",
+        "final"
+      ],
+      "imports": [
+        "com.classdiagrammer.application.port.out.DiagramOutput",
+        "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+        "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+        "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+        "com.classdiagrammer.infrastructure.output.YamlDiagramOutput"
+      ],
+      "extends": [],
+      "implements": [],
+      "permits": [],
+      "fields": [],
+      "constructors": [
+        {
+          "name": "DiagramOutputFactory",
+          "visibility": "private",
+          "parameters": []
+        }
+      ],
+      "methods": [
+        {
+          "name": "forFormat",
+          "returnType": "DiagramOutput",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "OutputFormat",
+              "name": "format"
+            }
+          ]
+        },
+        {
+          "name": "forPath",
+          "returnType": "DiagramOutput",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "outputPath"
+            },
+            {
+              "type": "OutputFormat",
+              "name": "explicit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "com.classdiagrammer.infrastructure.output.OutputFormat",
+      "name": "OutputFormat",
+      "kind": "enum",
+      "visibility": "public",
+      "package": "com.classdiagrammer.infrastructure.output",
+      "folder": "com/classdiagrammer/infrastructure/output",
+      "file": "com/classdiagrammer/infrastructure/output/OutputFormat.java",
+      "modifiers": [
+        "public"
+      ],
+      "imports": [],
+      "extends": [],
+      "implements": [],
+      "permits": [],
+      "fields": [
+        {
+          "name": "extension",
+          "type": "String",
+          "visibility": "private"
+        }
+      ],
+      "constructors": [
+        {
+          "name": "OutputFormat",
+          "visibility": "package_private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "extension"
+            }
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "extension",
+          "returnType": "String",
+          "visibility": "public",
+          "parameters": []
+        },
+        {
+          "name": "from",
+          "returnType": "OutputFormat",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "raw"
+            }
+          ]
+        },
+        {
+          "name": "fromPath",
+          "returnType": "OutputFormat",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "path"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "name": "ToonDiagramOutput",
+      "kind": "class",
+      "visibility": "public",
+      "package": "com.classdiagrammer.infrastructure.output",
+      "folder": "com/classdiagrammer/infrastructure/output",
+      "file": "com/classdiagrammer/infrastructure/output/ToonDiagramOutput.java",
+      "modifiers": [
+        "public",
+        "final"
+      ],
+      "imports": [
+        "com.classdiagrammer.application.port.out.DiagramOutput",
+        "com.classdiagrammer.application.port.out.DiagramReport",
+        "com.classdiagrammer.domain.model.Field",
+        "com.classdiagrammer.domain.model.Method",
+        "com.classdiagrammer.domain.model.Parameter",
+        "com.classdiagrammer.domain.model.TypeNode",
+        "com.classdiagrammer.domain.evidence.Evidence",
+        "java.io.IOException",
+        "java.nio.charset.StandardCharsets",
+        "java.nio.file.Files",
+        "java.nio.file.Path",
+        "java.nio.file.Paths",
+        "java.util.ArrayList",
+        "java.util.List"
+      ],
+      "extends": [],
+      "implements": [
+        "DiagramOutput"
+      ],
+      "permits": [],
+      "fields": [],
+      "constructors": [],
+      "methods": [
+        {
+          "name": "write",
+          "returnType": "Path",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "DiagramReport",
+              "name": "report"
+            },
+            {
+              "type": "String",
+              "name": "targetPath"
+            }
+          ]
+        },
+        {
+          "name": "line",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "int",
+              "name": "indent"
+            },
+            {
+              "type": "String",
+              "name": "key"
+            },
+            {
+              "type": "String",
+              "name": "value"
+            }
+          ]
+        },
+        {
+          "name": "list",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "int",
+              "name": "indent"
+            },
+            {
+              "type": "String",
+              "name": "key"
+            },
+            {
+              "type": "Iterable<String>",
+              "name": "values"
+            }
+          ]
+        },
+        {
+          "name": "fields",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "List<Field>",
+              "name": "fields"
+            }
+          ]
+        },
+        {
+          "name": "methods",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "String",
+              "name": "tag"
+            },
+            {
+              "type": "List<Method>",
+              "name": "methods"
+            },
+            {
+              "type": "boolean",
+              "name": "incRet"
+            }
+          ]
+        },
+        {
+          "name": "escape",
+          "returnType": "String",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "raw"
+            }
+          ]
+        },
+        {
+          "name": "ensureParentExists",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "Path",
+              "name": "target"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "name": "XmlDiagramOutput",
+      "kind": "class",
+      "visibility": "public",
+      "package": "com.classdiagrammer.infrastructure.output",
+      "folder": "com/classdiagrammer/infrastructure/output",
+      "file": "com/classdiagrammer/infrastructure/output/XmlDiagramOutput.java",
+      "modifiers": [
+        "public",
+        "final"
+      ],
+      "imports": [
+        "com.classdiagrammer.application.port.out.DiagramOutput",
+        "com.classdiagrammer.application.port.out.DiagramReport",
+        "com.classdiagrammer.domain.model.Field",
+        "com.classdiagrammer.domain.model.Method",
+        "com.classdiagrammer.domain.model.Parameter",
+        "com.classdiagrammer.domain.model.TypeNode",
+        "com.classdiagrammer.domain.evidence.Evidence",
+        "java.io.IOException",
+        "java.nio.charset.StandardCharsets",
+        "java.nio.file.Files",
+        "java.nio.file.Path",
+        "java.nio.file.Paths",
+        "java.util.ArrayList",
+        "java.util.List"
+      ],
+      "extends": [],
+      "implements": [
+        "DiagramOutput"
+      ],
+      "permits": [],
+      "fields": [],
+      "constructors": [],
+      "methods": [
+        {
+          "name": "write",
+          "returnType": "Path",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "DiagramReport",
+              "name": "report"
+            },
+            {
+              "type": "String",
+              "name": "targetPath"
+            }
+          ]
+        },
+        {
+          "name": "attr",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "String",
+              "name": "key"
+            },
+            {
+              "type": "String",
+              "name": "value"
+            }
+          ]
+        },
+        {
+          "name": "escapeXml",
+          "returnType": "String",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "raw"
+            }
+          ]
+        },
+        {
+          "name": "writeStringListXml",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "String",
+              "name": "indent"
+            },
+            {
+              "type": "String",
+              "name": "tag"
+            },
+            {
+              "type": "Iterable<String>",
+              "name": "values"
+            }
+          ]
+        },
+        {
+          "name": "writeFieldsXml",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "List<Field>",
+              "name": "fields"
+            }
+          ]
+        },
+        {
+          "name": "writeMethodsXml",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "String",
+              "name": "tag"
+            },
+            {
+              "type": "List<Method>",
+              "name": "methods"
+            },
+            {
+              "type": "boolean",
+              "name": "includeReturn"
+            }
+          ]
+        },
+        {
+          "name": "ensureParentExists",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "Path",
+              "name": "target"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "name": "YamlDiagramOutput",
+      "kind": "class",
+      "visibility": "public",
+      "package": "com.classdiagrammer.infrastructure.output",
+      "folder": "com/classdiagrammer/infrastructure/output",
+      "file": "com/classdiagrammer/infrastructure/output/YamlDiagramOutput.java",
+      "modifiers": [
+        "public",
+        "final"
+      ],
+      "imports": [
+        "com.classdiagrammer.application.port.out.DiagramOutput",
+        "com.classdiagrammer.application.port.out.DiagramReport",
+        "com.classdiagrammer.domain.model.Field",
+        "com.classdiagrammer.domain.model.Method",
+        "com.classdiagrammer.domain.model.Parameter",
+        "com.classdiagrammer.domain.model.TypeNode",
+        "com.classdiagrammer.domain.evidence.Evidence",
+        "java.io.IOException",
+        "java.nio.charset.StandardCharsets",
+        "java.nio.file.Files",
+        "java.nio.file.Path",
+        "java.nio.file.Paths",
+        "java.util.ArrayList",
+        "java.util.List"
+      ],
+      "extends": [],
+      "implements": [
+        "DiagramOutput"
+      ],
+      "permits": [],
+      "fields": [],
+      "constructors": [],
+      "methods": [
+        {
+          "name": "write",
+          "returnType": "Path",
+          "visibility": "public",
+          "parameters": [
+            {
+              "type": "DiagramReport",
+              "name": "report"
+            },
+            {
+              "type": "String",
+              "name": "targetPath"
+            }
+          ]
+        },
+        {
+          "name": "yaml",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "int",
+              "name": "indent"
+            },
+            {
+              "type": "String",
+              "name": "key"
+            },
+            {
+              "type": "String",
+              "name": "value"
+            }
+          ]
+        },
+        {
+          "name": "yamlList",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "int",
+              "name": "indent"
+            },
+            {
+              "type": "String",
+              "name": "key"
+            },
+            {
+              "type": "Iterable<String>",
+              "name": "values"
+            }
+          ]
+        },
+        {
+          "name": "yamlFields",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "List<Field>",
+              "name": "fields"
+            }
+          ]
+        },
+        {
+          "name": "yamlMethods",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "StringBuilder",
+              "name": "out"
+            },
+            {
+              "type": "String",
+              "name": "tag"
+            },
+            {
+              "type": "List<Method>",
+              "name": "methods"
+            },
+            {
+              "type": "boolean",
+              "name": "includeReturn"
+            }
+          ]
+        },
+        {
+          "name": "escapeYaml",
+          "returnType": "String",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "raw"
+            }
+          ]
+        },
+        {
+          "name": "ensureParentExists",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "Path",
+              "name": "target"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "name": "CompositeArtifactParser",
       "kind": "class",
@@ -6993,6 +7590,11 @@
           "visibility": "private"
         },
         {
+          "name": "outputFormat",
+          "type": "String",
+          "visibility": "private"
+        },
+        {
           "name": "helpRequested",
           "type": "boolean",
           "visibility": "private"
@@ -7014,6 +7616,10 @@
             {
               "type": "String",
               "name": "javaVersion"
+            },
+            {
+              "type": "String",
+              "name": "outputFormat"
             },
             {
               "type": "boolean",
@@ -7041,7 +7647,40 @@
           "parameters": []
         },
         {
+          "name": "defaultOutput",
+          "returnType": "String",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "format"
+            }
+          ]
+        },
+        {
+          "name": "inferFormat",
+          "returnType": "String",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "outputPath"
+            }
+          ]
+        },
+        {
           "name": "validateJavaVersion",
+          "returnType": "void",
+          "visibility": "private",
+          "parameters": [
+            {
+              "type": "String",
+              "name": "raw"
+            }
+          ]
+        },
+        {
+          "name": "validateFormat",
           "returnType": "void",
           "visibility": "private",
           "parameters": [
@@ -7076,6 +7715,12 @@
           "parameters": []
         },
         {
+          "name": "outputFormat",
+          "returnType": "String",
+          "visibility": "public",
+          "parameters": []
+        },
+        {
           "name": "helpRequested",
           "returnType": "boolean",
           "visibility": "public",
@@ -7104,7 +7749,8 @@
         "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
         "com.classdiagrammer.infrastructure.dependencies.LocalRepositoryIndex",
         "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
-        "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+        "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+        "com.classdiagrammer.infrastructure.output.OutputFormat",
         "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
         "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
         "com.classdiagrammer.infrastructure.parsing.JavaVersion",
@@ -7682,6 +8328,209 @@
     },
     {
       "from": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.TypeNode",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "to": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "to": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "to": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "to": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "implements",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramReport",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.domain.evidence.Evidence",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Field",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Method",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Parameter",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.TypeNode",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "implements",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramReport",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.domain.evidence.Evidence",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Field",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Method",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Parameter",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.TypeNode",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "implements",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramOutput",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.application.port.out.DiagramReport",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.domain.evidence.Evidence",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Field",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Method",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "to": "com.classdiagrammer.domain.model.Parameter",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
       "to": "com.classdiagrammer.domain.model.TypeNode",
       "kind": "imports",
       "resolved": true,
@@ -8305,7 +9154,14 @@
     },
     {
       "from": "com.classdiagrammer.interfaces.cli.Main",
-      "to": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "to": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "kind": "imports",
+      "resolved": true,
+      "origin": "project"
+    },
+    {
+      "from": "com.classdiagrammer.interfaces.cli.Main",
+      "to": "com.classdiagrammer.infrastructure.output.OutputFormat",
       "kind": "imports",
       "resolved": true,
       "origin": "project"
@@ -9161,6 +10017,296 @@
       "derivation": "ArchitecturalOriginResolver.enrich",
       "factKind": "ARCHITECTURAL_ORIGIN",
       "subject": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--823468524--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--823468524--1413003019",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--823468524-551466396",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--823468524-1221024571",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--823468524--423394897",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--410972780",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396-186489319",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396-1683355028",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--694325738",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--1731770289",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-551466396--1841137984",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--410972780",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571-186489319",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571-1683355028",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--694325738",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--1731770289",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN-1221024571--1841137984",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--481963679",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--410972780",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897-186489319",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897-1683355028",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--694325738",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--1731770289",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--423394897--1841137984",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
       "value": "project",
       "ruleId": "CSAS-006-U4"
     },
@@ -10045,12 +11191,22 @@
       "ruleId": "CSAS-006-U4"
     },
     {
-      "evidenceId": "ORIGIN--1440207809--1413003019",
+      "evidenceId": "ORIGIN--1440207809--823468524",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "ArchitecturalOriginResolver.enrich",
       "factKind": "ARCHITECTURAL_ORIGIN",
-      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "value": "project",
+      "ruleId": "CSAS-006-U4"
+    },
+    {
+      "evidenceId": "ORIGIN--1440207809-1115417014",
+      "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
+      "locator": "com.classdiagrammer.interfaces.cli.Main",
+      "derivation": "ArchitecturalOriginResolver.enrich",
+      "factKind": "ARCHITECTURAL_ORIGIN",
+      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.output.OutputFormat",
       "value": "project",
       "ruleId": "CSAS-006-U4"
     },
@@ -10555,6 +11711,56 @@
       "ruleId": "CSAS-003-U2"
     },
     {
+      "evidenceId": "FACT-TYPE--823468524",
+      "sourceFile": "com/classdiagrammer/infrastructure/output/DiagramOutputFactory.java",
+      "locator": "com/classdiagrammer/infrastructure/output/DiagramOutputFactory.java:1",
+      "derivation": "TypeNode",
+      "factKind": "TYPE_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "value": "CLASS",
+      "ruleId": "CSAS-003-U2"
+    },
+    {
+      "evidenceId": "FACT-TYPE-1115417014",
+      "sourceFile": "com/classdiagrammer/infrastructure/output/OutputFormat.java",
+      "locator": "com/classdiagrammer/infrastructure/output/OutputFormat.java:1",
+      "derivation": "TypeNode",
+      "factKind": "TYPE_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.OutputFormat",
+      "value": "ENUM",
+      "ruleId": "CSAS-003-U2"
+    },
+    {
+      "evidenceId": "FACT-TYPE-551466396",
+      "sourceFile": "com/classdiagrammer/infrastructure/output/ToonDiagramOutput.java",
+      "locator": "com/classdiagrammer/infrastructure/output/ToonDiagramOutput.java:1",
+      "derivation": "TypeNode",
+      "factKind": "TYPE_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "value": "CLASS",
+      "ruleId": "CSAS-003-U2"
+    },
+    {
+      "evidenceId": "FACT-TYPE-1221024571",
+      "sourceFile": "com/classdiagrammer/infrastructure/output/XmlDiagramOutput.java",
+      "locator": "com/classdiagrammer/infrastructure/output/XmlDiagramOutput.java:1",
+      "derivation": "TypeNode",
+      "factKind": "TYPE_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "value": "CLASS",
+      "ruleId": "CSAS-003-U2"
+    },
+    {
+      "evidenceId": "FACT-TYPE--423394897",
+      "sourceFile": "com/classdiagrammer/infrastructure/output/YamlDiagramOutput.java",
+      "locator": "com/classdiagrammer/infrastructure/output/YamlDiagramOutput.java:1",
+      "derivation": "TypeNode",
+      "factKind": "TYPE_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "value": "CLASS",
+      "ruleId": "CSAS-003-U2"
+    },
+    {
       "evidenceId": "FACT-TYPE-1837603211",
       "sourceFile": "com/classdiagrammer/infrastructure/parsing/CompositeArtifactParser.java",
       "locator": "com/classdiagrammer/infrastructure/parsing/CompositeArtifactParser.java:1",
@@ -10885,7 +12091,7 @@
       "ruleId": "CSAS-003-U2"
     },
     {
-      "evidenceId": "FACT-DEP-577675132",
+      "evidenceId": "FACT-DEP-978247411",
       "sourceFile": "com.classdiagrammer.application.port.out.ArtifactParser",
       "locator": "com.classdiagrammer.application.port.out.ArtifactParser",
       "derivation": "EdgeResolver",
@@ -10895,7 +12101,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1403474743",
+      "evidenceId": "FACT-DEP-1804047022",
       "sourceFile": "com.classdiagrammer.application.port.out.ArtifactParser",
       "locator": "com.classdiagrammer.application.port.out.ArtifactParser",
       "derivation": "EdgeResolver",
@@ -10905,7 +12111,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-395437368",
+      "evidenceId": "FACT-DEP-796009647",
       "sourceFile": "com.classdiagrammer.application.port.out.DependencyResolver",
       "locator": "com.classdiagrammer.application.port.out.DependencyResolver",
       "derivation": "EdgeResolver",
@@ -10915,7 +12121,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1114762584",
+      "evidenceId": "FACT-DEP--714190305",
       "sourceFile": "com.classdiagrammer.application.port.out.DiagramReport",
       "locator": "com.classdiagrammer.application.port.out.DiagramReport",
       "derivation": "EdgeResolver",
@@ -10925,7 +12131,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-845718918",
+      "evidenceId": "FACT-DEP-1246291197",
       "sourceFile": "com.classdiagrammer.application.port.out.DiagramReport",
       "locator": "com.classdiagrammer.application.port.out.DiagramReport",
       "derivation": "EdgeResolver",
@@ -10935,7 +12141,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1484970937",
+      "evidenceId": "FACT-DEP--1084398658",
       "sourceFile": "com.classdiagrammer.application.port.out.DiagramReport",
       "locator": "com.classdiagrammer.application.port.out.DiagramReport",
       "derivation": "EdgeResolver",
@@ -10945,7 +12151,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1384049462",
+      "evidenceId": "FACT-DEP-1784621741",
       "sourceFile": "com.classdiagrammer.application.port.out.SourceCodeReader",
       "locator": "com.classdiagrammer.application.port.out.SourceCodeReader",
       "derivation": "EdgeResolver",
@@ -10955,7 +12161,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-693109990",
+      "evidenceId": "FACT-DEP-635587748",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -10965,7 +12171,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--642863790",
+      "evidenceId": "FACT-DEP--242291511",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -10975,7 +12181,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--168834733",
+      "evidenceId": "FACT-DEP-231737546",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -10985,7 +12191,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-35077429",
+      "evidenceId": "FACT-DEP-435649708",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -10995,7 +12201,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1956563668",
+      "evidenceId": "FACT-DEP--1937831349",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11005,7 +12211,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1691506804",
+      "evidenceId": "FACT-DEP-2092079083",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11015,7 +12221,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1307161193",
+      "evidenceId": "FACT-DEP--906588914",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11025,7 +12231,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-893556676",
+      "evidenceId": "FACT-DEP-1294128955",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11035,7 +12241,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-735649754",
+      "evidenceId": "FACT-DEP-1136222033",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11045,7 +12251,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1337833004",
+      "evidenceId": "FACT-DEP-1738405283",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11055,7 +12261,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--491891688",
+      "evidenceId": "FACT-DEP--91319409",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11065,7 +12271,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--839795857",
+      "evidenceId": "FACT-DEP--439223578",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11075,7 +12281,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--182662831",
+      "evidenceId": "FACT-DEP-217909448",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11085,7 +12291,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-859558843",
+      "evidenceId": "FACT-DEP-1260131122",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11095,7 +12301,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1026252086",
+      "evidenceId": "FACT-DEP--625679807",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11105,7 +12311,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-934229416",
+      "evidenceId": "FACT-DEP-1334801695",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11115,7 +12321,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-2072707246",
+      "evidenceId": "FACT-DEP--1821687771",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11125,7 +12331,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1396460439",
+      "evidenceId": "FACT-DEP--995888160",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11135,7 +12341,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1645813885",
+      "evidenceId": "FACT-DEP--1245241606",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11145,7 +12351,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1790623137",
+      "evidenceId": "FACT-DEP--2103771880",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase",
       "derivation": "EdgeResolver",
@@ -11155,7 +12361,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1259385043",
+      "evidenceId": "FACT-DEP-1659957322",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11165,7 +12371,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1733414100",
+      "evidenceId": "FACT-DEP-2133986379",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11175,7 +12381,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1937326262",
+      "evidenceId": "FACT-DEP--1957068755",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11185,7 +12391,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--436154795",
+      "evidenceId": "FACT-DEP--35582516",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11195,7 +12401,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--701211659",
+      "evidenceId": "FACT-DEP--300639380",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11205,7 +12411,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-595087640",
+      "evidenceId": "FACT-DEP-995659919",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11215,7 +12421,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1499161787",
+      "evidenceId": "FACT-DEP--1098589508",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11225,7 +12431,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1657068709",
+      "evidenceId": "FACT-DEP--1256496430",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11235,7 +12441,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1054885459",
+      "evidenceId": "FACT-DEP--654313180",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11245,7 +12451,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1410357145",
+      "evidenceId": "FACT-DEP-1810929424",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11255,7 +12461,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1062452976",
+      "evidenceId": "FACT-DEP-1463025255",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11265,7 +12471,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1719586002",
+      "evidenceId": "FACT-DEP-2120158281",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11275,7 +12481,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1533159620",
+      "evidenceId": "FACT-DEP--1132587341",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11285,7 +12491,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-875996747",
+      "evidenceId": "FACT-DEP-1276569026",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11295,7 +12501,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1458489047",
+      "evidenceId": "FACT-DEP--1057916768",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11305,7 +12511,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--320011217",
+      "evidenceId": "FACT-DEP-80561062",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11315,7 +12521,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-505788394",
+      "evidenceId": "FACT-DEP-906360673",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11325,7 +12531,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-256434948",
+      "evidenceId": "FACT-DEP-657007227",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11335,7 +12541,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--602095326",
+      "evidenceId": "FACT-DEP--201523047",
       "sourceFile": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "locator": "com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase.ParseOutcome",
       "derivation": "EdgeResolver",
@@ -11345,7 +12551,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--381411411",
+      "evidenceId": "FACT-DEP--343308703",
       "sourceFile": "com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException",
       "locator": "com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException",
       "derivation": "EdgeResolver",
@@ -11355,7 +12561,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-191920243",
+      "evidenceId": "FACT-DEP-592492522",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11365,7 +12571,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1991478249",
+      "evidenceId": "FACT-DEP--1590905970",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11375,7 +12581,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1955584878",
+      "evidenceId": "FACT-DEP--1938810139",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11385,7 +12591,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1682249392",
+      "evidenceId": "FACT-DEP--1281677113",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11395,7 +12601,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-17711113",
+      "evidenceId": "FACT-DEP-418283392",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11405,7 +12611,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--565357145",
+      "evidenceId": "FACT-DEP--164784866",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11415,7 +12621,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1398920296",
+      "evidenceId": "FACT-DEP-1799492575",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver",
       "derivation": "EdgeResolver",
@@ -11425,7 +12631,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-795762263",
+      "evidenceId": "FACT-DEP-1196334542",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11435,7 +12641,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1387636229",
+      "evidenceId": "FACT-DEP--987063950",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11445,7 +12651,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1735540398",
+      "evidenceId": "FACT-DEP--1334968119",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11455,7 +12661,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1078407372",
+      "evidenceId": "FACT-DEP--677835093",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11465,7 +12671,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-621553133",
+      "evidenceId": "FACT-DEP-1022125412",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11475,7 +12681,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-38484875",
+      "evidenceId": "FACT-DEP-439057154",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11485,7 +12691,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-2002762316",
+      "evidenceId": "FACT-DEP--1891632701",
       "sourceFile": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "locator": "com.classdiagrammer.domain.resolution.ArchitecturalOriginResolver.EnrichmentResult",
       "derivation": "EdgeResolver",
@@ -11495,7 +12701,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-924493931",
+      "evidenceId": "FACT-DEP-1325066210",
       "sourceFile": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "locator": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "derivation": "EdgeResolver",
@@ -11505,7 +12711,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1409991863",
+      "evidenceId": "FACT-DEP--1009419584",
       "sourceFile": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "locator": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "derivation": "EdgeResolver",
@@ -11515,7 +12721,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-554285578",
+      "evidenceId": "FACT-DEP-954857857",
       "sourceFile": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "locator": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "derivation": "EdgeResolver",
@@ -11525,7 +12731,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1076900068",
+      "evidenceId": "FACT-DEP--676327789",
       "sourceFile": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "locator": "com.classdiagrammer.domain.resolution.EdgeResolver",
       "derivation": "EdgeResolver",
@@ -11535,7 +12741,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1290015343",
+      "evidenceId": "FACT-DEP--1347537585",
       "sourceFile": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "locator": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "derivation": "EdgeResolver",
@@ -11545,7 +12751,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1668978173",
+      "evidenceId": "FACT-DEP-2069550452",
       "sourceFile": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "locator": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "derivation": "EdgeResolver",
@@ -11555,7 +12761,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1494769043",
+      "evidenceId": "FACT-DEP-1895341322",
       "sourceFile": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "locator": "com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver",
       "derivation": "EdgeResolver",
@@ -11565,7 +12771,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-173964565",
+      "evidenceId": "FACT-DEP-116442323",
       "sourceFile": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "locator": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "derivation": "EdgeResolver",
@@ -11575,7 +12781,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1162009215",
+      "evidenceId": "FACT-DEP--761436936",
       "sourceFile": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "locator": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "derivation": "EdgeResolver",
@@ -11585,7 +12791,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-175048277",
+      "evidenceId": "FACT-DEP-575620556",
       "sourceFile": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "locator": "com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader",
       "derivation": "EdgeResolver",
@@ -11595,7 +12801,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--938083286",
+      "evidenceId": "FACT-DEP--995605528",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11605,7 +12811,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-2020910230",
+      "evidenceId": "FACT-DEP--1873484787",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11615,7 +12821,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--73339197",
+      "evidenceId": "FACT-DEP-327233082",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11625,7 +12831,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1268116688",
+      "evidenceId": "FACT-DEP-1668688967",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11635,7 +12841,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-426313411",
+      "evidenceId": "FACT-DEP-826885690",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11645,7 +12851,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--267346303",
+      "evidenceId": "FACT-DEP-133225976",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11655,7 +12861,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1931610984",
+      "evidenceId": "FACT-DEP--1962784033",
       "sourceFile": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "locator": "com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
       "derivation": "EdgeResolver",
@@ -11665,7 +12871,297 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--577962883",
+      "evidenceId": "FACT-DEP-2028449132",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1063966632",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--294956911",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1013489966",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--450885922",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "locator": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.DiagramOutputFactory->com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-1368859343",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPLEMENTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-490980084",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1603269343",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--261813458",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1103616735",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1797276449",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-401680838",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-1306249589",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.ToonDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-569171118",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPLEMENTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--308708141",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-1892009728",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1061501683",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1903304960",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-1698002622",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--398007387",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-506561364",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.XmlDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-830027298",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPLEMENTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--47851961",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramOutput",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--2142101388",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.application.port.out.DiagramReport",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--800645503",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Field",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--1642448780",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Method",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-1958858802",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.Parameter",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--137151207",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.model.TypeNode",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-767417544",
+      "sourceFile": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "locator": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.infrastructure.output.YamlDiagramOutput->com.classdiagrammer.domain.evidence.Evidence",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP--635485125",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "derivation": "EdgeResolver",
@@ -11675,7 +13171,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1913936663",
+      "evidenceId": "FACT-DEP--1513364384",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "derivation": "EdgeResolver",
@@ -11685,7 +13181,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1797793085",
+      "evidenceId": "FACT-DEP--1397220806",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "derivation": "EdgeResolver",
@@ -11695,7 +13191,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--971993474",
+      "evidenceId": "FACT-DEP--571421195",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser",
       "derivation": "EdgeResolver",
@@ -11705,7 +13201,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1380269862",
+      "evidenceId": "FACT-DEP--979697583",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11715,7 +13211,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-847850924",
+      "evidenceId": "FACT-DEP-1248423203",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11725,7 +13221,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-172453420",
+      "evidenceId": "FACT-DEP-573025699",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11735,7 +13231,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-282867948",
+      "evidenceId": "FACT-DEP-683440227",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11745,7 +13241,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1458756364",
+      "evidenceId": "FACT-DEP-1859328643",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11755,7 +13251,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-100710284",
+      "evidenceId": "FACT-DEP-501282563",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "locator": "com.classdiagrammer.infrastructure.parsing.JavaParserFactory",
       "derivation": "EdgeResolver",
@@ -11765,7 +13261,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1452424077",
+      "evidenceId": "FACT-DEP-1394901835",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "derivation": "EdgeResolver",
@@ -11775,7 +13271,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-116450297",
+      "evidenceId": "FACT-DEP-517022576",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "derivation": "EdgeResolver",
@@ -11785,7 +13281,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-232593875",
+      "evidenceId": "FACT-DEP-633166154",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "derivation": "EdgeResolver",
@@ -11795,7 +13291,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1058393486",
+      "evidenceId": "FACT-DEP-1458965765",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser",
       "derivation": "EdgeResolver",
@@ -11805,7 +13301,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--2145194332",
+      "evidenceId": "FACT-DEP-2092250722",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11815,7 +13311,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-813799184",
+      "evidenceId": "FACT-DEP-1214371463",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11825,7 +13321,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-929942762",
+      "evidenceId": "FACT-DEP-1330515041",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11835,7 +13331,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1752802643",
+      "evidenceId": "FACT-DEP--2141592374",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11845,7 +13341,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1755742373",
+      "evidenceId": "FACT-DEP--2138652644",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11855,7 +13351,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1089769839",
+      "evidenceId": "FACT-DEP-1490342118",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11865,7 +13361,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-527310027",
+      "evidenceId": "FACT-DEP-927882306",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11875,7 +13371,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1413268729",
+      "evidenceId": "FACT-DEP-1813841008",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser",
       "derivation": "EdgeResolver",
@@ -11885,7 +13381,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1068976676",
+      "evidenceId": "FACT-DEP--668404397",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "derivation": "EdgeResolver",
@@ -11895,7 +13391,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1910779953",
+      "evidenceId": "FACT-DEP--1510207674",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "derivation": "EdgeResolver",
@@ -11905,7 +13401,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1690527629",
+      "evidenceId": "FACT-DEP-2091099908",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "derivation": "EdgeResolver",
@@ -11915,7 +13411,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--408422110",
+      "evidenceId": "FACT-DEP--7849831",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "derivation": "EdgeResolver",
@@ -11925,7 +13421,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1071454914",
+      "evidenceId": "FACT-DEP--670882635",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter",
       "derivation": "EdgeResolver",
@@ -11935,7 +13431,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1283601366",
+      "evidenceId": "FACT-DEP-1684173645",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "derivation": "EdgeResolver",
@@ -11945,7 +13441,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-441798089",
+      "evidenceId": "FACT-DEP-842370368",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "derivation": "EdgeResolver",
@@ -11955,7 +13451,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--251861625",
+      "evidenceId": "FACT-DEP-148710654",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "derivation": "EdgeResolver",
@@ -11965,7 +13461,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1944155932",
+      "evidenceId": "FACT-DEP--1950239085",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "derivation": "EdgeResolver",
@@ -11975,7 +13471,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1281123128",
+      "evidenceId": "FACT-DEP-1681695407",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "locator": "com.classdiagrammer.infrastructure.parsing.java.SignatureInterpreter.ParsedMembers",
       "derivation": "EdgeResolver",
@@ -11985,7 +13481,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1607680476",
+      "evidenceId": "FACT-DEP--1665202718",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -11995,7 +13491,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1351313040",
+      "evidenceId": "FACT-DEP-1751885319",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12005,7 +13501,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1467456618",
+      "evidenceId": "FACT-DEP-1868028897",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12015,7 +13511,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--2001711067",
+      "evidenceId": "FACT-DEP--1601138788",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12025,7 +13521,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1064823883",
+      "evidenceId": "FACT-DEP-1465396162",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12035,7 +13531,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1950782585",
+      "evidenceId": "FACT-DEP--1943612432",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12045,7 +13541,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--715533470",
+      "evidenceId": "FACT-DEP--314961191",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java11.Java11ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12055,7 +13551,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1815169892",
+      "evidenceId": "FACT-DEP-1757647650",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12065,7 +13561,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-479196112",
+      "evidenceId": "FACT-DEP-879768391",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12075,7 +13571,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-595339690",
+      "evidenceId": "FACT-DEP-995911969",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12085,7 +13581,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1421139301",
+      "evidenceId": "FACT-DEP-1821711580",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12095,7 +13591,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-192706955",
+      "evidenceId": "FACT-DEP-593279234",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12105,7 +13601,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1078665657",
+      "evidenceId": "FACT-DEP-1479237936",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12115,7 +13611,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1587650398",
+      "evidenceId": "FACT-DEP--1187078119",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java17.Java17ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12125,7 +13621,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--386994876",
+      "evidenceId": "FACT-DEP--444517118",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12135,7 +13631,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1722968656",
+      "evidenceId": "FACT-DEP--1322396377",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12145,7 +13641,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1606825078",
+      "evidenceId": "FACT-DEP--1206252799",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12155,7 +13651,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--781025467",
+      "evidenceId": "FACT-DEP--380453188",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12165,7 +13661,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--2009457813",
+      "evidenceId": "FACT-DEP--1608885534",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12175,7 +13671,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1123499111",
+      "evidenceId": "FACT-DEP--722926832",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12185,7 +13681,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-505152130",
+      "evidenceId": "FACT-DEP-905724409",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java21.Java21ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12195,7 +13691,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-463249604",
+      "evidenceId": "FACT-DEP-405727362",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12205,7 +13701,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--872724176",
+      "evidenceId": "FACT-DEP--472151897",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12215,7 +13711,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--756580598",
+      "evidenceId": "FACT-DEP--356008319",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12225,7 +13721,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-69219013",
+      "evidenceId": "FACT-DEP-469791292",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12235,7 +13731,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1159213333",
+      "evidenceId": "FACT-DEP--758641054",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12245,7 +13741,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--273254631",
+      "evidenceId": "FACT-DEP-127317648",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12255,7 +13751,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1355396610",
+      "evidenceId": "FACT-DEP-1755968889",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.java25.Java25ArtifactParser",
       "derivation": "EdgeResolver",
@@ -12265,7 +13761,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1226156028",
+      "evidenceId": "FACT-DEP--1283678270",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12275,7 +13771,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1732837488",
+      "evidenceId": "FACT-DEP-2133409767",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12285,7 +13781,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-2011286381",
+      "evidenceId": "FACT-DEP--1883108636",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12295,7 +13791,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1169483104",
+      "evidenceId": "FACT-DEP-1570055383",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12305,7 +13801,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-475823390",
+      "evidenceId": "FACT-DEP-876395669",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12315,7 +13811,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1848981066",
+      "evidenceId": "FACT-DEP--2045413951",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12325,7 +13821,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1623126349",
+      "evidenceId": "FACT-DEP--1222554070",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12335,7 +13831,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1620186619",
+      "evidenceId": "FACT-DEP--1219614340",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12345,7 +13841,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-2008808143",
+      "evidenceId": "FACT-DEP--1885586874",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser",
       "derivation": "EdgeResolver",
@@ -12355,7 +13851,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1346368447",
+      "evidenceId": "FACT-DEP-1746940726",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.FormModelCollector",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.FormModelCollector",
       "derivation": "EdgeResolver",
@@ -12365,7 +13861,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1352564836",
+      "evidenceId": "FACT-DEP-1295042594",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12375,7 +13871,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-16591056",
+      "evidenceId": "FACT-DEP-417163335",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12385,7 +13881,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1224320767",
+      "evidenceId": "FACT-DEP-1624893046",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12395,7 +13891,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-295039949",
+      "evidenceId": "FACT-DEP-695612228",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12405,7 +13901,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--546763328",
+      "evidenceId": "FACT-DEP--146191049",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12415,7 +13911,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1240423042",
+      "evidenceId": "FACT-DEP--839850763",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12425,7 +13921,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-132734634",
+      "evidenceId": "FACT-DEP-533306913",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12435,7 +13931,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-955594515",
+      "evidenceId": "FACT-DEP-1356166794",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12445,7 +13941,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-958534245",
+      "evidenceId": "FACT-DEP-1359106524",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12455,7 +13951,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-292561711",
+      "evidenceId": "FACT-DEP-693133990",
       "sourceFile": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "locator": "com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser",
       "derivation": "EdgeResolver",
@@ -12465,7 +13961,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1509730020",
+      "evidenceId": "FACT-DEP--1109157741",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12475,7 +13971,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1305817858",
+      "evidenceId": "FACT-DEP--905245579",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12485,7 +13981,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-248253227",
+      "evidenceId": "FACT-DEP-648825506",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12495,7 +13991,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-449727850",
+      "evidenceId": "FACT-DEP-850300129",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12505,7 +14001,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1317457754",
+      "evidenceId": "FACT-DEP--916885475",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12515,7 +14011,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1355905154",
+      "evidenceId": "FACT-DEP-1756477433",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12525,7 +14021,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-622057678",
+      "evidenceId": "FACT-DEP-1022629957",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12535,7 +14031,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1475529564",
+      "evidenceId": "FACT-DEP--1074957285",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12545,17 +14041,27 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1445504948",
+      "evidenceId": "FACT-DEP-50767492",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
       "factKind": "DEPENDENCY_EXISTS",
-      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.json.JsonDiagramOutput",
+      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.output.DiagramOutputFactory",
       "value": "IMPORTS",
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-539040374",
+      "evidenceId": "FACT-DEP-26677026",
+      "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
+      "locator": "com.classdiagrammer.interfaces.cli.Main",
+      "derivation": "EdgeResolver",
+      "factKind": "DEPENDENCY_EXISTS",
+      "subject": "com.classdiagrammer.interfaces.cli.Main->com.classdiagrammer.infrastructure.output.OutputFormat",
+      "value": "IMPORTS",
+      "ruleId": "CSAS-003-U6"
+    },
+    {
+      "evidenceId": "FACT-DEP-939612653",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12565,7 +14071,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1526086757",
+      "evidenceId": "FACT-DEP-1926659036",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12575,7 +14081,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-329179224",
+      "evidenceId": "FACT-DEP-729751503",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12585,7 +14091,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP--1058031258",
+      "evidenceId": "FACT-DEP--657458979",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12595,7 +14101,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1903604239",
+      "evidenceId": "FACT-DEP--1990790778",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
@@ -12605,7 +14111,7 @@
       "ruleId": "CSAS-003-U6"
     },
     {
-      "evidenceId": "FACT-DEP-1986788783",
+      "evidenceId": "FACT-DEP--1907606234",
       "sourceFile": "com.classdiagrammer.interfaces.cli.Main",
       "locator": "com.classdiagrammer.interfaces.cli.Main",
       "derivation": "EdgeResolver",
