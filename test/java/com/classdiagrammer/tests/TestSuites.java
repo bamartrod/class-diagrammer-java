@@ -14,6 +14,7 @@ import com.classdiagrammer.tests.unit.DeterministicOutputBehavior;
 import com.classdiagrammer.tests.unit.EvidenceSufficiencyBehavior;
 import com.classdiagrammer.tests.unit.InheritanceEdgesBehavior;
 import com.classdiagrammer.tests.unit.JavaVersionBehavior;
+import com.classdiagrammer.tests.unit.OutputFormatBehavior;
 import com.classdiagrammer.tests.unit.SourceInterpretationBehavior;
 import com.classdiagrammer.tests.unit.TypeNodeIntegrity;
 import com.classdiagrammer.tests.unit.VersionCorrectnessBehavior;
@@ -40,6 +41,7 @@ public final class TestSuites {
         VersionCorrectnessBehavior.verify(harness);
         EvidenceSufficiencyBehavior.verify(harness);
         DeterministicOutputBehavior.verify(harness);
+        OutputFormatBehavior.verify(harness);
         GenerationFlowBehavior.verify(harness);
         FileDiscoveryBehavior.verify(harness);
         BuildMetadataBehavior.verify(harness);
