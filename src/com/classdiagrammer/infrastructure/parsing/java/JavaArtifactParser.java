@@ -26,19 +26,34 @@ public final class JavaArtifactParser implements ArtifactParser {
     private static final Pattern IMPORT_DECLARATION =
             Pattern.compile("\\bimport\\s+(?:static\\s+)?([\\w.*]+)\\s*;");
 
+    private final JavaVersion javaVersion;
     private final LanguageCapabilities capabilities;
     private final RegionScanner regionScanner = new RegionScanner();
     private final HeaderParser headerParser = new HeaderParser();
     private final MemberScanner memberScanner = new MemberScanner();
 
     public JavaArtifactParser() {
-        this(LanguageCapabilities.forVersion(JavaVersion.V8));
+        this(JavaVersion.V8, LanguageCapabilities.forVersion(JavaVersion.V8));
     }
 
     public JavaArtifactParser(LanguageCapabilities capabilities) {
-        this.capabilities = capabilities == null
+        this(deduceVersion(capabilities), capabilities == null
                 ? LanguageCapabilities.forVersion(JavaVersion.V8)
+                : capabilities);
+    }
+
+    public JavaArtifactParser(JavaVersion javaVersion, LanguageCapabilities capabilities) {
+        this.javaVersion = javaVersion == null ? JavaVersion.V8 : javaVersion;
+        this.capabilities = capabilities == null
+                ? LanguageCapabilities.forVersion(this.javaVersion)
                 : capabilities;
+    }
+
+    private static JavaVersion deduceVersion(LanguageCapabilities caps) {
+        if (caps == null) return JavaVersion.V8;
+        if (!caps.records() && !caps.textBlocks() && !caps.sealedTypes()) return JavaVersion.V8;
+        if (!caps.textBlocks() && !caps.records()) return JavaVersion.V11;
+        return JavaVersion.V17;
     }
 
     public boolean accepts(SourceFile source) {
@@ -49,6 +64,7 @@ public final class JavaArtifactParser implements ArtifactParser {
         if (source == null) {
             throw new IllegalArgumentException("source file is required");
         }
+        detectUnsupportedFeatures(source);
         SourceText text = SourceText.of(source.content());
         String masked = text.masked();
         String packageName = firstGroup(PACKAGE_DECLARATION, masked);
@@ -102,6 +118,36 @@ public final class JavaArtifactParser implements ArtifactParser {
     static String parentFolder(String filePath) {
         int slash = Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\'));
         return slash < 0 ? "" : filePath.substring(0, slash);
+    }
+
+    private void detectUnsupportedFeatures(SourceFile source) {
+        String content = source.content();
+        String file = source.file();
+        // text blocks """ – require textBlocks capability (Java 15+)
+        if (!capabilities.textBlocks() && content.contains("\"\"\"")) {
+            throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                    com.classdiagrammer.domain.evidence.LanguageFeature.TEXT_BLOCK, javaVersion.label(), file);
+        }
+        // records – require records capability
+        if (!capabilities.records() && content.matches("(?s).*\\brecord\\b.*")) {
+            // more precise: record keyword followed by identifier
+            if (content.matches("(?s).*\\brecord\\s+\\w+.*")) {
+                throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                        com.classdiagrammer.domain.evidence.LanguageFeature.RECORD, javaVersion.label(), file);
+            }
+        }
+        // sealed / permits – require sealedTypes
+        if (!capabilities.sealedTypes()) {
+            if (content.matches("(?s).*\\bsealed\\b.*") || content.matches("(?s).*\\bpermits\\b.*") || content.contains("non-sealed")) {
+                // check if actually a type declaration uses sealed/permit
+                String masked = SourceText.of(content).masked();
+                if (masked.matches("(?s).*\\b(sealed|permits|non-sealed)\\b.*")) {
+                    com.classdiagrammer.domain.evidence.LanguageFeature feat = content.contains("permits") || content.contains("permits") ? com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE : com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE;
+                    throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                            feat, javaVersion.label(), file);
+                }
+            }
+        }
     }
 
     private String firstGroup(Pattern pattern, String input) {

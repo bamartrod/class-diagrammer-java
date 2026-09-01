@@ -1,10 +1,6 @@
 package com.classdiagrammer.interfaces.cli;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Parses and validates command-line arguments.
@@ -66,7 +62,7 @@ public final class CliArgs {
     }
 
     private static void validateJavaVersion(String raw) {
-        Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "25"));
+        java.util.Set<String> supported = new java.util.HashSet<String>(java.util.Arrays.asList("8", "11", "17", "21", "25"));
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
                     "unsupported java version: " + raw + " (use 8, 11, 17, 21, 25)\n" + usage());
@@ -74,13 +70,24 @@ public final class CliArgs {
     }
 
     public static String usage() {
-        return "Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21|25>]\n"
+        return "Usage: classdiagrammer <source-folder> [-o output.json] [--java <8|11|17|21/25>]\n"
                 + "Scans .java files in the given folder and generates a JSON class diagram graph.\n"
                 + "  --java <v>  Java parser version (default 8)\n";
     }
 
-    public String sourceRoot() { return sourceRoot; }
-    public String outputPath() { return outputPath; }
-    public String javaVersion() { return javaVersion; }
-    public boolean helpRequested() { return helpRequested; }
+    public String sourceRoot() {
+        return sourceRoot;
+    }
+
+    public String outputPath() {
+        return outputPath;
+    }
+
+    public String javaVersion() {
+        return javaVersion;
+    }
+
+    public boolean helpRequested() {
+        return helpRequested;
+    }
 }
