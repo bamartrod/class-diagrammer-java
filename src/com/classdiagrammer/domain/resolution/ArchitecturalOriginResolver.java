@@ -9,6 +9,7 @@ import com.classdiagrammer.domain.model.Edge;
 import com.classdiagrammer.domain.model.TypeNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,18 +26,19 @@ public final class ArchitecturalOriginResolver {
     private final DependencyResolver dependencyResolver;
 
     public ArchitecturalOriginResolver(DependencyResolver dependencyResolver) {
-        this.dependencyResolver = Objects.requireNonNull(dependencyResolver, "dependencyResolver is required");
+        if (dependencyResolver == null) throw new IllegalArgumentException("dependencyResolver is required");
+        this.dependencyResolver = dependencyResolver;
     }
 
     public EnrichmentResult enrich(List<Edge> edges, List<TypeNode> nodes) {
-        Objects.requireNonNull(edges, "edges is required");
-        Objects.requireNonNull(nodes, "nodes is required");
-        Map<String, List<String>> importsByNode = new HashMap<>();
+        if (edges == null) throw new IllegalArgumentException("edges is required");
+        if (nodes == null) throw new IllegalArgumentException("nodes is required");
+        Map<String, List<String>> importsByNode = new HashMap<String, List<String>>();
         for (TypeNode node : nodes) {
             importsByNode.put(node.qualifiedName(), node.imports());
         }
-        List<Edge> enriched = new ArrayList<>();
-        List<Evidence> evidences = new ArrayList<>();
+        List<Edge> enriched = new ArrayList<Edge>();
+        List<Evidence> evidences = new ArrayList<Evidence>();
         for (Edge edge : edges) {
             if (edge.isResolved()) {
                 enriched.add(edge.withProjectOrigin());
@@ -72,8 +74,10 @@ public final class ArchitecturalOriginResolver {
         private final List<Evidence> evidences;
 
         public EnrichmentResult(List<Edge> edges, List<Evidence> evidences) {
-            this.edges = java.util.Collections.unmodifiableList(new java.util.ArrayList<>(Objects.requireNonNull(edges)));
-            this.evidences = java.util.Collections.unmodifiableList(new java.util.ArrayList<>(Objects.requireNonNull(evidences)));
+            if (edges == null) throw new IllegalArgumentException("edges is required");
+            if (evidences == null) throw new IllegalArgumentException("evidences is required");
+            this.edges = Collections.unmodifiableList(new ArrayList<Edge>(edges));
+            this.evidences = Collections.unmodifiableList(new ArrayList<Evidence>(evidences));
         }
 
         public List<Edge> edges() { return edges; }
