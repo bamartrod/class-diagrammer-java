@@ -40,16 +40,29 @@ public final class JsonDiagramOutput implements DiagramOutput {
         json.beginObject("summary")
                 .field("types", report.nodes().size())
                 .field("relations", report.edges().size())
+                .field("evidences", report.evidences().size())
+                .field("evaluation", report.evaluation().jsonName())
                 .endObject();
 
+        // deterministic ordering per CSAS-002-U23
+        List<TypeNode> sortedNodes = new java.util.ArrayList<>(report.nodes());
+        sortedNodes.sort((a, b) -> a.qualifiedName().compareTo(b.qualifiedName()));
         json.beginArray("nodes");
-        for (TypeNode node : report.nodes()) {
+        for (TypeNode node : sortedNodes) {
             writeNode(json, node);
         }
         json.endArray();
 
+        List<com.classdiagrammer.domain.model.Edge> sortedEdges = new java.util.ArrayList<>(report.edges());
+        sortedEdges.sort((a, b) -> {
+            int c = a.from().compareTo(b.from());
+            if (c != 0) return c;
+            c = a.to().compareTo(b.to());
+            if (c != 0) return c;
+            return a.kind().jsonName().compareTo(b.kind().jsonName());
+        });
         json.beginArray("edges");
-        for (com.classdiagrammer.domain.model.Edge edge : report.edges()) {
+        for (com.classdiagrammer.domain.model.Edge edge : sortedEdges) {
             json.beginObject()
                     .field("from", edge.from())
                     .field("to", edge.to())
@@ -66,6 +79,24 @@ public final class JsonDiagramOutput implements DiagramOutput {
             json.endObject();
         }
         json.endArray();
+
+        if (!report.evidences().isEmpty()) {
+            json.beginArray("evidences");
+            for (com.classdiagrammer.domain.evidence.Evidence ev : report.evidences()) {
+                json.beginObject()
+                        .field("evidenceId", ev.evidenceId())
+                        .field("sourceFile", ev.sourceFile())
+                        .field("locator", ev.locator())
+                        .field("derivation", ev.derivation())
+                        .field("factKind", ev.fact().kind().name())
+                        .field("subject", ev.fact().subject())
+                        .field("value", ev.fact().value())
+                        .field("ruleId", ev.fact().ruleId())
+                        .endObject();
+            }
+            json.endArray();
+        }
+        json.field("evaluation", report.evaluation().jsonName());
 
         json.endObject();
 

@@ -23,32 +23,35 @@ public final class CliArgs {
     }
 
     public static CliArgs parse(String[] arguments) {
-        if (arguments == null) {
-            throw new IllegalArgumentException(usage());
-        }
+        java.util.Objects.requireNonNull(arguments, "arguments is required");
         String root = null;
         String output = null;
         String javaVersion = "8";
         boolean help = false;
         for (int i = 0; i < arguments.length; i++) {
             String argument = arguments[i];
-            if ("-h".equals(argument) || "--help".equals(argument)) {
-                help = true;
-            } else if ("-o".equals(argument) || "--output".equals(argument)) {
-                if (i + 1 >= arguments.length) {
-                    throw new IllegalArgumentException("missing value for " + argument + "\n" + usage());
+            switch (argument) {
+                case "-h", "--help" -> help = true;
+                case "-o", "--output" -> {
+                    if (i + 1 >= arguments.length) {
+                        throw new IllegalArgumentException("missing value for " + argument + "\n" + usage());
+                    }
+                    output = arguments[++i];
                 }
-                output = arguments[++i];
-            } else if ("--java".equals(argument)) {
-                if (i + 1 >= arguments.length) {
-                    throw new IllegalArgumentException("missing value for " + argument + "\n" + usage());
+                case "--java" -> {
+                    if (i + 1 >= arguments.length) {
+                        throw new IllegalArgumentException("missing value for " + argument + "\n" + usage());
+                    }
+                    javaVersion = arguments[++i];
+                    validateJavaVersion(javaVersion);
                 }
-                javaVersion = arguments[++i];
-                validateJavaVersion(javaVersion);
-            } else if (root == null) {
-                root = argument;
-            } else {
-                throw new IllegalArgumentException("unexpected argument: " + argument + "\n" + usage());
+                default -> {
+                    if (root == null) {
+                        root = argument;
+                    } else {
+                        throw new IllegalArgumentException("unexpected argument: " + argument + "\n" + usage());
+                    }
+                }
             }
         }
         if (!help && (root == null || root.trim().isEmpty())) {
