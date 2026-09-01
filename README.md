@@ -1,6 +1,6 @@
-# ClassDiagrammer — v2.0.0 (Java 17 LTS)
+# ClassDiagrammer — v2.1.0 (Java 21 LTS)
 
-Tool **Java 17** that scans a project, interprets its sources and generates a
+Tool **Java 21** that scans a project, interprets its sources and generates a
 JSON graph shaped as a class diagram: folders, packages, imports,
 `extends`/`implements`/`permits`, constructors, methods, fields, visibility and
 modifiers (`sealed`/`non-sealed`/`final`).
@@ -29,28 +29,30 @@ libraries: own parser, own JSON writer and own verification harness.
 
 ## 1. Requirements
 
-* JDK 17 (`java-17-openjdk`), compiled with `javac --release 17`
+* JDK 21 (`java-21-openjdk`), compiled with `javac --release 21`
 * No remote repositories required
 
 Full project verification:
 
 ```bash
-./run-tests.sh          # 98 checks, 0 failures
+./run-tests.sh          # 106 checks, 0 failures
 ```
 
 ## 2. Usage
 
 ```bash
-./classdiagrammer.sh <source-folder> [-o output.json] [--java <8|11|17|21|25>]
+./classdiagrammer.sh <source-folder> [-o output.json] [--java <8|11|17|21|25>] [--format <json|xml|yaml|toon>]
 
 # examples
 ./classdiagrammer.sh ~/Projects/MyProject/src -o ~/Downloads/code.json --java 17
 ./classdiagrammer.sh ~/spring-framework/spring-core --java 17 -o diagrams/spring-core.json
-./classdiagrammer.sh ~/spring-framework/spring-web --java 17 -o diagrams/spring-web.json
+./classdiagrammer.sh ~/spring-framework/spring-web --java 21 -o diagrams/spring-web.json --format xml
+./classdiagrammer.sh ./src -o diagram.yaml --java 25
+./classdiagrammer.sh ./src -o diagram.toon --java 25
 ./classdiagrammer.sh --help
 ```
 
-`--java` selects the Java parser (default 8). Runtime is always 17. The selected version is behaviorally effective: unsupported features for that version yield an explicit `UNSUPPORTED` evidence instead of being silently accepted.
+`--java` selects the Java parser (default 8). `--format` selects the output format (`json`, `xml`, `yaml`, `toon`); inferred from output file extension if not given (default `json`). Runtime is always 21. The selected version is behaviorally effective: unsupported features for that version yield an explicit `UNSUPPORTED` evidence instead of being silently accepted.
 
 ## 3. Output format
 
@@ -112,6 +114,8 @@ Full project verification:
 JDK imports (`java.*`, `javax.*`) and wildcards (`foo.bar.*`) are omitted as
 noise; other external references generate an edge so they can be attributed.
 
+**Output formats:** `json` (default), `xml` (well-formed, `<?xml?>` + `<diagram>`), `yaml` (YAML 1.2, `tool: ...`), `toon` (Token-Oriented, minimal, `tool: ClassDiagrammer` per line, `nodes[82]:`). All formats carry the same semantic model (`summary`, `nodes`, `edges`, `evidences`, `evaluation`) and are deterministic. Selection via `--format` or inferred from file extension (`.xml`, `.yaml`/`.yml`, `.toon`, `.json`).
+
 Modeled content by technology:
 
 | Technology | Node | Methods | Fields | Edges |
@@ -131,7 +135,7 @@ src/com/classdiagrammer/
 │   ├── port/in/             GenerateClassDiagram (+ Command / Result)
 │   ├── port/out/            SourceCodeReader, ArtifactParser, DependencyResolver,
 │   │                        DiagramOutput, DiagramReport
-│   └── usecase/             GenerateClassDiagramUseCase (Fixed Thread Pool, 17)
+│   └── usecase/             GenerateClassDiagramUseCase (Virtual Threads, 21)
 ├── infrastructure/
 │   ├── filesystem/          FileSystemSourceReader
 │   ├── parsing/             LanguageCapabilities + JavaVersion (version = configuration, not copy)
@@ -142,7 +146,8 @@ src/com/classdiagrammer/
 │   │   ├── hibernate/       HbmArtifactParser (.hbm.xml)
 │   │   └── xml/             XmlTagScanner (shared kernel)
 │   ├── dependencies/        BuildDependencyScanner, LocalRepositoryIndex, ClasspathArtifactResolver
-│   └── json/                JsonDiagramOutput, JsonWriter
+│   ├── json/                JsonDiagramOutput, JsonWriter
+│   └── output/              OutputFormat, DiagramOutputFactory, Xml/Yaml/ToonDiagramOutput
 └── interfaces/cli/          Main, CliArgs (text blocks, Set.of, switch expression)
 ```
 
