@@ -10,10 +10,13 @@ import com.classdiagrammer.tests.adapter.XFormsDocumentBehavior;
 import com.classdiagrammer.tests.architecture.HexagonalConformanceBehavior;
 import com.classdiagrammer.tests.support.TestHarness;
 import com.classdiagrammer.tests.unit.CodeGraphIntegrity;
+import com.classdiagrammer.tests.unit.DeterministicOutputBehavior;
+import com.classdiagrammer.tests.unit.EvidenceSufficiencyBehavior;
 import com.classdiagrammer.tests.unit.InheritanceEdgesBehavior;
 import com.classdiagrammer.tests.unit.JavaVersionBehavior;
 import com.classdiagrammer.tests.unit.SourceInterpretationBehavior;
 import com.classdiagrammer.tests.unit.TypeNodeIntegrity;
+import com.classdiagrammer.tests.unit.VersionCorrectnessBehavior;
 import com.classdiagrammer.tests.usecase.EdgeEnrichmentBehavior;
 import com.classdiagrammer.tests.usecase.GenerationFlowBehavior;
 
@@ -34,6 +37,9 @@ public final class TestSuites {
         InheritanceEdgesBehavior.verify(harness);
         SourceInterpretationBehavior.verify(harness);
         JavaVersionBehavior.verify(harness);
+        VersionCorrectnessBehavior.verify(harness);
+        EvidenceSufficiencyBehavior.verify(harness);
+        DeterministicOutputBehavior.verify(harness);
         GenerationFlowBehavior.verify(harness);
         FileDiscoveryBehavior.verify(harness);
         BuildMetadataBehavior.verify(harness);

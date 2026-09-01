@@ -16,6 +16,7 @@ import com.classdiagrammer.infrastructure.parsing.hibernate.HbmArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.velocity.VelocityArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.xforms.XFormsArtifactParser;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 
 /**
@@ -29,32 +30,48 @@ public final class Main {
     }
 
     public static void main(String[] args) {
+        CliArgs cli;
         try {
-            CliArgs cli = CliArgs.parse(args);
-            if (cli.helpRequested()) {
-                System.out.println(CliArgs.usage());
-                return;
-            }
-            GenerateClassDiagramResult result =
-                    new GenerateClassDiagramUseCase(
-                            new FileSystemSourceReader(),
-                            new CompositeArtifactParser(Arrays.asList(
-                                    JavaParserFactory.forVersion(
-                                            JavaVersion.from(cli.javaVersion())),
-                                    new VelocityArtifactParser(),
-                                    new XFormsArtifactParser(),
-                                    new HbmArtifactParser())),
-                            new EdgeResolver(),
-                            new ClasspathArtifactResolver(new LocalRepositoryIndex(
-                                    new BuildDependencyScanner().scan(cli.sourceRoot()))),
-                            new JsonDiagramOutput())
-                            .generate(GenerateClassDiagramCommand.of(
-                                    cli.sourceRoot(), cli.outputPath()));
+            cli = CliArgs.parse(args);
+        } catch (IllegalArgumentException e) {
+            // INPUT_VALIDATION_FAILURE / CONFIGURATION_FAILURE per CSAS-002-U20
+            System.err.println("Input validation failed: " + e.getMessage());
+            System.exit(2);
+            return;
+        }
+        if (cli.helpRequested()) {
+            System.out.println(CliArgs.usage());
+            return;
+        }
+        try {
+            GenerateClassDiagramResult result = new GenerateClassDiagramUseCase(
+                    new FileSystemSourceReader(),
+                    new CompositeArtifactParser(Arrays.asList(
+                            JavaParserFactory.forVersion(JavaVersion.from(cli.javaVersion())),
+                            new VelocityArtifactParser(),
+                            new XFormsArtifactParser(),
+                            new HbmArtifactParser())),
+                    new EdgeResolver(),
+                    new ClasspathArtifactResolver(new LocalRepositoryIndex(
+                            new BuildDependencyScanner().scan(cli.sourceRoot()))),
+                    new JsonDiagramOutput())
+                    .generate(GenerateClassDiagramCommand.of(cli.sourceRoot(), cli.outputPath()));
             System.out.printf("Graph generated: %d types, %d relations -> %s%n",
                     result.typeCount(), result.edgeCount(), result.writtenTo());
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            System.err.println("Error: " + e.getMessage());
-            System.exit(2);
+            // also report evaluation if present
+            // evaluation is inside JSON; CLI could print evidence count if needed
+        } catch (IllegalStateException e) {
+            // EXPECTED_OPERATIONAL_FAILURE / RECOVERABLE_RUNTIME per CSAS-002-U20
+            System.err.println("Operational failure: " + e.getMessage());
+            System.exit(1);
+        } catch (RuntimeException e) {
+            // PROGRAMMER_DEFECT – do not hide
+            System.err.println("Unexpected failure: " + e.getMessage());
+            e.printStackTrace(System.err);
+            System.exit(3);
+        } catch (Exception e) {
+            System.err.println("Fatal failure: " + e.getMessage());
+            System.exit(4);
         }
     }
 }

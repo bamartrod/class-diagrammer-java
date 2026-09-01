@@ -1,35 +1,26 @@
 package com.classdiagrammer.application.port.in;
 
+import java.util.Objects;
+
 /**
- * Input port GenerateClassDiagramCommand defining the use-case contract.
+ * Immutable data carrier for the generate command (record where available).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
-public final class GenerateClassDiagramCommand {
+public record GenerateClassDiagramCommand(String sourceRoot, String outputPath) {
 
-    private final String sourceRoot;
-    private final String outputPath;
-
-    private GenerateClassDiagramCommand(String sourceRoot, String outputPath) {
+    public GenerateClassDiagramCommand {
         if (sourceRoot == null || sourceRoot.trim().isEmpty()) {
             throw new IllegalArgumentException("source root is required");
         }
         if (outputPath == null || outputPath.trim().isEmpty()) {
             throw new IllegalArgumentException("output path is required");
         }
-        this.sourceRoot = sourceRoot.trim();
-        this.outputPath = outputPath.trim();
+        sourceRoot = sourceRoot.trim();
+        outputPath = outputPath.trim();
     }
 
     public static GenerateClassDiagramCommand of(String sourceRoot, String outputPath) {
         return new GenerateClassDiagramCommand(sourceRoot, outputPath);
-    }
-
-    public String sourceRoot() {
-        return sourceRoot;
-    }
-
-    public String outputPath() {
-        return outputPath;
     }
 }
