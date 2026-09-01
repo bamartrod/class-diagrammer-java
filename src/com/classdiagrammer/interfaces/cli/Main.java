@@ -8,7 +8,8 @@ import com.classdiagrammer.infrastructure.dependencies.BuildDependencyScanner;
 import com.classdiagrammer.infrastructure.dependencies.ClasspathArtifactResolver;
 import com.classdiagrammer.infrastructure.dependencies.LocalRepositoryIndex;
 import com.classdiagrammer.infrastructure.filesystem.FileSystemSourceReader;
-import com.classdiagrammer.infrastructure.json.JsonDiagramOutput;
+import com.classdiagrammer.infrastructure.output.DiagramOutputFactory;
+import com.classdiagrammer.infrastructure.output.OutputFormat;
 import com.classdiagrammer.infrastructure.parsing.CompositeArtifactParser;
 import com.classdiagrammer.infrastructure.parsing.JavaParserFactory;
 import com.classdiagrammer.infrastructure.parsing.JavaVersion;
@@ -44,6 +45,7 @@ public final class Main {
             return;
         }
         try {
+            OutputFormat fmt = OutputFormat.from(cli.outputFormat());
             GenerateClassDiagramResult result = new GenerateClassDiagramUseCase(
                     new FileSystemSourceReader(),
                     new CompositeArtifactParser(Arrays.asList(
@@ -54,7 +56,7 @@ public final class Main {
                     new EdgeResolver(),
                     new ClasspathArtifactResolver(new LocalRepositoryIndex(
                             new BuildDependencyScanner().scan(cli.sourceRoot()))),
-                    new JsonDiagramOutput())
+                    DiagramOutputFactory.forFormat(fmt))
                     .generate(GenerateClassDiagramCommand.of(cli.sourceRoot(), cli.outputPath()));
             System.out.printf("Graph generated: %d types, %d relations -> %s%n",
                     result.typeCount(), result.edgeCount(), result.writtenTo());
