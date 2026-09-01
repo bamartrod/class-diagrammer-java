@@ -1,10 +1,6 @@
 package com.classdiagrammer.interfaces.cli;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Parses and validates command-line arguments.
@@ -27,9 +23,7 @@ public final class CliArgs {
     }
 
     public static CliArgs parse(String[] arguments) {
-        if (arguments == null) {
-            throw new IllegalArgumentException(usage());
-        }
+        java.util.Objects.requireNonNull(arguments, "arguments is required");
         String root = null;
         String output = null;
         String javaVersion = "8";
@@ -66,7 +60,7 @@ public final class CliArgs {
     }
 
     private static void validateJavaVersion(String raw) {
-        Set<String> supported = new HashSet<>(Arrays.asList("8", "11", "17", "21", "25"));
+        var supported = java.util.Set.of("8", "11", "17", "21", "25");
         if (!supported.contains(raw)) {
             throw new IllegalArgumentException(
                     "unsupported java version: " + raw + " (use 8, 11, 17, 21, 25)\n" + usage());
@@ -79,8 +73,19 @@ public final class CliArgs {
                 + "  --java <v>  Java parser version (default 8)\n";
     }
 
-    public String sourceRoot() { return sourceRoot; }
-    public String outputPath() { return outputPath; }
-    public String javaVersion() { return javaVersion; }
-    public boolean helpRequested() { return helpRequested; }
+    public String sourceRoot() {
+        return sourceRoot;
+    }
+
+    public String outputPath() {
+        return outputPath;
+    }
+
+    public String javaVersion() {
+        return javaVersion;
+    }
+
+    public boolean helpRequested() {
+        return helpRequested;
+    }
 }

@@ -2,11 +2,6 @@ package com.classdiagrammer.infrastructure.parsing;
 
 import java.util.Objects;
 
-/**
- * Describes language capabilities enabled per Java version.
- *
- * @author Brandon Martinez - https://github.com/bamartrod
- */
 public final class LanguageCapabilities {
 
     private final boolean textBlocks;
