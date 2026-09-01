@@ -23,7 +23,16 @@ final class RegionScanner {
             "(?<![\\w$.])((?:(?:public|protected|private|abstract|static|final|strictfp|sealed|non-sealed)\\s+)*)"
                     + "(@\\s*interface|class|interface|enum|record)\\s+([A-Za-z_$][\\w$]*)");
 
+    private static final int MAX_DEPTH = 100;
+
     void scan(String masked, int from, int to, String qualifier, TypeConsumer consumer) {
+        scanBounded(masked, from, to, qualifier, consumer, 0);
+    }
+
+    private void scanBounded(String masked, int from, int to, String qualifier, TypeConsumer consumer, int depth) {
+        if (depth > MAX_DEPTH) {
+            throw new IllegalStateException("maximum nesting depth " + MAX_DEPTH + " exceeded at qualifier " + qualifier);
+        }
         Matcher matcher = TYPE_DECLARATION.matcher(masked);
         int cursor = Math.max(from, 0);
         while (cursor <= to && matcher.find(cursor)) {
@@ -52,7 +61,7 @@ final class RegionScanner {
             consumer.accept(declaration, braceIndex, bodyEnd, qualifier);
 
             String nestedQualifier = qualifier.isEmpty() ? name : qualifier + "." + name;
-            scan(masked, braceIndex + 1, bodyEnd, nestedQualifier, consumer);
+            scanBounded(masked, braceIndex + 1, bodyEnd, nestedQualifier, consumer, depth + 1);
             cursor = bodyEnd + 1;
         }
     }

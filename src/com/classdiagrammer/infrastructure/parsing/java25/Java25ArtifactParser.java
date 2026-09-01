@@ -17,7 +17,7 @@ import java.util.List;
 public final class Java25ArtifactParser implements ArtifactParser {
 
     private final JavaArtifactParser delegate =
-            new JavaArtifactParser(LanguageCapabilities.forVersion(JavaVersion.V25));
+            new JavaArtifactParser(JavaVersion.V25, LanguageCapabilities.forVersion(JavaVersion.V25));
 
     public boolean accepts(SourceFile source) {
         return source != null && source.file().endsWith(".java");
