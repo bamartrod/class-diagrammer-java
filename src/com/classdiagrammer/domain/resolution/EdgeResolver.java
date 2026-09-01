@@ -39,7 +39,21 @@ public final class EdgeResolver {
     }
 
     private void collectImportEdges(TypeNode node, CodeGraph graph, Set<Edge> edges) {
-        for (String imported : node.imports()) {
+        // class-level imports are now only for hierarchy (extends/implements/permits)
+        // import edges must be derived from per-member requiredImports
+        java.util.Set<String> allMemberImports = new java.util.HashSet<>();
+        for (com.classdiagrammer.domain.model.Field f : node.fields()) {
+            allMemberImports.addAll(f.requiredImports());
+        }
+        for (com.classdiagrammer.domain.model.Method m : node.methods()) {
+            allMemberImports.addAll(m.requiredImports());
+        }
+        for (com.classdiagrammer.domain.model.Method c : node.constructors()) {
+            allMemberImports.addAll(c.requiredImports());
+        }
+        // also include class-level hierarchy imports that are attributable as imports (for completeness)
+        // but they are already covered via extends edges, not needed as import edges
+        for (String imported : allMemberImports) {
             Optional<TypeNode> target = graph.find(imported);
             if (!target.isPresent() && imported.contains(".")) {
                 String withoutMember = imported.substring(0, imported.lastIndexOf('.'));
@@ -51,6 +65,23 @@ public final class EdgeResolver {
             } else if (isAttributable(imported)) {
                 edges.add(new Edge(node.qualifiedName(), imported,
                         TypeRelationKind.IMPORTS, false));
+            }
+        }
+        // fallback: if no per-member imports but class-level has imports (legacy), still handle for backward compat
+        if (allMemberImports.isEmpty()) {
+            for (String imported : node.imports()) {
+                Optional<TypeNode> target = graph.find(imported);
+                if (!target.isPresent() && imported.contains(".")) {
+                    String withoutMember = imported.substring(0, imported.lastIndexOf('.'));
+                    target = graph.find(withoutMember);
+                }
+                if (target.isPresent()) {
+                    edges.add(new Edge(node.qualifiedName(), imported,
+                            TypeRelationKind.IMPORTS, true));
+                } else if (isAttributable(imported)) {
+                    edges.add(new Edge(node.qualifiedName(), imported,
+                            TypeRelationKind.IMPORTS, false));
+                }
             }
         }
     }

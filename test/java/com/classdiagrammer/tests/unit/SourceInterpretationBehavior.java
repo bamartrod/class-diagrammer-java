@@ -29,15 +29,49 @@ public final class SourceInterpretationBehavior {
         h.expect("paquete e imports quedan registrados", () -> {
             List<TypeNode> nodes = parser.parse(userServiceSource());
             TypeNode type = only(nodes);
+            // class-level imports now only for hierarchy (extends/implements/permits), per-member for fields/methods
             return "com.demo".equals(type.packageName())
-                    && type.imports().contains("java.util.List")
                     && type.imports().contains("com.demo.Base")
-                    && type.imports().size() == 2;
+                    && !type.imports().contains("java.util.List")
+                    && type.imports().size() == 1;
         });
         h.expect("folder and file accompany the type", () -> {
             TypeNode type = only(parser.parse(userServiceSource()));
             return "src/com/demo".equals(type.folder())
                     && type.file().endsWith("UserService.java");
+        });
+        h.expect("los imports requeridos por campo se resuelven por uso", () -> {
+            List<TypeNode> nodes = parser.parse(Sources.java("shop/Order.java",
+                    "package shop;",
+                    "import com.shop.domain.Base;",
+                    "import com.shop.domain.Validable;",
+                    "import com.shop.domain.Cliente;",
+                    "import com.shop.domain.PedidoExpress;",
+                    "public class Order extends Base implements Validable {",
+                    "    private Cliente cliente;",
+                    "    private PedidoExpress express;",
+                    "    private int cantidad;",
+                    "    public Order(Cliente c) {}",
+                    "    public void process(Cliente c, PedidoExpress p) {}",
+                    "}"));
+            TypeNode order = only(nodes);
+            // class-level only hierarchy (Base, Validable)
+            boolean classFiltered = order.imports().size() == 2
+                    && order.imports().contains("com.shop.domain.Base")
+                    && order.imports().contains("com.shop.domain.Validable")
+                    && !order.imports().contains("com.shop.domain.Cliente");
+            Field clienteField = findField(order, "cliente");
+            Field expressField = findField(order, "express");
+            Field cantField = findField(order, "cantidad");
+            boolean fieldCliente = clienteField != null && clienteField.requiredImports().contains("com.shop.domain.Cliente");
+            boolean fieldExpress = expressField != null && expressField.requiredImports().contains("com.shop.domain.PedidoExpress");
+            boolean fieldCantEmpty = cantField != null && cantField.requiredImports().isEmpty();
+            Method ctor = order.constructors().stream().filter(m -> m.name().equals("Order")).findFirst().orElse(null);
+            boolean ctorImports = ctor != null && ctor.requiredImports().contains("com.shop.domain.Cliente");
+            Method proc = findMethod(order, "process");
+            boolean methodImports = proc != null && proc.requiredImports().contains("com.shop.domain.Cliente")
+                    && proc.requiredImports().contains("com.shop.domain.PedidoExpress");
+            return classFiltered && fieldCliente && fieldExpress && fieldCantEmpty && ctorImports && methodImports;
         });
         h.expect("una clase publica abstracta expone naturaleza y visibilidad", () -> {
             TypeNode type = only(parser.parse(userServiceSource()));
