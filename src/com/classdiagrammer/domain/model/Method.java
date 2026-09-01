@@ -19,9 +19,10 @@ public final class Method {
     private final Visibility visibility;
     private final Set<String> modifiers;
     private final List<Parameter> parameters;
+    private final List<String> requiredImports;
 
     private Method(String name, String returnType, Visibility visibility,
-                   Set<String> modifiers, List<Parameter> parameters) {
+                   Set<String> modifiers, List<Parameter> parameters, List<String> requiredImports) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("method name is required");
         }
@@ -33,11 +34,17 @@ public final class Method {
         this.visibility = visibility;
         this.modifiers = Collections.unmodifiableSet(new HashSet<>(modifiers));
         this.parameters = Collections.unmodifiableList(new ArrayList<>(parameters));
+        this.requiredImports = requiredImports == null ? List.of() : List.copyOf(requiredImports);
     }
 
     public static Method constructor(String name, Visibility visibility,
                                      Set<String> modifiers, List<Parameter> parameters) {
-        return new Method(name, "", visibility, modifiers, parameters);
+        return new Method(name, "", visibility, modifiers, parameters, List.of());
+    }
+
+    public static Method constructor(String name, Visibility visibility,
+                                     Set<String> modifiers, List<Parameter> parameters, List<String> requiredImports) {
+        return new Method(name, "", visibility, modifiers, parameters, requiredImports);
     }
 
     public static Method returning(String name, String returnType, Visibility visibility,
@@ -45,7 +52,15 @@ public final class Method {
         if (returnType == null || returnType.trim().isEmpty()) {
             throw new IllegalArgumentException("method return type is required");
         }
-        return new Method(name, returnType, visibility, modifiers, parameters);
+        return new Method(name, returnType, visibility, modifiers, parameters, List.of());
+    }
+
+    public static Method returning(String name, String returnType, Visibility visibility,
+                                   Set<String> modifiers, List<Parameter> parameters, List<String> requiredImports) {
+        if (returnType == null || returnType.trim().isEmpty()) {
+            throw new IllegalArgumentException("method return type is required");
+        }
+        return new Method(name, returnType, visibility, modifiers, parameters, requiredImports);
     }
 
     public String name() {
@@ -70,5 +85,9 @@ public final class Method {
 
     public List<Parameter> parameters() {
         return parameters;
+    }
+
+    public List<String> requiredImports() {
+        return requiredImports;
     }
 }

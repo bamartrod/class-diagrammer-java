@@ -165,7 +165,9 @@ public final class XmlDiagramOutput implements DiagramOutput {
             attr(out, "name", f.name());
             attr(out, "type", f.type());
             attr(out, "visibility", f.visibility().jsonName());
-            out.append("/>\n");
+            out.append(">\n");
+            writeStringListXml(out, "          ", "requiredImports", f.requiredImports());
+            out.append("        </field>\n");
         }
         out.append("      </fields>\n");
     }
@@ -178,6 +180,7 @@ public final class XmlDiagramOutput implements DiagramOutput {
             if (includeReturn) attr(out, "returnType", m.returnType());
             attr(out, "visibility", m.visibility().jsonName());
             out.append(">\n");
+            writeStringListXml(out, "          ", "requiredImports", m.requiredImports());
             out.append("          <parameters>\n");
             for (Parameter p : m.parameters()) {
                 out.append("            <parameter");
