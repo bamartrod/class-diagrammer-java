@@ -73,11 +73,14 @@ public final class JavaArtifactParser implements ArtifactParser {
 
         List<TypeNode> nodes = new ArrayList<>();
         regionScanner.scan(masked, 0, masked.length(), "",
-                (declaration, bodyStart, bodyEnd, qualifier) ->
-                        nodes.add(buildType(declaration, qualifier, packageName,
-                                imports, folder, source.file(),
-                                memberScanner.scan(declaration, masked, bodyStart + 1, bodyEnd),
-                                headerParser.parse(declaration.header()))));
+                (declaration, bodyStart, bodyEnd, qualifier) -> {
+                    HeaderParser.ParsedHeader header = headerParser.parse(declaration.header());
+                    SignatureInterpreter.ParsedMembers members = memberScanner.scan(declaration, masked, bodyStart + 1, bodyEnd, imports);
+                    List<String> hierarchyImports = filterHierarchyImports(imports, header);
+                    nodes.add(buildType(declaration, qualifier, packageName,
+                            hierarchyImports, folder, source.file(),
+                            members, header));
+                });
         return nodes;
     }
 
@@ -113,6 +116,40 @@ public final class JavaArtifactParser implements ArtifactParser {
         } else {
             return TypeKind.ANNOTATION;
         }
+    }
+
+    private List<String> filterHierarchyImports(List<String> imports, HeaderParser.ParsedHeader header) {
+        if (imports == null || imports.isEmpty()) return List.of();
+        java.util.Set<String> hierarchySimpleNames = new java.util.HashSet<>();
+        for (String t : header.extendsTypes()) hierarchySimpleNames.add(simpleNameOf(t));
+        for (String t : header.implementsTypes()) hierarchySimpleNames.add(simpleNameOf(t));
+        for (String t : header.permitsTypes()) hierarchySimpleNames.add(simpleNameOf(t));
+        if (hierarchySimpleNames.isEmpty()) return List.of();
+        List<String> filtered = new ArrayList<>();
+        for (String imp : imports) {
+            if (imp == null || imp.trim().isEmpty()) continue;
+            if (imp.endsWith(".*")) continue;
+            if (imp.startsWith("java.") || imp.startsWith("javax.")) continue;
+            int lastDot = imp.lastIndexOf('.');
+            if (lastDot < 0) continue;
+            String simple = imp.substring(lastDot + 1);
+            if (hierarchySimpleNames.contains(simple)) {
+                filtered.add(imp);
+            }
+        }
+        java.util.Collections.sort(filtered);
+        return List.copyOf(filtered);
+    }
+
+    private String simpleNameOf(String type) {
+        if (type == null) return "";
+        // remove generics and array markers, then take simple name after last dot
+        String cleaned = type.replaceAll("<.*>", "").replaceAll("\\[\\]", "").trim();
+        int lastDot = cleaned.lastIndexOf('.');
+        if (lastDot >= 0) cleaned = cleaned.substring(lastDot + 1);
+        // in case still contains spaces, take last token
+        String[] parts = cleaned.split("\\s+");
+        return parts.length == 0 ? "" : parts[parts.length - 1];
     }
 
     static String parentFolder(String filePath) {

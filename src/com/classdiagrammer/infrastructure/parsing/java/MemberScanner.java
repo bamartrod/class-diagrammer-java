@@ -8,11 +8,13 @@ package com.classdiagrammer.infrastructure.parsing.java;
 final class MemberScanner {
 
     SignatureInterpreter.ParsedMembers scan(TypeDeclaration declaration,
-                                            String masked, int start, int end) {
+                                            String masked, int start, int end,
+                                            java.util.List<String> classImports) {
         SignatureInterpreter interpreter = new SignatureInterpreter(
                 declaration.name(),
                 JavaArtifactParser.mapKind(declaration.kindToken()),
-                "enum".equals(declaration.kindToken()));
+                "enum".equals(declaration.kindToken()),
+                classImports);
 
         int depth = 0;
         int chunkStart = -1;
@@ -43,5 +45,10 @@ final class MemberScanner {
             }
         }
         return interpreter.toMembers();
+    }
+
+    SignatureInterpreter.ParsedMembers scan(TypeDeclaration declaration,
+                                            String masked, int start, int end) {
+        return scan(declaration, masked, start, end, java.util.List.of());
     }
 }
