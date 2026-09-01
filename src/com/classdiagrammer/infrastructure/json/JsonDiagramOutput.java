@@ -131,8 +131,9 @@ public final class JsonDiagramOutput implements DiagramOutput {
             json.beginObject()
                     .field("name", field.name())
                     .field("type", field.type())
-                    .field("visibility", field.visibility().jsonName())
-                    .endObject();
+                    .field("visibility", field.visibility().jsonName());
+            writeStringList(json, "requiredImports", field.requiredImports());
+            json.endObject();
         }
         json.endArray();
 
@@ -167,6 +168,7 @@ public final class JsonDiagramOutput implements DiagramOutput {
                     .endObject();
         }
         json.endArray();
+        writeStringList(json, "requiredImports", operation.requiredImports());
         json.endObject();
     }
 

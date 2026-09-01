@@ -139,6 +139,7 @@ public final class ToonDiagramOutput implements DiagramOutput {
             line(out, 3, "field", f.name());
             line(out, 4, "type", f.type());
             line(out, 4, "visibility", f.visibility().jsonName());
+            list(out, 4, "requiredImports", f.requiredImports());
         }
     }
 
@@ -149,6 +150,7 @@ public final class ToonDiagramOutput implements DiagramOutput {
             line(out, 3, "method", m.name());
             if (incRet) line(out, 4, "returnType", m.returnType());
             line(out, 4, "visibility", m.visibility().jsonName());
+            list(out, 4, "requiredImports", m.requiredImports());
             if (m.parameters().isEmpty()) line(out, 4, "parameters", "-");
             else {
                 StringBuilder ps = new StringBuilder();
