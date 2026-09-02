@@ -51,8 +51,8 @@ public final class JavaArtifactParser implements ArtifactParser {
 
     private static JavaVersion deduceVersion(LanguageCapabilities caps) {
         if (caps == null) return JavaVersion.V8;
-        if (!caps.records() && !caps.textBlocks() && !caps.sealedTypes()) return JavaVersion.V8;
-        if (!caps.textBlocks() && !caps.records()) return JavaVersion.V11;
+        if (!caps.records() && !caps.textBlocks() && !caps.sealedTypes() && !caps.patternMatching() && !caps.switchExpression() && !caps.localVariableTypeInference() && !caps.virtualThread()) return JavaVersion.V8;
+        if (!caps.textBlocks() && !caps.records() && !caps.sealedTypes() && !caps.patternMatching()) return JavaVersion.V11;
         return JavaVersion.V17;
     }
 
@@ -157,6 +157,7 @@ public final class JavaArtifactParser implements ArtifactParser {
     private void detectUnsupportedFeatures(SourceFile source) {
         String content = source.content();
         String file = source.file();
+        String masked = SourceText.of(content).masked();
         // text blocks """ – require textBlocks capability (Java 15+)
         if (!capabilities.textBlocks() && content.contains("\"\"\"")) {
             throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
@@ -164,8 +165,7 @@ public final class JavaArtifactParser implements ArtifactParser {
         }
         // records – require records capability
         if (!capabilities.records() && content.matches("(?s).*\\brecord\\b.*")) {
-            // more precise: record keyword followed by identifier
-            if (content.matches("(?s).*\\brecord\\s+\\w+.*")) {
+            if (content.matches("(?s).*\\brecord\\s+\\w+.*") && masked.matches("(?s).*\\brecord\\s+\\w+.*")) {
                 throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
                         com.classdiagrammer.domain.evidence.LanguageFeature.RECORD, javaVersion.label(), file);
             }
@@ -173,14 +173,35 @@ public final class JavaArtifactParser implements ArtifactParser {
         // sealed / permits – require sealedTypes
         if (!capabilities.sealedTypes()) {
             if (content.matches("(?s).*\\bsealed\\b.*") || content.matches("(?s).*\\bpermits\\b.*") || content.contains("non-sealed")) {
-                // check if actually a type declaration uses sealed/permit
-                String masked = SourceText.of(content).masked();
                 if (masked.matches("(?s).*\\b(sealed|permits|non-sealed)\\b.*")) {
-                    com.classdiagrammer.domain.evidence.LanguageFeature feat = content.contains("permits") || content.contains("permits") ? com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE : com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE;
+                    com.classdiagrammer.domain.evidence.LanguageFeature feat = masked.contains("permits") ? com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE : com.classdiagrammer.domain.evidence.LanguageFeature.SEALED_TYPE;
                     throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
                             feat, javaVersion.label(), file);
                 }
             }
+        }
+        // pattern matching instanceof – require patternMatching (Java 16+)
+        if (!capabilities.patternMatching() && masked.matches("(?s).*\\binstanceof\\s+\\w+\\s+\\w+.*")) {
+            throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                    com.classdiagrammer.domain.evidence.LanguageFeature.PATTERN_MATCHING, javaVersion.label(), file);
+        }
+        // switch expression – require switchExpression (Java 14+)
+        if (!capabilities.switchExpression() && (masked.contains("->") && masked.matches("(?s).*\\bswitch\\s*\\(.*\\).*") || masked.contains("yield "))) {
+            // heuristic: switch with arrow or yield keyword
+            if (masked.matches("(?s).*\\bswitch\\s*\\(.*\\)\\s*\\{.*->.*") || masked.matches("(?s).*\\byield\\b.*")) {
+                throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                        com.classdiagrammer.domain.evidence.LanguageFeature.SWITCH_EXPRESSION, javaVersion.label(), file);
+            }
+        }
+        // local variable type inference var – require localVariableTypeInference (Java 10+)
+        if (!capabilities.localVariableTypeInference() && masked.matches("(?s).*\\bvar\\s+\\w+\\s*[=;].*")) {
+            throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                    com.classdiagrammer.domain.evidence.LanguageFeature.LOCAL_VARIABLE_TYPE_INFERENCE, javaVersion.label(), file);
+        }
+        // virtual thread – require virtualThread (Java 21+)
+        if (!capabilities.virtualThread() && (content.contains("newVirtualThreadPerTaskExecutor") || content.contains("VirtualThread") || content.contains("Executors.newVirtualThread"))) {
+            throw new com.classdiagrammer.domain.evidence.UnsupportedLanguageFeatureException(
+                    com.classdiagrammer.domain.evidence.LanguageFeature.VIRTUAL_THREAD, javaVersion.label(), file);
         }
     }
 
