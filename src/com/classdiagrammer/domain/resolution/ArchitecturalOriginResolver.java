@@ -64,7 +64,7 @@ public final class ArchitecturalOriginResolver {
                 from + "->" + to,
                 from,
                 origin,
-                "CSAS-006-U4"
+                "RULE-006-U4"
         );
         return new Evidence(fact, edge.from(), "ArchitecturalOriginResolver.enrich", "ORIGIN-" + from.hashCode() + "-" + to.hashCode());
     }

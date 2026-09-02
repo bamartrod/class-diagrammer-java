@@ -7,7 +7,7 @@ import com.classdiagrammer.domain.evidence.Evidence;
 import java.util.List;
 
 /**
- * CSAS-004-U13: Domain must not depend on infrastructure.
+ * RULE-004-U13: Domain must not depend on infrastructure.
  * Applicability: exists TypeNode in domain package.
  * Predicate: ∀ edge where from ∈ domain.* → to ∉ infrastructure.*
  *
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public final class HexagonalDomainIsolationRule implements Rule {
 
-    @Override public String ruleId() { return "CSAS-004-U13"; }
+    @Override public String ruleId() { return "RULE-004-U13"; }
     @Override public String description() { return "Domain must not depend on infrastructure (hexagonal isolation)"; }
     @Override public List<String> requiredInputs() { return java.util.Arrays.asList("DEPENDENCY_EXISTS", "TYPE_EXISTS"); }
     @Override public List<String> requiredEvidenceKinds() { return java.util.Arrays.asList("DEPENDENCY_EXISTS", "ARCHITECTURAL_ORIGIN"); }

@@ -20,8 +20,8 @@ import com.classdiagrammer.infrastructure.parsing.java.JavaArtifactParser;
 import java.util.List;
 
 /**
- * Verifies that every CSAS-relevant fact is attributable to evidence (CSAS-002-U5/U6) and
- * that insufficient evidence is not reported as CONFORMANT (CSAS-002-U13).
+ * Verifies that every RULE-relevant fact is attributable to evidence (RULE-002-U5/U6) and
+ * that insufficient evidence is not reported as CONFORMANT (RULE-002-U13).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

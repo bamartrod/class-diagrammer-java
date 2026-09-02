@@ -9,7 +9,7 @@ import com.classdiagrammer.infrastructure.parsing.LanguageCapabilities;
 import com.classdiagrammer.tests.support.TestHarness;
 
 /**
- * Verifies version-correct parsing per CSAS-002-U12 and CSAS-007-U1.
+ * Verifies version-correct parsing per RULE-002-U12 and RULE-007-U1.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

@@ -35,7 +35,7 @@ public final class Main {
         try {
             cli = CliArgs.parse(args);
         } catch (IllegalArgumentException e) {
-            // INPUT_VALIDATION_FAILURE / CONFIGURATION_FAILURE per CSAS-002-U20
+            // INPUT_VALIDATION_FAILURE / CONFIGURATION_FAILURE per RULE-002-U20
             System.err.println("Input validation failed: " + e.getMessage());
             System.exit(2);
             return;
@@ -63,7 +63,7 @@ public final class Main {
             // also report evaluation if present
             // evaluation is inside JSON; CLI could print evidence count if needed
         } catch (IllegalStateException e) {
-            // EXPECTED_OPERATIONAL_FAILURE / RECOVERABLE_RUNTIME per CSAS-002-U20
+            // EXPECTED_OPERATIONAL_FAILURE / RECOVERABLE_RUNTIME per RULE-002-U20
             System.err.println("Operational failure: " + e.getMessage());
             System.exit(1);
         } catch (RuntimeException e) {

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Aggregate conformance per CSAS-002-U32/U33.
+ * Aggregate conformance per RULE-002-U32/U33.
  * Per-rule results + aggregate state.
  *
  * @author Brandon Martinez - https://github.com/bamartrod

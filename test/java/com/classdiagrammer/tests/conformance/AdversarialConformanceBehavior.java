@@ -27,7 +27,7 @@ import com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase;
 import java.util.List;
 
 /**
- * Adversarial conformance fixtures per CSAS §13–14.
+ * Adversarial conformance fixtures per RULE §13–14.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
@@ -50,13 +50,13 @@ public final class AdversarialConformanceBehavior {
             ));
             List<Edge> edges = java.util.Collections.emptyList();
             List<Evidence> evs = java.util.Arrays.asList(
-                    new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, "com.classdiagrammer.domain.Foo", "com/classdiagrammer/domain/Foo.java:1", "CLASS", "CSAS-003-U2"), "com/classdiagrammer/domain/Foo.java", "TypeNode", "EVID-1")
+                    new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, "com.classdiagrammer.domain.Foo", "com/classdiagrammer/domain/Foo.java:1", "CLASS", "RULE-003-U2"), "com/classdiagrammer/domain/Foo.java", "TypeNode", "EVID-1")
             );
             ConformanceResult cr = ConformanceEngine.defaultEngine().evaluate(graph, edges, evs);
-            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("CSAS-004-U13")).findFirst().orElse(null);
+            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("RULE-004-U13")).findFirst().orElse(null);
             return r != null && r.state() == EvaluationState.CONFORMANT
                     && r.applicability() && r.predicateResult() != null && r.predicateResult()
-                    && r.traceability().contains("CSAS-004-U13");
+                    && r.traceability().contains("RULE-004-U13");
         });
 
         // Fixture B — NON_CONFORMANT (deliberate violation)
@@ -76,10 +76,10 @@ public final class AdversarialConformanceBehavior {
             List<Edge> edges = resolver.resolve(graph);
             // edges should contain domain -> infrastructure
             List<Evidence> evs = java.util.Arrays.asList(
-                    new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, violating.qualifiedName(), "com/classdiagrammer/domain/Violating.java:1", "CLASS", "CSAS-003-U2"), "com/classdiagrammer/domain/Violating.java", "TypeNode", "EVID-1")
+                    new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, violating.qualifiedName(), "com/classdiagrammer/domain/Violating.java:1", "CLASS", "RULE-003-U2"), "com/classdiagrammer/domain/Violating.java", "TypeNode", "EVID-1")
             );
             ConformanceResult cr = ConformanceEngine.defaultEngine().evaluate(graph, edges, evs);
-            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("CSAS-004-U13")).findFirst().orElse(null);
+            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("RULE-004-U13")).findFirst().orElse(null);
             return r != null && r.state() == EvaluationState.NON_CONFORMANT
                     && !r.predicateResult()
                     && r.evidenceSufficiency() == com.classdiagrammer.domain.conformance.EvidenceSufficiency.SUFFICIENT
@@ -136,7 +136,7 @@ public final class AdversarialConformanceBehavior {
                             .build()
             ));
             ConformanceResult cr = ConformanceEngine.defaultEngine().evaluate(graph, java.util.Collections.emptyList(), java.util.Collections.emptyList());
-            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("CSAS-004-U13")).findFirst().orElse(null);
+            EvaluationResult r = cr.results().stream().filter(e -> e.ruleId().equals("RULE-004-U13")).findFirst().orElse(null);
             return r != null && r.state() == EvaluationState.NOT_APPLICABLE && !r.applicability();
         });
 
@@ -179,16 +179,16 @@ public final class AdversarialConformanceBehavior {
             EdgeResolver resolver = new EdgeResolver();
             List<Edge> eConformant = resolver.resolve(gConformant);
             List<Edge> eViolating = resolver.resolve(gViolating);
-            List<Evidence> evC = java.util.Arrays.asList(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, conformant.qualifiedName(), "com/classdiagrammer/domain/Conformant.java:1", "CLASS", "CSAS-003-U2"), "com/classdiagrammer/domain/Conformant.java", "TypeNode", "EVID-C1"));
-            List<Evidence> evV = java.util.Arrays.asList(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, violating.qualifiedName(), "com/classdiagrammer/domain/Violating2.java:1", "CLASS", "CSAS-003-U2"), "com/classdiagrammer/domain/Violating2.java", "TypeNode", "EVID-V1"));
+            List<Evidence> evC = java.util.Arrays.asList(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, conformant.qualifiedName(), "com/classdiagrammer/domain/Conformant.java:1", "CLASS", "RULE-003-U2"), "com/classdiagrammer/domain/Conformant.java", "TypeNode", "EVID-C1"));
+            List<Evidence> evV = java.util.Arrays.asList(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, violating.qualifiedName(), "com/classdiagrammer/domain/Violating2.java:1", "CLASS", "RULE-003-U2"), "com/classdiagrammer/domain/Violating2.java", "TypeNode", "EVID-V1"));
             ConformanceEngine engine = ConformanceEngine.defaultEngine();
             ConformanceResult crC = engine.evaluate(gConformant, eConformant, evC);
             ConformanceResult crV = engine.evaluate(gViolating, eViolating, evV);
-            EvaluationResult rc = crC.results().stream().filter(r -> r.ruleId().equals("CSAS-004-U13")).findFirst().orElse(null);
-            EvaluationResult rv = crV.results().stream().filter(r -> r.ruleId().equals("CSAS-004-U13")).findFirst().orElse(null);
+            EvaluationResult rc = crC.results().stream().filter(r -> r.ruleId().equals("RULE-004-U13")).findFirst().orElse(null);
+            EvaluationResult rv = crV.results().stream().filter(r -> r.ruleId().equals("RULE-004-U13")).findFirst().orElse(null);
             return rc != null && rc.state() == EvaluationState.CONFORMANT
                     && rv != null && rv.state() == EvaluationState.NON_CONFORMANT
-                    && rv.traceability().contains("CSAS-004-U13")
+                    && rv.traceability().contains("RULE-004-U13")
                     && rv.traceability().contains("predicate")
                     && rv.evidenceSufficiency() == com.classdiagrammer.domain.conformance.EvidenceSufficiency.SUFFICIENT;
         });
