@@ -22,17 +22,27 @@ public final class DiagramReport {
     private final String generatedAtUtc;
     private final List<com.classdiagrammer.domain.evidence.Evidence> evidences;
     private final com.classdiagrammer.domain.evidence.EvaluationState evaluation;
+    private final com.classdiagrammer.domain.conformance.ConformanceResult conformance;
 
     private DiagramReport(String sourceRoot, List<TypeNode> nodes,
                           List<Edge> edges, String generatedAtUtc,
                           List<com.classdiagrammer.domain.evidence.Evidence> evidences,
                           com.classdiagrammer.domain.evidence.EvaluationState evaluation) {
+        this(sourceRoot, nodes, edges, generatedAtUtc, evidences, evaluation, null);
+    }
+
+    private DiagramReport(String sourceRoot, List<TypeNode> nodes,
+                          List<Edge> edges, String generatedAtUtc,
+                          List<com.classdiagrammer.domain.evidence.Evidence> evidences,
+                          com.classdiagrammer.domain.evidence.EvaluationState evaluation,
+                          com.classdiagrammer.domain.conformance.ConformanceResult conformance) {
         this.sourceRoot = sourceRoot;
         this.nodes = Collections.unmodifiableList(new ArrayList<>(nodes));
         this.edges = Collections.unmodifiableList(new ArrayList<>(edges));
         this.generatedAtUtc = generatedAtUtc;
         this.evidences = evidences == null ? java.util.Collections.emptyList() : Collections.unmodifiableList(new ArrayList<>(evidences));
         this.evaluation = evaluation == null ? com.classdiagrammer.domain.evidence.EvaluationState.CONFORMANT : evaluation;
+        this.conformance = conformance == null ? new com.classdiagrammer.domain.conformance.ConformanceResult(java.util.Collections.emptyList(), this.evaluation) : conformance;
     }
 
     public static DiagramReport capture(String sourceRoot, CodeGraph graph,
@@ -65,6 +75,17 @@ public final class DiagramReport {
         return new DiagramReport(sourceRoot, graph.nodes(), resolvedEdges, generatedAt.toString(), evidences, evaluation);
     }
 
+    public static DiagramReport capture(String sourceRoot, CodeGraph graph,
+                                        List<Edge> resolvedEdges, Instant generatedAt,
+                                        List<com.classdiagrammer.domain.evidence.Evidence> evidences,
+                                        com.classdiagrammer.domain.conformance.ConformanceResult conformance) {
+        if (graph == null) throw new IllegalArgumentException("code graph is required");
+        if (resolvedEdges == null) throw new IllegalArgumentException("resolved edges are required");
+        if (generatedAt == null) throw new IllegalArgumentException("generation instant is required");
+        if (conformance == null) throw new IllegalArgumentException("conformance is required");
+        return new DiagramReport(sourceRoot, graph.nodes(), resolvedEdges, generatedAt.toString(), evidences, conformance.aggregateState(), conformance);
+    }
+
     public String sourceRoot() {
         return sourceRoot;
     }
@@ -87,5 +108,9 @@ public final class DiagramReport {
 
     public com.classdiagrammer.domain.evidence.EvaluationState evaluation() {
         return evaluation;
+    }
+
+    public com.classdiagrammer.domain.conformance.ConformanceResult conformance() {
+        return conformance;
     }
 }
