@@ -1,7 +1,7 @@
 package com.classdiagrammer.domain.evidence;
 
 /**
- * Evaluation states per CSAS-002-U12.
+ * Evaluation states per RULE-002-U12.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

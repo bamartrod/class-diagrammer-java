@@ -44,7 +44,7 @@ public final class JsonDiagramOutput implements DiagramOutput {
                 .field("evaluation", report.evaluation().jsonName())
                 .endObject();
 
-        // deterministic ordering per CSAS-002-U23
+        // deterministic ordering per RULE-002-U23
         List<TypeNode> sortedNodes = new java.util.ArrayList<>(report.nodes());
         sortedNodes.sort((a, b) -> a.qualifiedName().compareTo(b.qualifiedName()));
         json.beginArray("nodes");
@@ -98,7 +98,7 @@ public final class JsonDiagramOutput implements DiagramOutput {
             }
             json.endArray();
         }
-        // Conformance per CSAS-002-U27/U35
+        // Conformance per RULE-002-U27/U35
         if (report.conformance() != null && !report.conformance().results().isEmpty()) {
             json.beginObject("conformance");
             json.field("aggregateState", report.conformance().aggregateState().jsonName());

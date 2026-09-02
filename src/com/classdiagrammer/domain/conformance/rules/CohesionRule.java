@@ -7,7 +7,7 @@ import com.classdiagrammer.domain.evidence.Evidence;
 import java.util.List;
 
 /**
- * CSAS-007-U9: Class cohesion — effective lines ≤200 or justified.
+ * RULE-007-U9: Class cohesion — effective lines ≤200 or justified.
  * Simplified: counts lines of source file? For now uses TypeNode count as proxy: if nodes >200? Not accurate.
  * For test fixture we will use CodeGraph size or mock effectiveLines via Evidence.
  *
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public final class CohesionRule implements Rule {
 
-    @Override public String ruleId() { return "CSAS-007-U9"; }
+    @Override public String ruleId() { return "RULE-007-U9"; }
     @Override public String description() { return "Class cohesion — effective lines ≤200"; }
     @Override public List<String> requiredInputs() { return List.of("RESOURCE_OWNERSHIP"); }
     @Override public List<String> requiredEvidenceKinds() { return List.of("RESOURCE_OWNERSHIP"); }
