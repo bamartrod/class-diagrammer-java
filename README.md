@@ -1,9 +1,10 @@
 # ClassDiagrammer — v2.0.0 (Java 11 LTS)
 
 Tool **Java 11** that scans a project, interprets its sources and generates a
-JSON graph shaped as a class diagram: folders, packages, imports,
-`extends`/`implements`/`permits`, constructors, methods, fields, visibility and
-modifiers (`sealed`/`non-sealed`/`final`).
+JSON graph shaped as a class diagram: folders, packages, hierarchy imports
+(`extends`/`implements`/`permits` at node level), constructors, methods, fields,
+visibility, modifiers (`sealed`/`non-sealed`/`final`) and per-member
+`requiredImports` (field/method/constructor) resolved via `ImportResolver`.
 
 **Supported languages:** Java code (`.java` 8/11/17/21/25), Apache Velocity
 templates (`.vm`, `.vtl`) and XForms forms (`.xhtml`/`.xforms`/`.xml` with
@@ -22,7 +23,7 @@ packages in JARs from the local repository (`~/.m2/repository`, falling back to
 Gradle cache). The transitive graph of libraries is not explored: only what the
 analyzed code directly uses is tagged.
 
-**Zero dependencies.** Only a **JDK 25** is needed. No Maven, Gradle or third-party
+**Zero dependencies.** Only a **JDK 11** is needed. No Maven, Gradle or third-party
 libraries: own parser, own JSON writer and own verification harness.
 
 ---
@@ -35,7 +36,7 @@ libraries: own parser, own JSON writer and own verification harness.
 Full project verification:
 
 ```bash
-./run-tests.sh          # 106 checks, 0 failures
+./run-tests.sh          # 107 checks, 0 failures
 ```
 
 ## 2. Usage
@@ -73,13 +74,13 @@ Full project verification:
       "folder": "src/com/shop/domain",
       "file": "src/com/shop/domain/Order.java",
       "modifiers": ["public", "sealed"],
-      "imports": ["com.shop.domain.Customer"],
+      "imports": ["com.shop.domain.DomainObject"],
       "extends": ["DomainObject"],
       "implements": ["Validatable"],
       "permits": ["ExpressOrder"],
-      "fields":     [{ "name": "...", "type": "...", "visibility": "private" }],
-      "constructors": [{ "name": "Order", "visibility": "public", "parameters": [] }],
-      "methods":    [{ "name": "total", "returnType": "double", "visibility": "public", "parameters": [] }]
+      "fields":     [{ "name": "customer", "type": "Customer", "visibility": "private", "requiredImports": ["com.shop.domain.Customer"] }],
+      "constructors": [{ "name": "Order", "visibility": "public", "parameters": [], "requiredImports": [] }],
+      "methods":    [{ "name": "total", "returnType": "Money", "visibility": "public", "parameters": [], "requiredImports": ["com.shop.domain.Money"] }]
     }
   ],
   "edges": [
@@ -111,8 +112,7 @@ Full project verification:
   confirmed by the corresponding JAR.
 - `unknown` — could not be attributed; `resolved: false`, no `artifact` object.
 
-JDK imports (`java.*`, `javax.*`) and wildcards (`foo.bar.*`) are omitted as
-noise; other external references generate an edge so they can be attributed.
+Hierarchy `imports` and per-member `requiredImports` omit `java.*`/`javax.*` and wildcards (`foo.bar.*`) as noise. Node `imports` holds only hierarchy-qualified imports (`extends`/`implements`/`permits`); each `field`/`method`/`constructor` carries `requiredImports` — the sorted, deduplicated subset of that file's imports whose simple names appear in that member's type signature (via `ImportResolver`). `imports` edges are aggregated from per-member `requiredImports` (fallback to node `imports` when a type has no members), so `external` attribution is member-accurate.
 
 **Output formats:** `json` (default), `xml` (well-formed, `<?xml?>` + `<diagram>`), `yaml` (YAML 1.2, `tool: ...`), `toon` (Token-Oriented, minimal, `tool: ClassDiagrammer` per line, `nodes[82]:`). All formats carry the same semantic model (`summary`, `nodes`, `edges`, `evidences`, `evaluation`) and are deterministic. Selection via `--format` or inferred from file extension (`.xml`, `.yaml`/`.yml`, `.toon`, `.json`).
 
@@ -120,17 +120,17 @@ Modeled content by technology:
 
 | Technology | Node | Methods | Fields | Edges |
 | --- | --- | --- | --- | --- |
-| Java 8-25 | class / interface / enum / annotation / record (sealed/non-sealed/final preserved) | constructors + methods | fields | extends / implements / **permits** / imports |
+| Java 8-25 | class / interface / enum / annotation / record (sealed/non-sealed/final preserved) | constructors + methods (`requiredImports` per member) | fields (`requiredImports` per field) | `extends` / `implements` / **permits** / `imports` (hierarchy-only at node, `requiredImports` per member → `imports` edges) |
 | Velocity `.vm/.vtl` | `template` (id = file path) | each `#macro(name $args)` | each `#set($var)` global (outside macros) | imports towards `#parse`/`#include` |
 | XForms `.xhtml/.xforms/.xml` | `form` (id = file path) | each `<xf:model>` and `<xf:submission>` | each `<xf:bind nodeset/ref>` | imports towards instances/submissions pointing to in-tree documents |
 
-## 4. Architecture (hexagonal, Java 25)
+## 4. Architecture (hexagonal, Java 11)
 
 ```
 src/com/classdiagrammer/
 ├── domain/                  CORE — zero outward dependencies
-│   ├── model/               TypeNode, Method, Field, Edge, EdgeOrigin, ArtifactRef, CodeGraph… (records for Parameter/ArtifactRef, List.copyOf)
-│   └── resolution/          EdgeResolver (extends/implements/permits/imports)
+│   ├── model/               TypeNode (hierarchy `imports` only), Field/Method/Constructor with `requiredImports`, Edge, EdgeOrigin, ArtifactRef, CodeGraph… (records for Parameter/ArtifactRef, List.copyOf)
+│   └── resolution/          EdgeResolver (extends/implements/permits + per-member `requiredImports` → `imports` edges), TypeQualifier, ArchitecturalOriginResolver
 ├── application/
 │   ├── port/in/             GenerateClassDiagram (+ Command / Result)
 │   ├── port/out/            SourceCodeReader, ArtifactParser, DependencyResolver,
@@ -139,7 +139,7 @@ src/com/classdiagrammer/
 ├── infrastructure/
 │   ├── filesystem/          FileSystemSourceReader
 │   ├── parsing/             LanguageCapabilities + JavaVersion (version = configuration, not copy)
-│   │   ├── java/            JavaArtifactParser (core, text-blocks in SourceText, permits in HeaderParser)
+│   │   ├── java/            JavaArtifactParser (core, `filterHierarchyImports` → node `imports`, `ImportResolver` per member via `SignatureInterpreter`/`MemberScanner` with `classImports`)
 │   │   ├── java11/17/21/25/ Thin wrappers per LTS (composition)
 │   │   ├── velocity/        VelocityArtifactParser, TemplateDirectives, DirectiveReader
 │   │   ├── xforms/          XFormsArtifactParser, FormModelCollector
@@ -147,7 +147,7 @@ src/com/classdiagrammer/
 │   │   └── xml/             XmlTagScanner (shared kernel)
 │   ├── dependencies/        BuildDependencyScanner, LocalRepositoryIndex, ClasspathArtifactResolver
 │   ├── json/                JsonDiagramOutput, JsonWriter
-│   └── output/              OutputFormat, DiagramOutputFactory, Xml/Yaml/ToonDiagramOutput
+│   └── output/              OutputFormat, DiagramOutputFactory, Xml/Yaml/ToonDiagramOutput (each emits `requiredImports` per field/method/constructor)
 └── interfaces/cli/          Main, CliArgs (text blocks, Set.of, switch expression)
 ```
 
