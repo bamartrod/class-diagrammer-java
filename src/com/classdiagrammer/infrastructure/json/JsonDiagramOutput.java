@@ -82,7 +82,9 @@ public final class JsonDiagramOutput implements DiagramOutput {
 
         if (!report.evidences().isEmpty()) {
             json.beginArray("evidences");
-            for (com.classdiagrammer.domain.evidence.Evidence ev : report.evidences()) {
+            List<com.classdiagrammer.domain.evidence.Evidence> sortedEvs = new java.util.ArrayList<>(report.evidences());
+            sortedEvs.sort((a,b) -> a.evidenceId().compareTo(b.evidenceId()));
+            for (com.classdiagrammer.domain.evidence.Evidence ev : sortedEvs) {
                 json.beginObject()
                         .field("evidenceId", ev.evidenceId())
                         .field("sourceFile", ev.sourceFile())
@@ -95,6 +97,35 @@ public final class JsonDiagramOutput implements DiagramOutput {
                         .endObject();
             }
             json.endArray();
+        }
+        // Conformance per CSAS-002-U27/U35
+        if (report.conformance() != null && !report.conformance().results().isEmpty()) {
+            json.beginObject("conformance");
+            json.field("aggregateState", report.conformance().aggregateState().jsonName());
+            List<com.classdiagrammer.domain.conformance.EvaluationResult> sortedResults = new java.util.ArrayList<>(report.conformance().results());
+            sortedResults.sort((a,b) -> a.ruleId().compareTo(b.ruleId()));
+            json.beginArray("results");
+            for (com.classdiagrammer.domain.conformance.EvaluationResult r : sortedResults) {
+                json.beginObject()
+                        .field("ruleId", r.ruleId())
+                        .field("applicability", r.applicability())
+                        .field("evidenceSufficiency", r.evidenceSufficiency().jsonName())
+                        .field("predicateResult", r.predicateResult() == null ? "null" : r.predicateResult().toString())
+                        .field("state", r.state().jsonName())
+                        .field("traceability", r.traceability());
+                json.beginArray("requiredInputs");
+                for (String ri : r.requiredInputs()) json.stringValue(ri);
+                json.endArray();
+                json.beginArray("evidence");
+                for (com.classdiagrammer.domain.evidence.Evidence ev : r.evidence()) json.stringValue(ev.evidenceId());
+                json.endArray();
+                json.beginArray("dependencies");
+                for (String d : r.dependencies()) json.stringValue(d);
+                json.endArray();
+                json.endObject();
+            }
+            json.endArray();
+            json.endObject();
         }
         json.field("evaluation", report.evaluation().jsonName());
 
