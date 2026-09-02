@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Thrown when source uses a language feature not available in the selected Java version.
- * Maps to UNSUPPORTED evaluation per CSAS-002-U12.
+ * Maps to UNSUPPORTED evaluation per RULE-002-U12.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
@@ -31,7 +31,7 @@ public final class UnsupportedLanguageFeatureException extends RuntimeException 
                 sourceFile,
                 sourceFile + ":1",
                 feature.factValue(),
-                "CSAS-007-U1"
+                "RULE-007-U1"
         );
     }
 
@@ -41,7 +41,7 @@ public final class UnsupportedLanguageFeatureException extends RuntimeException 
                 feature.factValue(),
                 "JavaVersion:" + javaVersion,
                 "unavailable",
-                "CSAS-007-U1"
+                "RULE-007-U1"
         );
         return new Evidence(availability, sourceFile, "LanguageCapabilities.forVersion(" + javaVersion + ")", "EVID-" + feature.factValue() + "-" + sourceFile.hashCode());
     }

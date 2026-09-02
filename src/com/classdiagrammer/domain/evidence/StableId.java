@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Stable identifier derivation via SHA-256 hex, first 8 chars.
- * Deterministic across JVMs, vs hashCode (CSAS-002-U5, §20).
+ * Deterministic across JVMs, vs hashCode (RULE-002-U5, §20).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

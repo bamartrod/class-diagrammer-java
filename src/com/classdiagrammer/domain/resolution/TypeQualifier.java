@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Resolves simple names to fully-qualified names using imports.
- * Separate from dependency resolution per CSAS-002-U16.
+ * Separate from dependency resolution per RULE-002-U16.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

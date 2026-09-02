@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Evidence sufficiency per CSAS-002-U30 (8 questions) and U31 (S1/S2/S3).
+ * Evidence sufficiency per RULE-002-U30 (8 questions) and U31 (S1/S2/S3).
  * Distinguishes evidence exists vs sufficient to prove required property.
  *
  * @author Brandon Martinez - https://github.com/bamartrod

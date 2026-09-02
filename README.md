@@ -99,7 +99,7 @@ Full project verification:
     { "evidenceId": "ORIGIN-com.shop.domain.Order", "sourceFile": "com.shop.domain.Order",
       "locator": "com.shop.domain.Order", "derivation": "ArchitecturalOriginResolver",
       "factKind": "ARCHITECTURAL_ORIGIN", "subject": "com.shop.domain.Order->com.shop.domain.DomainObject",
-      "value": "project", "ruleId": "CSAS-006-U4" }
+      "value": "project", "ruleId": "RULE-006-U4" }
   ]
 }
 ```
@@ -160,7 +160,7 @@ and imports `infrastructure.*` to wire adapters.
 ImplementationModel
   ├── StructuralModel (CodeGraph, TypeNode, Edge)
   ├── SemanticFacts (FactKind: TYPE_EXISTS, DEPENDENCY_EXISTS, LANGUAGE_FEATURE_USAGE, CONFIGURATION_*, ARCHITECTURAL_ORIGIN, etc.)
-  ├── Evidence (attributable, addressable, reproducible per CSAS-002)
+  ├── Evidence (attributable, addressable, reproducible per RULE-002)
   ├── LanguageModel (LanguageCapabilities per JavaVersion)
   ├── DependencyModel (enriched with artifact origin)
   └── Evaluation (CONFORMANT, NON_CONFORMANT, UNSUPPORTED, UNDECIDABLE, REVIEW_REQUIRED)

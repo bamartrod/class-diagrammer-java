@@ -1,7 +1,7 @@
 package com.classdiagrammer.domain.evidence;
 
 /**
- * Classification of implementation facts per CSAS-002-U2.
+ * Classification of implementation facts per RULE-002-U2.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
