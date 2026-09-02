@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Per-rule EvaluationResult per CSAS-002-U27/U28.
+ * Per-rule EvaluationResult per RULE-002-U27/U28.
  * Fields: ruleId, applicability, requiredInputs, evidence, evidenceSufficiency, predicateResult, state, dependencies, traceability.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
