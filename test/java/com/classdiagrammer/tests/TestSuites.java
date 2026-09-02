@@ -8,6 +8,7 @@ import com.classdiagrammer.tests.adapter.JsonEmissionBehavior;
 import com.classdiagrammer.tests.adapter.VelocityTemplateBehavior;
 import com.classdiagrammer.tests.adapter.XFormsDocumentBehavior;
 import com.classdiagrammer.tests.architecture.HexagonalConformanceBehavior;
+import com.classdiagrammer.tests.conformance.AdversarialConformanceBehavior;
 import com.classdiagrammer.tests.support.TestHarness;
 import com.classdiagrammer.tests.unit.CodeGraphIntegrity;
 import com.classdiagrammer.tests.unit.DeterministicOutputBehavior;
@@ -52,6 +53,7 @@ public final class TestSuites {
         JsonEmissionBehavior.verify(harness);
         EdgeEnrichmentBehavior.verify(harness);
         HexagonalConformanceBehavior.verify(harness);
+        AdversarialConformanceBehavior.verify(harness);
 
         harness.report(System.out);
         System.out.println();
