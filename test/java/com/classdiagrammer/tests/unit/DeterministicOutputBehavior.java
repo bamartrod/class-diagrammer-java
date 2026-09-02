@@ -13,7 +13,7 @@ import com.classdiagrammer.application.usecase.GenerateClassDiagramUseCase;
 import java.util.List;
 
 /**
- * Verifies deterministic output per CSAS-002-U7 and section 28.
+ * Verifies deterministic output per RULE-002-U7 and section 28.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

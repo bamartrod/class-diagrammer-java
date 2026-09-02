@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Conformance Engine per CSAS-002-U28.
+ * Conformance Engine per RULE-002-U28.
  * Flow: Rule → Applicability → RequiredInputs → Evidence → Sufficiency → Predicate → EvaluationState
  *
  * @author Brandon Martinez - https://github.com/bamartrod

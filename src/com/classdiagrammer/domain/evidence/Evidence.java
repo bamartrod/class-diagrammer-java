@@ -3,7 +3,7 @@ package com.classdiagrammer.domain.evidence;
 import java.util.Objects;
 
 /**
- * Reproducible attributable record that a fact holds at an addressable location (CSAS-002-U5).
+ * Reproducible attributable record that a fact holds at an addressable location (RULE-002-U5).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

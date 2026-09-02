@@ -3,7 +3,7 @@ package com.classdiagrammer.domain.evidence;
 import java.util.Objects;
 
 /**
- * Observable, addressable property without author intent (CSAS-002-U1).
+ * Observable, addressable property without author intent (RULE-002-U1).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */

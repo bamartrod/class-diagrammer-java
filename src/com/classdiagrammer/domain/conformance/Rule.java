@@ -6,7 +6,7 @@ import com.classdiagrammer.domain.evidence.Evidence;
 import java.util.List;
 
 /**
- * CSAS Rule Definition (APPL, PRED, NEED, EVID, EVAL, REQ, FORB, EXC, DEP, DECID, LAYER).
+ * RULE Rule Definition (APPL, PRED, NEED, EVID, EVAL, REQ, FORB, EXC, DEP, DECID, LAYER).
  * Each rule knows its applicability, required inputs, evidence kinds and normative predicate.
  *
  * @author Brandon Martinez - https://github.com/bamartrod
@@ -58,7 +58,7 @@ public interface Rule {
     default List<String> dependencies() { return List.of(); }
 
     /**
-     * Layer (LAYER) per CSAS.
+     * Layer (LAYER) per RULE.
      */
     default String layer() { return "implementation"; }
 

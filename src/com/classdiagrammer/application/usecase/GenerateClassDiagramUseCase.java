@@ -34,7 +34,7 @@ import java.util.concurrent.Future;
 /**
  * Application use case orchestrating parsing, resolution and output generation.
  * Single cohesive responsibility: transform validated command into implementation analysis
- * producing a class-diagram view over the semantic model (CSAS-007-U2).
+ * producing a class-diagram view over the semantic model (RULE-007-U2).
  *
  * @author Brandon Martinez - https://github.com/bamartrod
  */
@@ -65,11 +65,11 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
 
     public GenerateClassDiagramResult generate(GenerateClassDiagramCommand command) {
         if (command == null) throw new IllegalArgumentException("command is required");
-        // Configuration facts: declaration -> consumption -> effect (CSAS-002-U18)
+        // Configuration facts: declaration -> consumption -> effect (RULE-002-U18)
         List<Evidence> configEvidences = List.of(
-                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_DECLARATION, "javaVersion", "CliArgs", command.sourceRoot(), "CSAS-011-U15"), command.sourceRoot(), "CliArgs.parse", "CFG-DECL"),
-                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_CONSUMPTION, "javaVersion", "JavaParserFactory", "consumed", "CSAS-002-U18"), command.sourceRoot(), "JavaParserFactory.forVersion", "CFG-CONS"),
-                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_EFFECT, "javaVersion", "JavaArtifactParser", "affects parsing", "CSAS-002-U18"), command.sourceRoot(), "LanguageCapabilities", "CFG-EFF")
+                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_DECLARATION, "javaVersion", "CliArgs", command.sourceRoot(), "RULE-011-U15"), command.sourceRoot(), "CliArgs.parse", "CFG-DECL"),
+                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_CONSUMPTION, "javaVersion", "JavaParserFactory", "consumed", "RULE-002-U18"), command.sourceRoot(), "JavaParserFactory.forVersion", "CFG-CONS"),
+                new Evidence(new ImplementationFact(FactKind.CONFIGURATION_EFFECT, "javaVersion", "JavaArtifactParser", "affects parsing", "RULE-002-U18"), command.sourceRoot(), "LanguageCapabilities", "CFG-EFF")
         );
 
         List<SourceFile> files = sourceReader.readAll(command.sourceRoot());
@@ -87,14 +87,14 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
         // Add structural facts with stable IDs
         for (TypeNode n : outcome.nodes()) {
             String fid = StableId.factId(FactKind.TYPE_EXISTS.name(), n.qualifiedName(), n.file() + ":1");
-            allEvidences.add(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, n.qualifiedName(), n.file() + ":1", n.kind().name(), "CSAS-003-U2"), n.file(), "TypeNode", fid));
+            allEvidences.add(new Evidence(new ImplementationFact(FactKind.TYPE_EXISTS, n.qualifiedName(), n.file() + ":1", n.kind().name(), "RULE-003-U2"), n.file(), "TypeNode", fid));
         }
         for (Edge e : enriched.edges()) {
             String fid = StableId.factId(FactKind.DEPENDENCY_EXISTS.name(), e.from() + "->" + e.to(), e.from());
-            allEvidences.add(new Evidence(new ImplementationFact(FactKind.DEPENDENCY_EXISTS, e.from() + "->" + e.to(), e.from(), e.kind().name(), "CSAS-003-U6"), e.from(), "EdgeResolver", fid));
+            allEvidences.add(new Evidence(new ImplementationFact(FactKind.DEPENDENCY_EXISTS, e.from() + "->" + e.to(), e.from(), e.kind().name(), "RULE-003-U6"), e.from(), "EdgeResolver", fid));
         }
 
-        // Conformance Engine per CSAS-002-U28 (Rule → Applicability → RequiredInputs → Evidence → Sufficiency → Predicate → State)
+        // Conformance Engine per RULE-002-U28 (Rule → Applicability → RequiredInputs → Evidence → Sufficiency → Predicate → State)
         ConformanceEngine engine = ConformanceEngine.defaultEngine();
         ConformanceResult conformance = engine.evaluate(graph, enriched.edges(), allEvidences);
         EvaluationState parseEval = outcome.evaluation();
@@ -127,15 +127,15 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
             } catch (UnsupportedLanguageFeatureException e) {
                 Evidence ev = e.toEvidence();
                 ImplementationFact usage = e.toFact();
-                Evidence usageEv = new Evidence(usage, e.sourceFile(), "JavaArtifactParser.detectUnsupportedFeatures", StableId.evidenceId("CSAS-007-U1", e.sourceFile(), e.sourceFile() + ":1"));
+                Evidence usageEv = new Evidence(usage, e.sourceFile(), "JavaArtifactParser.detectUnsupportedFeatures", StableId.evidenceId("RULE-007-U1", e.sourceFile(), e.sourceFile() + ":1"));
                 return new ParseOutcome(List.of(), List.of(ev, usageEv), EvaluationState.UNSUPPORTED);
             } catch (IllegalStateException e) {
-                ImplementationFact fact = new ImplementationFact(FactKind.RESOURCE_OWNERSHIP, file.file(), file.file() + ":1", "depth_exceeded", "CSAS-002-U22");
-                Evidence ev = new Evidence(fact, file.file(), "RegionScanner.scanBounded", StableId.evidenceId("CSAS-002-U22", file.file(), file.file() + ":1"));
+                ImplementationFact fact = new ImplementationFact(FactKind.RESOURCE_OWNERSHIP, file.file(), file.file() + ":1", "depth_exceeded", "RULE-002-U22");
+                Evidence ev = new Evidence(fact, file.file(), "RegionScanner.scanBounded", StableId.evidenceId("RULE-002-U22", file.file(), file.file() + ":1"));
                 return new ParseOutcome(List.of(), List.of(ev), EvaluationState.REVIEW_REQUIRED);
             } catch (Exception e) {
-                ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, file.file(), file.file() + ":1", e.getClass().getSimpleName(), "CSAS-002-U20");
-                Evidence ev = new Evidence(fact, file.file(), "ArtifactParser.parse", StableId.evidenceId("CSAS-002-U20", file.file(), file.file() + ":1"));
+                ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, file.file(), file.file() + ":1", e.getClass().getSimpleName(), "RULE-002-U20");
+                Evidence ev = new Evidence(fact, file.file(), "ArtifactParser.parse", StableId.evidenceId("RULE-002-U20", file.file(), file.file() + ":1"));
                 System.err.println("Warning: file skipped due to error: " + file.file() + " - " + e.getMessage());
                 return new ParseOutcome(List.of(), List.of(ev), EvaluationState.UNDECIDABLE);
             }
@@ -150,15 +150,15 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                     } catch (UnsupportedLanguageFeatureException e) {
                         Evidence ev = e.toEvidence();
                         ImplementationFact usage = e.toFact();
-                        Evidence usageEv = new Evidence(usage, e.sourceFile(), "JavaArtifactParser.detectUnsupportedFeatures", StableId.evidenceId("CSAS-007-U1", e.sourceFile(), e.sourceFile() + ":1"));
+                        Evidence usageEv = new Evidence(usage, e.sourceFile(), "JavaArtifactParser.detectUnsupportedFeatures", StableId.evidenceId("RULE-007-U1", e.sourceFile(), e.sourceFile() + ":1"));
                         return new ParseOutcome(List.<TypeNode>of(), List.of(ev, usageEv), EvaluationState.UNSUPPORTED);
                     } catch (IllegalStateException e) {
-                        ImplementationFact fact = new ImplementationFact(FactKind.RESOURCE_OWNERSHIP, file.file(), file.file() + ":1", "depth_exceeded", "CSAS-002-U22");
-                        Evidence ev = new Evidence(fact, file.file(), "RegionScanner.scanBounded", StableId.evidenceId("CSAS-002-U22", file.file(), file.file() + ":1"));
+                        ImplementationFact fact = new ImplementationFact(FactKind.RESOURCE_OWNERSHIP, file.file(), file.file() + ":1", "depth_exceeded", "RULE-002-U22");
+                        Evidence ev = new Evidence(fact, file.file(), "RegionScanner.scanBounded", StableId.evidenceId("RULE-002-U22", file.file(), file.file() + ":1"));
                         return new ParseOutcome(List.<TypeNode>of(), List.of(ev), EvaluationState.REVIEW_REQUIRED);
                     } catch (Exception e) {
-                        ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, file.file(), file.file() + ":1", e.getClass().getSimpleName(), "CSAS-002-U20");
-                        Evidence ev = new Evidence(fact, file.file(), "ArtifactParser.parse", StableId.evidenceId("CSAS-002-U20", file.file(), file.file() + ":1"));
+                        ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, file.file(), file.file() + ":1", e.getClass().getSimpleName(), "RULE-002-U20");
+                        Evidence ev = new Evidence(fact, file.file(), "ArtifactParser.parse", StableId.evidenceId("RULE-002-U20", file.file(), file.file() + ":1"));
                         System.err.println("Warning: file skipped due to error: " + file.file() + " - " + e.getMessage());
                         return new ParseOutcome(List.<TypeNode>of(), List.of(ev), EvaluationState.UNDECIDABLE);
                     }
@@ -180,8 +180,8 @@ public final class GenerateClassDiagramUseCase implements GenerateClassDiagram {
                     throw new IllegalStateException("parsing interrupted", e);
                 } catch (ExecutionException e) {
                     System.err.println("Warning: task failed: " + e.getCause().getMessage());
-                    ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, "task", "executor", e.getCause().getClass().getSimpleName(), "CSAS-002-U20");
-                    allEvs.add(new Evidence(fact, "executor", "GenerateClassDiagramUseCase", StableId.evidenceId("CSAS-002-U20", "executor", "task:1")));
+                    ImplementationFact fact = new ImplementationFact(FactKind.FAILURE_CLASSIFICATION, "task", "executor", e.getCause().getClass().getSimpleName(), "RULE-002-U20");
+                    allEvs.add(new Evidence(fact, "executor", "GenerateClassDiagramUseCase", StableId.evidenceId("RULE-002-U20", "executor", "task:1")));
                     if (overall == EvaluationState.CONFORMANT) overall = EvaluationState.UNDECIDABLE;
                 }
             }
